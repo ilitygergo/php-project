@@ -1,3 +1,4 @@
+# Initial data
 CREATE TABLE users (
 	id int NOT NULL AUTO_INCREMENT,
     first_name varchar(255),
@@ -6,14 +7,18 @@ CREATE TABLE users (
     address varchar(255),
     gender varchar(255),
     age int,
+    internal bit,
+  	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     PRIMARY KEY (id)
 );
 
-INSERT INTO users (id, first_name, last_name, email, address, gender, age) VALUES (1, 'Nagy', 'Elek', 'nagyelek@example.com', 'Szeged, Szilléri sgt. 32', 'male', 25);
-INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Kis', 'Jenő', 'kisjeno@example.com', 'Szeged, Kossuth u. 3B', 'male', 20);
-INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Lapos', 'Ödön', 'laposodon@example.com', 'Békéscsaba, Tata u. 12', 'male', 30);
-INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Csonka', 'Károly', 'csonkakaroly@example.com', 'Budapest, Deák tér 7', 'male', 43);
-INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Szarvas', 'Edina', 'szarvasedina@example.com', 'Orosháza, Petőfi u. 2', 'female', 18);
+INSERT INTO users (id, first_name, last_name, email, address, gender, age, internal) VALUES (1, 'Nagy', 'Elek', 'nagyelek@example.com', 'Szeged, Szilléri sgt. 32', 'male', 25, 0);
+INSERT INTO users (first_name, last_name, email, address, gender, age, internal) VALUES ('Kis', 'Jenő', 'kisjeno@example.com', 'Szeged, Kossuth u. 3B', 'male', 20, 0);
+INSERT INTO users (first_name, last_name, email, address, gender, age, internal) VALUES ('Lapos', 'Ödön', 'laposodon@example.com', 'Békéscsaba, Tata u. 12', 'male', 30, 0);
+INSERT INTO users (first_name, last_name, email, address, gender, age, internal) VALUES ('Csonka', 'Károly', 'csonkakaroly@example.com', 'Budapest, Deák tér 7', 'male', 43, 0);
+INSERT INTO users (first_name, last_name, email, address, gender, age, internal) VALUES ('Szarvas', 'Edina', 'szarvasedina@example.com', 'Orosháza, Petőfi u. 2', 'female', 18, 0);
+INSERT INTO users (first_name, last_name, email, address, gender, age, internal) VALUES ('Admin', 'Admin', 'admin@example.com', '', 'male', 40, 1);
 
 CREATE TABLE products (
 	id int NOT NULL AUTO_INCREMENT,
@@ -22,6 +27,8 @@ CREATE TABLE products (
     category varchar(255),
     subcategory varchar(255),
 	image varchar(255),
+  	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     PRIMARY KEY (id)
 );
 
@@ -37,6 +44,8 @@ CREATE TABLE availability (
 	color varchar(255),
 	amount int,
 	sale float,
+  	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
 	FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
@@ -56,9 +65,28 @@ CREATE TABLE reviews (
 	product_id int NOT NULL,
 	content varchar(255),
 	stars int,
+  	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 INSERT INTO reviews (user_id, product_id, content, stars) VALUES (1, 1, 'Comfortable and doesn\'t get dirty easily. I love it!', 4);
 INSERT INTO reviews (user_id, product_id, content, stars) VALUES (2, 1, 'It looked different in the picture', 3);
+
+CREATE TABLE website (
+	id int NOT NULL AUTO_INCREMENT,
+	currency varchar(255),
+  	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
+    PRIMARY KEY (id)
+);
+
+INSERT INTO website (currency) VALUES ('EUR');
+
+# Deleting everything
+DROP TABLE reviews;
+DROP TABLE availability;
+DROP TABLE products;
+DROP TABLE users;
+DROP TABLE website;

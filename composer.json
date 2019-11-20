@@ -1,0 +1,7 @@
+{
+    "name": "gergo_ility/bench-project",
+    "require": {},
+    "autoload": {
+        "psr-4": {"Acme\\": "src/"}
+    }
+}
