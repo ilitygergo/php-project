@@ -38,7 +38,7 @@ INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Lacost
 INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('NewBalance', 99, 'shoe', 'sneaker', '');
 INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Adidas', 85, 'shoe', 'sneaker', '');
 
-CREATE TABLE availability (
+CREATE TABLE availabilities (
 	product_id int NOT NULL,
 	size varchar(255),
 	color varchar(255),
@@ -49,16 +49,16 @@ CREATE TABLE availability (
 	FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
-INSERT INTO availability (product_id, size, color, amount, sale) VALUES (1, '42', 'black', 1, 0.75);
-INSERT INTO availability (product_id, size, color, amount, sale) VALUES (1, '43', 'black', 16, 0);
-INSERT INTO availability (product_id, size, color, amount, sale) VALUES (1, '44', 'black', 20, 0);
-INSERT INTO availability (product_id, size, color, amount, sale) VALUES (1, '45', 'black', 18, 0);
-INSERT INTO availability (product_id, size, color, amount, sale) VALUES (1, '46', 'black', 20, 0);
-INSERT INTO availability (product_id, size, color, amount, sale) VALUES (1, '42', 'white', 18, 0);
-INSERT INTO availability (product_id, size, color, amount, sale) VALUES (1, '43', 'white', 20, 0);
-INSERT INTO availability (product_id, size, color, amount, sale) VALUES (1, '44', 'white', 20, 0);
-INSERT INTO availability (product_id, size, color, amount, sale) VALUES (1, '45', 'white', 19, 0);
-INSERT INTO availability (product_id, size, color, amount, sale) VALUES (1, '46', 'white', 20, 0);
+INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '42', 'black', 1, 0.75);
+INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '43', 'black', 16, 0);
+INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '44', 'black', 20, 0);
+INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '45', 'black', 18, 0);
+INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '46', 'black', 20, 0);
+INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '42', 'white', 18, 0);
+INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '43', 'white', 20, 0);
+INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '44', 'white', 20, 0);
+INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '45', 'white', 19, 0);
+INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '46', 'white', 20, 0);
 
 CREATE TABLE reviews (
 	user_id int NOT NULL,
@@ -74,19 +74,41 @@ CREATE TABLE reviews (
 INSERT INTO reviews (user_id, product_id, content, stars) VALUES (1, 1, 'Comfortable and doesn\'t get dirty easily. I love it!', 4);
 INSERT INTO reviews (user_id, product_id, content, stars) VALUES (2, 1, 'It looked different in the picture', 3);
 
+CREATE TABLE baskets (
+     user_id int NOT NULL,
+     availability_id int NOT NULL,
+     status varchar(255),
+     FOREIGN KEY (availability_id) REFERENCES availabilities(product_id)
+);
+
+INSERT INTO baskets (user_id, availability_id, status) VALUES (1, 1, 'done');
+INSERT INTO baskets (user_id, availability_id, status) VALUES (1, 2, 'done');
+
+CREATE TABLE orders(
+    id int NOT NULL AUTO_INCREMENT,
+    user_id int,
+    status varchar(255),
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 CREATE TABLE website (
-	id int NOT NULL AUTO_INCREMENT,
-	currency varchar(255),
-  	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
-    PRIMARY KEY (id)
+     id int NOT NULL AUTO_INCREMENT,
+     currency varchar(255),
+     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+     updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
+     PRIMARY KEY (id)
 );
 
 INSERT INTO website (currency) VALUES ('EUR');
 
 # Deleting everything
 DROP TABLE reviews;
-DROP TABLE availability;
+DROP TABLE availabilities;
+DROP TABLE orders;
+DROP TABLE baskets;
 DROP TABLE products;
 DROP TABLE users;
 DROP TABLE website;
