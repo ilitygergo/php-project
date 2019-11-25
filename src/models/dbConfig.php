@@ -10,15 +10,15 @@ class Dbconfig {
     /**
      * @var string
      */
-    static public $user_name = 'root';
+    static public $user_name = 'docker';
 
     /**
      * @var string
      */
-    static public $pass_code = 'password';
+    static public $pass_code = 'docker';
 
     /**
      * @var string
      */
-    static public $db_name = 'test';
+    static public $db_name = 'docker';
 }

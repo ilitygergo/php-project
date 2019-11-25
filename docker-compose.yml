@@ -14,25 +14,22 @@ services:
   php:
     container_name: php
     image: php:7-fpm
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      MYSQL_ROOT_PASSWORD: docker
     volumes:
       - ./src:/src
-    depends_on:
-      - db
+    build:
+      context: ./
   db:
     container_name: mysql
     image: mysql:latest
-    restart: always
     environment:
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
-      MYSQL_DATABASE: 'db'
+      MYSQL_DATABASE: docker
+      MYSQL_ROOT_PASSWORD: docker
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
     ports:
-      - "3306:3306"
-    expose:
-      - '3306'
-    volumes:
-      - my-db:/var/lib/mysql
-
-volumes:
-  my-db:
+      - "3308:3306"
