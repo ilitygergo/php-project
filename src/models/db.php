@@ -1,14 +1,14 @@
 <?php
 namespace models;
 
-use mysqli;
+use \mysqli;
 
 class Db {
 
     /**
      * @var string
      */
-    public $db;
+    public $mysqli;
 
     /**
      * @var string
@@ -41,26 +41,24 @@ class Db {
     }
 
     /**
-     * @return mysqli
+     * @return mysqli/string
      */
     public function dbConnect() {
-        $this->db = new mysqli($this->server_name, $this->user_name, $this->pass_code, $this->db_name);
+        $this->mysqli = new mysqli($this->server_name, $this->user_name, $this->pass_code, $this->db_name, 3308);
 
-        if ($this->db->connect_error) {
-            die(
-                'Db connection failed: ' . $this->db->connect_error .
-                ' No.:' . $this->db->errno
-            );
+        if ($this->mysqli->connect_error) {
+            die('Connect Error (' . $this->mysqli->connect_errno . ') '
+                . $this->mysqli->connect_error);
         }
 
-        return $this->db;
+        return $this->mysqli;
     }
 
     /**
      *
      */
     public function dbDisconnect() {
-        $this->db = NULL;
+        $this->mysqli = NULL;
         $this->db_name = NULL;
         $this->server_name = NULL;
         $this->user_name = NULL;

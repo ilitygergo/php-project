@@ -5,7 +5,7 @@ class Dbconfig {
     /**
      * @var string
      */
-    static public $server_name = 'localhost';
+    static public $server_name = 'db';
 
     /**
      * @var string

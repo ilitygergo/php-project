@@ -1,0 +1,70 @@
+https://app.quickdatabasediagrams.com/#/
+
+Users
+-
+id int PK FK >- Baskets.user_id FK >- Reviews.user_id FK >- Website.internal
+first_name varchar(255)
+last_name varchar(255)
+email varchar(255)
+address varchar(255)
+gender varchar(255)
+age int
+created_at timestamp
+updated_at timestamp
+
+Products
+-
+id int PK FK >- Reviews.product_id FK >- Availabilities.product_id
+brand varchar(255)
+cost int
+category varchar(255)
+subcategory varchar(255)
+image varchar(255)
+created_at timestamp
+updated_at timestamp
+
+Availabilities as ol
+-
+id int PK FK >- Baskets.availability_id
+product_id
+size varchar(255) 
+color varchar(255)
+amount int
+sale float
+created_at timestamp
+updated_at timestamp
+
+Reviews
+-
+user_id int
+product_id int
+content varchar(255)
+stars int
+created_at timestamp
+updated_at timestamp
+
+Baskets
+-
+id int PK FK >- Orders.basket_id
+user_id int
+availability_id int
+amount int
+status varchar(255)
+created_at timestamp
+updated_at timestamp
+
+Orders
+-
+id int PK
+basket_id int
+status varchar(255)
+created_at timestamp
+updated_at timestamp
+
+Website
+-
+id PK int
+internal int
+currency varchar(255)
+created_at timestamp
+updated_at timestamp

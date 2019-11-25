@@ -7,18 +7,17 @@ CREATE TABLE users (
     address varchar(255),
     gender varchar(255),
     age int,
-    internal bit,
   	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
 	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     PRIMARY KEY (id)
 );
 
-INSERT INTO users (id, first_name, last_name, email, address, gender, age, internal) VALUES (1, 'Nagy', 'Elek', 'nagyelek@example.com', 'Szeged, Szilléri sgt. 32', 'male', 25, 0);
-INSERT INTO users (first_name, last_name, email, address, gender, age, internal) VALUES ('Kis', 'Jenő', 'kisjeno@example.com', 'Szeged, Kossuth u. 3B', 'male', 20, 0);
-INSERT INTO users (first_name, last_name, email, address, gender, age, internal) VALUES ('Lapos', 'Ödön', 'laposodon@example.com', 'Békéscsaba, Tata u. 12', 'male', 30, 0);
-INSERT INTO users (first_name, last_name, email, address, gender, age, internal) VALUES ('Csonka', 'Károly', 'csonkakaroly@example.com', 'Budapest, Deák tér 7', 'male', 43, 0);
-INSERT INTO users (first_name, last_name, email, address, gender, age, internal) VALUES ('Szarvas', 'Edina', 'szarvasedina@example.com', 'Orosháza, Petőfi u. 2', 'female', 18, 0);
-INSERT INTO users (first_name, last_name, email, address, gender, age, internal) VALUES ('Admin', 'Admin', 'admin@example.com', '', 'male', 40, 1);
+INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Admin', 'Admin', 'admin@example.com', '', 'male', 40);
+INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Nagy', 'Elek', 'nagyelek@example.com', 'Szeged, Szilléri sgt. 32', 'male', 25);
+INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Kis', 'Jenő', 'kisjeno@example.com', 'Szeged, Kossuth u. 3B', 'male', 20);
+INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Lapos', 'Ödön', 'laposodon@example.com', 'Békéscsaba, Tata u. 12', 'male', 30);
+INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Csonka', 'Károly', 'csonkakaroly@example.com', 'Budapest, Deák tér 7', 'male', 43);
+INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Szarvas', 'Edina', 'szarvasedina@example.com', 'Orosháza, Petőfi u. 2', 'female', 18);
 
 CREATE TABLE products (
 	id int NOT NULL AUTO_INCREMENT,
@@ -32,13 +31,14 @@ CREATE TABLE products (
     PRIMARY KEY (id)
 );
 
-INSERT INTO products (id, brand, cost, category, subcategory, image) VALUES (1, 'Adidas', 76, 'shoe', 'sneaker', '');
+INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Adidas', 76, 'shoe', 'sneaker', '');
 INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Nike', 89, 'shoe', 'sneaker', '');
 INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Lacoste', 129, 'shoe', 'sneaker', '');
 INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('NewBalance', 99, 'shoe', 'sneaker', '');
 INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Adidas', 85, 'shoe', 'sneaker', '');
 
 CREATE TABLE availabilities (
+    id int NOT NULL AUTO_INCREMENT,
 	product_id int NOT NULL,
 	size varchar(255),
 	color varchar(255),
@@ -46,7 +46,8 @@ CREATE TABLE availabilities (
 	sale float,
   	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
 	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
-	FOREIGN KEY (product_id) REFERENCES products(id)
+	FOREIGN KEY (product_id) REFERENCES products(id),
+	PRIMARY KEY (id)
 );
 
 INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '42', 'black', 1, 0.75);
@@ -75,40 +76,50 @@ INSERT INTO reviews (user_id, product_id, content, stars) VALUES (1, 1, 'Comfort
 INSERT INTO reviews (user_id, product_id, content, stars) VALUES (2, 1, 'It looked different in the picture', 3);
 
 CREATE TABLE baskets (
+     id int NOT NULL AUTO_INCREMENT,
      user_id int NOT NULL,
      availability_id int NOT NULL,
+     amount int,
      status varchar(255),
-     FOREIGN KEY (availability_id) REFERENCES availabilities(product_id)
+     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+     updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
+     FOREIGN KEY (availability_id) REFERENCES availabilities(id),
+     PRIMARY KEY (id)
 );
 
-INSERT INTO baskets (user_id, availability_id, status) VALUES (1, 1, 'done');
-INSERT INTO baskets (user_id, availability_id, status) VALUES (1, 2, 'done');
+INSERT INTO baskets (user_id, availability_id, amount, status) VALUES (1, 1, 1, 'done');
+INSERT INTO baskets (user_id, availability_id, amount, status) VALUES (1, 2, 1, 'done');
 
 CREATE TABLE orders(
     id int NOT NULL AUTO_INCREMENT,
-    user_id int,
+    basket_id int,
     status varchar(255),
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (basket_id) REFERENCES baskets(id)
 );
+
+INSERT INTO orders (basket_id, status) VALUES (1, 'fulfilled');
+INSERT INTO orders (basket_id, status) VALUES (2, 'fulfilled');
 
 CREATE TABLE website (
      id int NOT NULL AUTO_INCREMENT,
+     internal_id int,
      currency varchar(255),
      created_at TIMESTAMP NOT NULL DEFAULT NOW(),
      updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
-     PRIMARY KEY (id)
+     PRIMARY KEY (id),
+     FOREIGN KEY (internal_id) REFERENCES users(id)
 );
 
-INSERT INTO website (currency) VALUES ('EUR');
+INSERT INTO website (internal_id, currency) VALUES (1, 'EUR');
 
 # Deleting everything
 DROP TABLE reviews;
-DROP TABLE availabilities;
 DROP TABLE orders;
 DROP TABLE baskets;
-DROP TABLE products;
-DROP TABLE users;
+DROP TABLE availabilities;
 DROP TABLE website;
+DROP TABLE users;
+DROP TABLE products;
