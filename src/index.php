@@ -1,6 +1,4 @@
 <?php
-include_once 'autoload.php';
+require "framework/core/Framework.php";
 
-$db = new models\Db;
-
-echo $db->dbConnect();
+Framework::run();

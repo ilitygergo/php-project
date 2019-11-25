@@ -14,15 +14,13 @@ services:
   php:
     container_name: php
     image: php:7-fpm
-    environment:
-      MYSQL_DATABASE: db
-      MYSQL_USER: docker
-      MYSQL_PASSWORD: docker
-      MYSQL_ROOT_PASSWORD: docker
     volumes:
       - ./src:/src
     build:
       context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - db
   db:
     container_name: mysql
     image: mysql:latest
