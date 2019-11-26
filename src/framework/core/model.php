@@ -4,17 +4,17 @@ class Model {
     /**
      * @var Mysql
      */
-    protected $db; //database connection object
+    protected $db;
 
     /**
      * @var string
      */
-    protected $table; //table name
+    protected $table;
 
     /**
      * @var array
      */
-    protected $fields = array();  //fields list
+    protected $fields = array();
 
     /**
      * Model constructor.
@@ -30,7 +30,7 @@ class Model {
 
         $this->db = new Mysql($dbconfig);
         $this->table = $GLOBALS['config']['prefix'] . $table;
-//        $this->getFields();
+        $this->getFields();
     }
 
     /**
@@ -61,8 +61,8 @@ class Model {
      * @return mixed If succeed return inserted record id, else return false
      */
     public function insert($list){
-        $field_list = '';  //field list string
-        $value_list = '';  //value list string
+        $field_list = '';
+        $value_list = '';
 
         foreach ($list as $k => $v) {
             if (in_array($k, $this->fields)) {
@@ -90,8 +90,8 @@ class Model {
      * @return mixed If succeed return the count of affected rows, else return false
      */
     public function update($list){
-        $uplist = ''; //update fields
-        $where = 0;   //update condition, default is 0
+        $uplist = '';
+        $where = 0;
 
         foreach ($list as $k => $v) {
             if (in_array($k, $this->fields)) {

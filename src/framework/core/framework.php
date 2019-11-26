@@ -15,6 +15,8 @@ class Framework {
      * Initializing
      */
     private static function init() {
+        $url = explode('/', $_SERVER['REQUEST_URI']);
+
         // Define path constants
 
         define("DS", DIRECTORY_SEPARATOR);
@@ -49,11 +51,11 @@ class Framework {
 
         // Define platform, controller, action
 
-        define("PLATFORM", isset($_REQUEST['p']) ? $_REQUEST['p'] : 'home');
+        define("PLATFORM", $_REQUEST['p'] ?? 'home');
 
-        define("CONTROLLER", isset($_REQUEST['c']) ? $_REQUEST['c'] : 'index');
+        define("CONTROLLER", $url[1] != '' ? $url[1] : 'index');
 
-        define("ACTION", isset($_REQUEST['a']) ? $_REQUEST['a'] : 'index');
+        define("ACTION", $url[2] ?? 'index');
 
 
         define("CURR_CONTROLLER_PATH", CONTROLLER_PATH . PLATFORM . DS);

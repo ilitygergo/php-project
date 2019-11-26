@@ -158,17 +158,17 @@ class UserModel extends \Model {
         return $this->updated_at;
     }
 
-//    /**
-//     * Users constructor.
-//     * @param $args
-//     */
-//    public function __construct($args) {
-//        $this->setFirstName($args['first_name']);
-//        $this->setLastName($args['last_name']);
-//        $this->setEmail($args['email']);
-//        $this->setAddress($args['address']);
-//        $this->setGender($args['gender']);
-//        $this->setAge($args['age']);
-//        $this->setInternal($args['internal']);
-//    }
+    /**
+     * Users constructor.
+     * @param $args
+     */
+    public function __construct($args) {
+        $this->setFirstName($args['first_name']);
+        $this->setLastName($args['last_name']);
+        $this->setEmail($args['email']);
+        $this->setAddress($args['address']);
+        $this->setGender($args['gender']);
+        $this->setAge($args['age']);
+        $this->setInternal($args['internal']);
+    }
 }

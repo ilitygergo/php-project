@@ -17,18 +17,18 @@ class Mysql{
      * @param $config string configuration array
      */
     public function __construct($config = array()){
-        $host = $config['host'] ?? 'db';
+        $host = $config['host'] ?? 'mysql';
         $user = $config['user'] ?? 'docker';
-        $password = $config['docker'] ?? '';
-        $dbname = $config['docker'] ?? '';
-        $port = $config['port'] ?? '3306';
-        $charset = $config['charset'] ?? '3306';
+        $password = $config['password'] ?? 'docker';
+        $dbname = $config['dbname'] ?? 'docker';
+        $port = $config['port'] ?? '3308';
+        $charset = $config['charset'] ?? '3308';
 
-//        $this->conn = mysqli_connect("$host:$port", $user, $password) or die('Database connection error');
-//
-//        mysqli_select_db( $dbname) or die('Database selection error');
-//
-//        $this->setChar($charset);
+        $this->conn = mysqli_connect($host, $user, $password, $dbname, $port) or die('Database connection error');
+
+        mysqli_select_db( $dbname) or die('Database selection error');
+
+        $this->setChar($charset);
     }
 
     /**
