@@ -1,7 +1,8 @@
 {
     "name": "gergo_ility/bench-project",
     "require": {
-      "ext-mysqli": "*"
+        "ext-mysqli": "*",
+        "twbs/bootstrap": "4.3.1"
     },
     "autoload": {
         "psr-4": {"Acme\\": "src/"}

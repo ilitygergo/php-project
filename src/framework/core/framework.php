@@ -49,18 +49,15 @@ class Framework {
 
         define("UPLOAD_PATH", PUBLIC_PATH . "uploads" . DS);
 
-        // Define platform, controller, action
-
-        define("PLATFORM", $_REQUEST['p'] ?? 'home');
+        // Define, controller, action
 
         define("CONTROLLER", $url[1] != '' ? $url[1] : 'index');
 
         define("ACTION", $url[2] ?? 'index');
 
+        define("CURR_CONTROLLER_PATH", CONTROLLER_PATH . DS);
 
-        define("CURR_CONTROLLER_PATH", CONTROLLER_PATH . PLATFORM . DS);
-
-        define("CURR_VIEW_PATH", VIEW_PATH . PLATFORM . DS);
+        define("CURR_VIEW_PATH", VIEW_PATH . DS);
 
         // Load core classes
 
