@@ -17,27 +17,24 @@ class Mysql{
      * @param $config string configuration array
      */
     public function __construct($config = array()){
-        $host = $config['host'] ?? 'mysql';
+        $host = $config['host'] ?? 'db';
         $user = $config['user'] ?? 'docker';
         $password = $config['password'] ?? 'docker';
         $dbname = $config['dbname'] ?? 'docker';
-        $port = $config['port'] ?? '3308';
-        $charset = $config['charset'] ?? '3308';
+        $port = $config['port'] ?? '3306';
 
         $this->conn = mysqli_connect($host, $user, $password, $dbname, $port) or die('Database connection error');
 
-        mysqli_select_db( $dbname) or die('Database selection error');
-
-        $this->setChar($charset);
+        $this->setChar();
     }
 
     /**
      * @access private
      * @param $charset string charset
      */
-    private function setChar($charest){
-        $sql = 'set names '.$charest;
-        $this->query($sql);
+    private function setChar(){
+        $this->query('SET character_set_server = \'latin2\';');
+        $this->query('SET collation_server = \'latin2_hungarian_ci\';');
     }
 
     /**
@@ -47,9 +44,7 @@ class Mysql{
      */
     public function query($sql){
         $this->sql = $sql;
-        $str = $sql . "  [". date("Y-m-d H:i:s") ."]" . PHP_EOL;
-        file_put_contents("log.txt", $str,FILE_APPEND);
-        $result = mysqli_query($this->sql,$this->conn);
+        $result = mysqli_query($this->conn, $this->sql);
 
         if (! $result) {
             die($this->errno().':'.$this->error().'<br />Error SQL statement is '.$this->sql.'<br />');

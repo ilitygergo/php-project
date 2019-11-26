@@ -15,7 +15,7 @@ class Framework {
      * Initializing
      */
     private static function init() {
-        $url = explode('/', $_SERVER['REQUEST_URI']);
+        $url = explode('/', strtok($_SERVER["REQUEST_URI"],'?'));
 
         // Define path constants
 
@@ -57,7 +57,7 @@ class Framework {
 
         define("CURR_CONTROLLER_PATH", CONTROLLER_PATH . DS);
 
-        define("CURR_VIEW_PATH", VIEW_PATH . DS);
+        define("CURR_VIEW_PATH", VIEW_PATH);
 
         // Load core classes
 
