@@ -42,6 +42,11 @@ class UserModel extends \Model {
     private $password;
 
     /**
+     * @var string
+     */
+    private $hashed_password;
+
+    /**
      * @var \DateTime
      */
     private $created_at;
@@ -143,6 +148,13 @@ class UserModel extends \Model {
     }
 
     /**
+     *
+     */
+    public function setHashedPassword() {
+        $this->hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
+    }
+
+    /**
      * @return \DateTime
      */
     public function getCreatedAt() {
@@ -167,7 +179,9 @@ class UserModel extends \Model {
             'email',
             'address',
             'gender',
-            'age'
+            'age',
+            'password',
+            'hashed_password'
         ];
     }
 
@@ -203,12 +217,14 @@ class UserModel extends \Model {
             return;
         }
 
+        $this->setHashedPassword();
+
         parent::insert(
             [
                 'first_name' => $this->first_name,
                 'last_name' => $this->last_name,
                 'email' => $this->email,
-                'password' => $this->password
+                'hashed_password' => $this->hashed_password
             ]
         );
     }

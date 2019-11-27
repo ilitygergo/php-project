@@ -40,8 +40,8 @@ class Mysql{
      * @param $charset string charset
      */
     private function setChar(){
-        $this->query('SET character_set_server = \'latin2\';');
-        $this->query('SET collation_server = \'latin2_hungarian_ci\';');
+        $this->conn->set_charset('utf8');
+        $this->query('SET collation_connection = \'latin2_hungarian_ci\';');
     }
 
     /**
