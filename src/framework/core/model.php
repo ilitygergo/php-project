@@ -2,14 +2,14 @@
 
 class Model {
     /**
-     * @var Mysql
+     * @var mysqli
      */
-    protected $db;
+    static protected $db;
 
     /**
      * @var string
      */
-    protected $table;
+    static protected $table;
 
     /**
      * @var array
@@ -17,10 +17,21 @@ class Model {
     protected $fields = array();
 
     /**
-     * Model constructor.
-     * @param $table
+     * @var array
      */
-    public function __construct($table){
+    static public $errors = [];
+
+    /**
+     * @param $db
+     */
+    static public function setDb($db) {
+        self::$db = $db;
+    }
+
+    /**
+     * Model constructor.
+     */
+    public function __construct(){
         $dbconfig['host'] = $GLOBALS['config']['host'];
         $dbconfig['user'] = $GLOBALS['config']['user'];
         $dbconfig['password'] = $GLOBALS['config']['password'];
@@ -28,59 +39,21 @@ class Model {
         $dbconfig['port'] = $GLOBALS['config']['port'];
         $dbconfig['charset'] = $GLOBALS['config']['charset'];
 
-        $this->db = new Mysql($dbconfig);
-        $this->table = $GLOBALS['config']['prefix'] . $table;
-        $this->getFields();
+        self::$db = new Mysql($dbconfig);
     }
 
     /**
-     * Get the list of table fields
-     *
+     * @param $data
+     * @return bool|resource
      */
-    private function getFields(){
-        $sql = "DESC ". $this->table;
-        $result = $this->db->getAll($sql);
+    function insert($data) {
+        $fields = array_keys($data);
 
-        foreach ($result as $v) {
-            $this->fields[] = $v['Field'];
+        $sql = 'INSERT INTO ' . static::$table .
+            ' (' . implode(', ', $fields) . ') ' .
+            ' VALUES(\'' . implode('\',\'', $data) . '\')';
 
-            if ($v['Key'] == 'PRI') {
-                $pk = $v['Field'];
-            }
-        }
-
-        if (isset($pk)) {
-            $this->fields['pk'] = $pk;
-        }
-    }
-
-    /**
-     * Insert records
-     * @access public
-     * @param $list array associative array
-     * @return mixed If succeed return inserted record id, else return false
-     */
-    public function insert($list){
-        $field_list = '';
-        $value_list = '';
-
-        foreach ($list as $k => $v) {
-            if (in_array($k, $this->fields)) {
-                $field_list .= "`".$k."`" . ',';
-                $value_list .= "'".$v."'" . ',';
-            }
-        }
-
-        $field_list = rtrim($field_list,',');
-        $value_list = rtrim($value_list,',');
-
-        $sql = "INSERT INTO `{$this->table}` ({$field_list}) VALUES ($value_list)";
-
-        if ($this->db->query($sql)) {
-            return $this->db->getInsertId();
-        } else {
-            return false;
-        }
+        return mysqli_query(self::$db, $sql);
     }
 
     /**
@@ -104,10 +77,10 @@ class Model {
         }
 
         $uplist = rtrim($uplist,',');
-        $sql = "UPDATE `{$this->table}` SET {$uplist} WHERE {$where}";
+        $sql = "UPDATE " . static::$table . " SET {$uplist} WHERE {$where}";
 
-        if ($this->db->query($sql)) {
-            if ($rows = mysqli_affected_rows()) {
+        if (self::$db->query($sql)) {
+            if ($rows = mysqli_affected_rows(self::$db)) {
                 return $rows;
             } else {
                 return false;
@@ -132,10 +105,10 @@ class Model {
             $where = "`{$this->fields['pk']}`=$pk";
         }
 
-        $sql = "DELETE FROM `{$this->table}` WHERE $where";
+        $sql = "DELETE FROM " . static::$table . " WHERE $where";
 
-        if ($this->db->query($sql)) {
-            if ($rows = mysqli_affected_rows()) {
+        if (self::$db->query($sql)) {
+            if ($rows = mysqli_affected_rows(self::$db)) {
                 return $rows;
             } else {
                 return false;
@@ -151,9 +124,9 @@ class Model {
      * @return array an array of single record
      */
     public function selectByPrimaryKey($pk){
-        $sql = "SELECT * FROM `{$this->table}` WHERE `{$this->fields['pk']}`=$pk";
+        $sql = "SELECT * FROM " . static::$table . " WHERE " . $this->fields['pk'] . "=$pk";
 
-        return $this->db->getRow($sql);
+        return self::$db->getRow($sql);
     }
 
     /**
@@ -161,9 +134,9 @@ class Model {
      *
      */
     public function total(){
-        $sql = "SELECT count(*) FROM {$this->table}";
+        $sql = "SELECT count(*) FROM " . static::$table;
 
-        return $this->db->getOne($sql);
+        return self::$db->getOne($sql);
     }
 
     /**
@@ -171,15 +144,15 @@ class Model {
      * @param $offset int offset value
      * @param $limit int number of records of each fetch
      * @param $where string where condition,default is empty
-     * @return SQL
+     * @return string
      */
     public function pageRows($offset, $limit,$where = ''){
         if (empty($where)){
-            $sql = "SELECT * FROM {$this->table} LIMIT $offset, $limit";
+            $sql = "SELECT * FROM " . static::$table . " LIMIT $offset, $limit";
         } else {
-            $sql = "SELECT * FROM {$this->table} WHERE $where LIMIT $offset, $limit";
+            $sql = "SELECT * FROM " . static::$table . " WHERE $where LIMIT $offset, $limit";
         }
 
-        return $this->db->getAll($sql);
+        return self::$db->getAll($sql);
     }
 }

@@ -7,10 +7,13 @@ CREATE TABLE users (
     address varchar(255),
     gender varchar(255),
     age int,
+    password varchar(255),
   	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
 	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     PRIMARY KEY (id)
-);
+)
+CHARACTER SET 'latin2' 
+COLLATE 'latin2_hungarian_ci';
 
 INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Admin', 'Admin', 'admin@example.com', '', 'male', 40);
 INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Nagy', 'Elek', 'nagyelek@example.com', 'Szeged, Szilléri sgt. 32', 'male', 25);
@@ -18,6 +21,7 @@ INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('
 INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Lapos', 'Ödön', 'laposodon@example.com', 'Békéscsaba, Tata u. 12', 'male', 30);
 INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Csonka', 'Károly', 'csonkakaroly@example.com', 'Budapest, Deák tér 7', 'male', 43);
 INSERT INTO users (first_name, last_name, email, address, gender, age) VALUES ('Szarvas', 'Edina', 'szarvasedina@example.com', 'Orosháza, Petőfi u. 2', 'female', 18);
+INSERT INTO users (first_name, last_name, email, password) VALUES('asd','asd','asd@asd.com','Asdasdasd1');
 
 CREATE TABLE products (
 	id int NOT NULL AUTO_INCREMENT,
@@ -29,7 +33,9 @@ CREATE TABLE products (
   	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
 	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     PRIMARY KEY (id)
-);
+)
+CHARACTER SET 'latin2' 
+COLLATE 'latin2_hungarian_ci';
 
 INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Adidas', 76, 'shoe', 'sneaker', '');
 INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Nike', 89, 'shoe', 'sneaker', '');
@@ -48,7 +54,9 @@ CREATE TABLE availabilities (
 	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
 	FOREIGN KEY (product_id) REFERENCES products(id),
 	PRIMARY KEY (id)
-);
+)
+CHARACTER SET 'latin2' 
+COLLATE 'latin2_hungarian_ci';
 
 INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '42', 'black', 1, 0.75);
 INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '43', 'black', 16, 0);
@@ -70,7 +78,9 @@ CREATE TABLE reviews (
 	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (product_id) REFERENCES products(id)
-);
+)
+CHARACTER SET 'latin2' 
+COLLATE 'latin2_hungarian_ci';
 
 INSERT INTO reviews (user_id, product_id, content, stars) VALUES (1, 1, 'Comfortable and doesn\'t get dirty easily. I love it!', 4);
 INSERT INTO reviews (user_id, product_id, content, stars) VALUES (2, 1, 'It looked different in the picture', 3);
@@ -85,7 +95,9 @@ CREATE TABLE baskets (
      updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
      FOREIGN KEY (availability_id) REFERENCES availabilities(id),
      PRIMARY KEY (id)
-);
+)
+CHARACTER SET 'latin2' 
+COLLATE 'latin2_hungarian_ci';
 
 INSERT INTO baskets (user_id, availability_id, amount, status) VALUES (1, 1, 1, 'done');
 INSERT INTO baskets (user_id, availability_id, amount, status) VALUES (1, 2, 1, 'done');
@@ -98,7 +110,9 @@ CREATE TABLE orders(
     updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     PRIMARY KEY (id),
     FOREIGN KEY (basket_id) REFERENCES baskets(id)
-);
+)
+CHARACTER SET 'latin2' 
+COLLATE 'latin2_hungarian_ci';
 
 INSERT INTO orders (basket_id, status) VALUES (1, 'fulfilled');
 INSERT INTO orders (basket_id, status) VALUES (2, 'fulfilled');
@@ -111,7 +125,9 @@ CREATE TABLE website (
      updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
      PRIMARY KEY (id),
      FOREIGN KEY (internal_id) REFERENCES users(id)
-);
+)
+CHARACTER SET 'latin2' 
+COLLATE 'latin2_hungarian_ci';
 
 INSERT INTO website (internal_id, currency) VALUES (1, 'EUR');
 

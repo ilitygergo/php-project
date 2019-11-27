@@ -7,7 +7,11 @@ class Framework {
      */
     public static function run() {
         self::init();
+
         self::autoload();
+
+        Model::setDb((new Mysql())->getConnection());
+
         self::dispatch();
     }
 

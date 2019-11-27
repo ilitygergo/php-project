@@ -13,6 +13,13 @@ class Mysql{
     protected $sql;
 
     /**
+     * @return bool|false|mysqli|resource
+     */
+    public function getConnection() {
+        return $this->conn;
+    }
+
+    /**
      * Constructor, to connect to database, select database and set charset
      * @param $config string configuration array
      */
