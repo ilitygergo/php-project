@@ -4,7 +4,9 @@ $page_title = 'Register Page';
 include_once 'common/header.phtml';
 
 if (isPostRequest() && isset($_POST['user'])) {
-    $user = new UserModel($_POST['user']);
+    $user = UserModel::getInstance();
+    $user->init($_POST['user']);
+    $user->setPassword($_POST['user']['password']);
     $user->create();
 }
 
@@ -40,6 +42,7 @@ if (!empty($errors = \Model::$errors)) {
             <div class="form-group">
                 <label for="passwordInput">Password</label>
                 <input type="password" name="user[password]" class="form-control" placeholder="Password" required>
+                <small class="form-text text-muted">Password must contain: 8 characters (1 lowercase, 1 uppercase), 1 number</small>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>

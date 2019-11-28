@@ -2,9 +2,37 @@
 
 class UserModel extends \Model {
     /**
+     * @var UserModel
+     */
+    private static $instance = null;
+
+    /**
      * @var string
      */
     static protected $table = 'users';
+
+    /**
+     * The first element is the primary key
+     * The order is important!
+     * @var array
+     */
+    static protected $fields = [
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'address',
+        'gender',
+        'age',
+        'hashed_password',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * @var int
+     */
+    private $id;
 
     /**
      * @var string
@@ -55,6 +83,39 @@ class UserModel extends \Model {
      * @var \DateTime
      */
     private $updated_at;
+
+    /**
+     * Users constructor.
+     * @param $args
+     */
+    public function init($args) {
+        $this->id = $args['id'] ?? '';
+        $this->setFirstName($args['first_name'] ?? '');
+        $this->setLastName($args['last_name'] ?? '');
+        $this->setEmail($args['email'] ?? '');
+        $this->setAddress($args['address'] ?? '');
+        $this->setGender($args['gender'] ?? '');
+        $this->setAge($args['age'] ?? 0);
+        $this->hashed_password = $args['hashed_password'] ?? '';
+    }
+
+    /**
+     * @return UserModel
+     */
+    public static function getInstance() {
+        if (self::$instance == null)  {
+            self::$instance = new UserModel();
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
+    }
 
     /**
      * @return string
@@ -155,48 +216,17 @@ class UserModel extends \Model {
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt() {
         return $this->created_at;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdatedAt() {
         return $this->updated_at;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getColumns() {
-        return [
-            'id',
-            'first_name',
-            'last_name',
-            'email',
-            'address',
-            'gender',
-            'age',
-            'password',
-            'hashed_password'
-        ];
-    }
-
-    /**
-     * Users constructor.
-     * @param $args
-     */
-    public function __construct($args) {
-        $this->setFirstName($args['first_name'] ?? '');
-        $this->setLastName($args['last_name'] ?? '');
-        $this->setEmail($args['email'] ?? '');
-        $this->setAddress($args['address'] ?? '');
-        $this->setGender($args['gender'] ?? '');
-        $this->setAge($args['age'] ?? 0);
-        $this->setPassword($args['password'] ?? '');
     }
 
     /**
@@ -208,7 +238,7 @@ class UserModel extends \Model {
 
     /**
      * Creating a user to the database
-     * @return void
+     * @return void|boolean
      */
     public function create() {
         $this->validate();
@@ -219,14 +249,55 @@ class UserModel extends \Model {
 
         $this->setHashedPassword();
 
-        parent::insert(
+        $result = parent::insert(
             [
-                'first_name' => $this->first_name,
-                'last_name' => $this->last_name,
-                'email' => $this->email,
-                'hashed_password' => $this->hashed_password
+                'first_name' => parent::$db->escape_string($this->first_name),
+                'last_name' => parent::$db->escape_string($this->last_name),
+                'email' => parent::$db->escape_string($this->email),
+                'hashed_password' => parent::$db->escape_string($this->hashed_password)
             ]
         );
+
+//        if (is_integer($result)) {
+//            $this->id = $result;
+//
+//            return $this->login();
+//        }
+    }
+
+    /**
+     * Logs the user in
+     * @return bool|string
+     */
+    public function login() {
+        if (!isset($this->email)) {
+            return 'Email or password is invalid!';
+        }
+
+        if (!isset($this->password)) {
+            return 'Email or password is invalid!';
+        }
+
+        if (!($mysql_result = $this->findByEmail($this->email))) {
+            return 'Email or password is invalid!';
+        }
+
+        $user = [];
+
+        foreach ($mysql_result as $key => $value) {
+            $user[self::$fields[$key]] = $value;
+        }
+
+        $this->init($user);
+
+        if (!password_verify($this->password, $this->hashed_password)) {
+            return 'Email or password is invalid!';
+        }
+
+        $session = Session::getInstance();
+        $session->login($this);
+
+        return $this;
     }
 
     /**
@@ -239,7 +310,7 @@ class UserModel extends \Model {
             parent::$errors[] = 'First name can\'t be empty';
         }
 
-        if (!preg_match("/^[áéúőóüöA-Za-z0-9_-]+$/", $this->first_name)) {
+        if (!preg_match("/^[áéúőóüöA-Za-z-]+$/", $this->first_name)) {
             parent::$errors[] = 'First name: only letters allowed';
         }
 
@@ -247,7 +318,7 @@ class UserModel extends \Model {
             parent::$errors[] = 'Last name can\'t be empty';
         }
 
-        if (!preg_match("/^[áéúőóüöA-Za-z0-9_-]+$/", $this->last_name)) {
+        if (!preg_match("/^[áéúőóüöA-Za-z-]+$/", $this->last_name)) {
             parent::$errors[] = 'Last name: only letters allowed';
         }
 
@@ -259,53 +330,30 @@ class UserModel extends \Model {
             parent::$errors[] = "Invalid email format";
         }
 
+        if (parent::isUnique('email', $this->email)) {
+            parent::$errors[] = "Already registered email!";
+        }
+
         if (empty($this->password)) {
             parent::$errors[] = 'Password can\'t be empty';
         }
 
-        if (strlen($this->password) <= 8) {
+        if (strlen($this->password) < 8) {
             parent::$errors[] = "Your Password Must Contain At Least 8 Characters!";
         }
-        elseif(!preg_match("#[0-9]+#", $this->password)) {
+
+        if(!preg_match("#[0-9]+#", $this->password)) {
             parent::$errors[] = "Your Password Must Contain At Least 1 Number!";
         }
-        elseif(!preg_match("#[A-Z]+#", $this->password)) {
+
+        if(!preg_match("#[A-Z]+#", $this->password)) {
             parent::$errors[] = "Your Password Must Contain At Least 1 Capital Letter!";
         }
-        elseif(!preg_match("#[a-z]+#", $this->password)) {
+
+        if(!preg_match("#[a-z]+#", $this->password)) {
             parent::$errors[] = "Your Password Must Contain At Least 1 Lowercase Letter!";
         }
 
         return parent::$errors;
-    }
-
-    /**
-     * Returns the database columns except the id
-     * @return array
-     */
-    public function attributes() {
-        $attributes = [];
-
-        foreach (self::getColumns() as $column) {
-            if ($column == 'id') continue;
-
-            $attributes[$column] = $this->$column;
-        }
-
-        return $attributes;
-    }
-
-    /**
-     * Sanitize the attribute values
-     * @return array
-     */
-    public function sanitizeAttributes() {
-        $sanitized = [];
-
-        foreach ($this->attributes() as $key => $value) {
-            $sanitized[$key] = mysqli_escape_string(parent::$db, $value);
-        }
-
-        return $sanitized;
     }
 }

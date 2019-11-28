@@ -73,13 +73,13 @@ class Framework {
 
         require CORE_PATH . "model.php";
 
+        require CORE_PATH . "session.php";
+
         // Load configuration file
 
         $GLOBALS['config'] = include CONFIG_PATH . "config.php";
 
-        // Start session
-
-        session_start();
+        $session = new Session();
     }
 
     /**

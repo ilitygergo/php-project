@@ -12,9 +12,10 @@ class Model {
     static protected $table;
 
     /**
+     * The first element is the primary key
      * @var array
      */
-    protected $fields = array();
+    static protected $fields = [];
 
     /**
      * @var array
@@ -29,17 +30,10 @@ class Model {
     }
 
     /**
-     * Model constructor.
+     * @return string
      */
-    public function __construct(){
-        $dbconfig['host'] = $GLOBALS['config']['host'];
-        $dbconfig['user'] = $GLOBALS['config']['user'];
-        $dbconfig['password'] = $GLOBALS['config']['password'];
-        $dbconfig['dbname'] = $GLOBALS['config']['dbname'];
-        $dbconfig['port'] = $GLOBALS['config']['port'];
-        $dbconfig['charset'] = $GLOBALS['config']['charset'];
-
-        self::$db = new Mysql($dbconfig);
+    public function error() {
+        return self::$db->errno . ': ' . self::$db->error;
     }
 
     /**
@@ -53,7 +47,11 @@ class Model {
             ' (' . implode(', ', $fields) . ') ' .
             ' VALUES(\'' . implode('\',\'', $data) . '\')';
 
-        return mysqli_query(self::$db, $sql);
+        if (self::$db->query($sql)) {
+            return self::$db->insert_id;
+        } else {
+            return $this->error();
+        }
     }
 
     /**
@@ -67,8 +65,8 @@ class Model {
         $where = 0;
 
         foreach ($list as $k => $v) {
-            if (in_array($k, $this->fields)) {
-                if ($k == $this->fields['pk']) {
+            if (in_array($k, static::$fields)) {
+                if ($k == static::$fields['pk']) {
                     $where = "`$k`=$v";
                 } else {
                     $uplist .= "`$k`='$v'".",";
@@ -80,7 +78,7 @@ class Model {
         $sql = "UPDATE " . static::$table . " SET {$uplist} WHERE {$where}";
 
         if (self::$db->query($sql)) {
-            if ($rows = mysqli_affected_rows(self::$db)) {
+            if ($rows = self::$db->affected_rows) {
                 return $rows;
             } else {
                 return false;
@@ -96,19 +94,19 @@ class Model {
      * @param $pk mixed could be an int or an array
      * @return mixed If succeed, return the count of deleted records, if fail, return false
      */
-    public function delete($pk){
+    public function delete($key){
         $where = 0;
 
-        if (is_array($pk)) {
-            $where = "`{$this->fields['pk']}` in (".implode(',', $pk).")";
+        if (is_array($key)) {
+            $where = "'{" . static::$fields['pk'] . "}' in (".implode(',', $key).")";
         } else {
-            $where = "`{$this->fields['pk']}`=$pk";
+            $where = "'{" . static::$fields['pk'] . "}'=$key";
         }
 
         $sql = "DELETE FROM " . static::$table . " WHERE $where";
 
         if (self::$db->query($sql)) {
-            if ($rows = mysqli_affected_rows(self::$db)) {
+            if ($rows = self::$db->affected_rows) {
                 return $rows;
             } else {
                 return false;
@@ -119,24 +117,13 @@ class Model {
     }
 
     /**
-     * Get info based on PK
-     * @param $pk int Primary Key
-     * @return array an array of single record
-     */
-    public function selectByPrimaryKey($pk){
-        $sql = "SELECT * FROM " . static::$table . " WHERE " . $this->fields['pk'] . "=$pk";
-
-        return self::$db->getRow($sql);
-    }
-
-    /**
-     * Get the count of all records
+     * Find the count of all records
      *
      */
     public function total(){
         $sql = "SELECT count(*) FROM " . static::$table;
 
-        return self::$db->getOne($sql);
+        return $this->findFisrt($sql);
     }
 
     /**
@@ -144,7 +131,7 @@ class Model {
      * @param $offset int offset value
      * @param $limit int number of records of each fetch
      * @param $where string where condition,default is empty
-     * @return string
+     * @return array
      */
     public function pageRows($offset, $limit,$where = ''){
         if (empty($where)){
@@ -153,6 +140,72 @@ class Model {
             $sql = "SELECT * FROM " . static::$table . " WHERE $where LIMIT $offset, $limit";
         }
 
-        return self::$db->getAll($sql);
+        return $this->findAll($sql);
+    }
+
+    /**
+     * Checks if the field has a unique value
+     * @param $field
+     * @param $value
+     * @return bool
+     */
+    public function isUnique($field, $value) {
+        $sql = "SELECT * FROM " . static::$table . " WHERE " . $field . "='$value'";
+
+        return $this->findFirst($sql);
+    }
+
+    /**
+     * Get info based on id
+     * @param $email string
+     * @return bool|mysqli_result
+     */
+    public function findByEmail($email){
+        $sql = "SELECT * FROM " . static::$table . " WHERE email='$email';";
+
+        return $this->findFirst($sql);
+    }
+
+    /**
+     * Get info based on id
+     * @param $id int Primary Key
+     * @return bool|mysqli_result
+     */
+    public function findById($id){
+        $sql = "SELECT * FROM " . static::$table . " WHERE " . static::$fields[0] . "=$id";
+
+        return $this->findFirst($sql);
+    }
+
+    /**
+     * Get the first record
+     * @param $sql
+     * @return bool
+     */
+    public function findFirst($sql){
+        $result = self::$db->query($sql);
+        $row = $result->fetch_row();
+
+        if ($row) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Find all records
+     * @param $sql
+     * @return array
+     */
+    public function findAll($sql){
+        $result = self::$db->query($sql);
+        $list = [];
+
+        while ($row = $result->fetch_assoc()){
+            $list[] = $row;
+        }
+
+        return $list;
     }
 }
