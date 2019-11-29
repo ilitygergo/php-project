@@ -66,4 +66,11 @@ class Session {
             $this->user_id = $_SESSION['user_id'];
         }
     }
+
+    /**
+     * @return int
+     */
+    public function getUserId() {
+        return $this->user_id;
+    }
 }

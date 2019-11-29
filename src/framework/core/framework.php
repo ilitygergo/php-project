@@ -12,6 +12,8 @@ class Framework {
 
         Model::setDb((new Mysql())->getConnection());
 
+        WebsiteModel::getInstance();
+
         self::dispatch();
     }
 

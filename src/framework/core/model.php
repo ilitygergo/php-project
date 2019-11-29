@@ -180,7 +180,7 @@ class Model {
     /**
      * Get the first record
      * @param $sql
-     * @return bool
+     * @return mixed
      */
     public function findFirst($sql){
         $result = self::$db->query($sql);

@@ -8,6 +8,8 @@ if (isPostRequest() && isset($_POST['user'])) {
     $user->init($_POST['user']);
     $user->setPassword($_POST['user']['password']);
     $user->create();
+
+    redirect_to('/');
 }
 
 if (!empty($errors = \Model::$errors)) {

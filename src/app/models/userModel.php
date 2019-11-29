@@ -14,7 +14,7 @@ class UserModel extends \Model {
     /**
      * The first element is the primary key
      * The order is important!
-     * @var array
+     * @var []
      */
     static protected $fields = [
         'id',
@@ -85,17 +85,17 @@ class UserModel extends \Model {
     private $updated_at;
 
     /**
-     * Users constructor.
+     * Users initialization.
      * @param $args
      */
     public function init($args) {
         $this->id = $args['id'] ?? '';
-        $this->setFirstName($args['first_name'] ?? '');
-        $this->setLastName($args['last_name'] ?? '');
-        $this->setEmail($args['email'] ?? '');
-        $this->setAddress($args['address'] ?? '');
-        $this->setGender($args['gender'] ?? '');
-        $this->setAge($args['age'] ?? 0);
+        $this->first_name = $args['first_name'] ?? '';
+        $this->last_name = $args['last_name'] ?? '';
+        $this->email = $args['email'] ?? '';
+        $this->address = $args['address'] ?? '';
+        $this->gender = $args['gender'] ?? '';
+        $this->age = $args['age'] ?? 0;
         $this->hashed_password = $args['hashed_password'] ?? '';
     }
 
@@ -258,11 +258,11 @@ class UserModel extends \Model {
             ]
         );
 
-//        if (is_integer($result)) {
-//            $this->id = $result;
-//
-//            return $this->login();
-//        }
+        if (is_integer($result)) {
+            $this->id = $result;
+
+            return $this->login();
+        }
     }
 
     /**
@@ -278,13 +278,13 @@ class UserModel extends \Model {
             return 'Email or password is invalid!';
         }
 
-        if (!($mysql_result = $this->findByEmail($this->email))) {
+        if (!($mysqli_result = $this->findByEmail($this->email))) {
             return 'Email or password is invalid!';
         }
 
         $user = [];
 
-        foreach ($mysql_result as $key => $value) {
+        foreach ($mysqli_result as $key => $value) {
             $user[self::$fields[$key]] = $value;
         }
 
