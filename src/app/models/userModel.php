@@ -23,7 +23,7 @@ class UserModel extends \Model {
         'email',
         'address',
         'gender',
-        'age',
+        'birthday',
         'hashed_password',
         'created_at',
         'updated_at',
@@ -60,9 +60,10 @@ class UserModel extends \Model {
     private $gender;
 
     /**
-     * @var int
+     * @var DateTime
+     * Format: YYYY-MM-DD
      */
-    private $age;
+    private $birthday;
 
     /**
      * @var string
@@ -75,12 +76,12 @@ class UserModel extends \Model {
     private $hashed_password;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $created_at;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $updated_at;
 
@@ -95,7 +96,7 @@ class UserModel extends \Model {
         $this->email = $args['email'] ?? '';
         $this->address = $args['address'] ?? '';
         $this->gender = $args['gender'] ?? '';
-        $this->age = $args['age'] ?? 0;
+        $this->birthday = $args['birthday'] ?? '';
         $this->hashed_password = $args['hashed_password'] ?? '';
     }
 
@@ -188,17 +189,28 @@ class UserModel extends \Model {
     }
 
     /**
-     * @return int
+     * @return String
      */
-    public function getAge() {
-        return $this->age;
+    public function getBirthday() {
+        return substr($this->birthday, 0, strrpos($this->birthday, ' '));
     }
 
     /**
-     * @param int $age
+     * @param int $birthday
      */
-    public function setAge(int $age) {
-        $this->age = $age;
+    public function setBirthday(int $birthday) {
+        $this->birthday = $birthday;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAge() {
+        $birthDate = explode("-", $this->birthday);
+        $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md")
+            ? ((date("Y") - $birthDate[0]) - 2)
+            : (date("Y") - $birthDate[0]));
+        return $age;
     }
 
     /**
@@ -237,11 +249,24 @@ class UserModel extends \Model {
     }
 
     /**
+     * @return array
+     */
+    public function getAllUser() {
+        return parent::findAll('SELECT * FROM ' . self::$table);
+    }
+
+    /**
      * Creating a user to the database
      * @return void|boolean
      */
     public function create() {
         $this->validate();
+        $this->validatePassword();
+
+        if (parent::isUnique('email', $this->email)) {
+            parent::$errors[] = "Already registered email!";
+        }
+
 
         if (!empty(parent::$errors)) {
             return;
@@ -266,6 +291,42 @@ class UserModel extends \Model {
     }
 
     /**
+     * Creating a user to the database
+     * @return void|boolean
+     */
+    public function edit() {
+        $this->validate();
+
+        $user = parent::isUnique('email', $this->email);
+
+        if ($user && $user[0] != $this->getId()) {
+            parent::$errors[] = "Already registered email!";
+        }
+
+        if (!empty(parent::$errors)) {
+            return;
+        }
+
+        $result = parent::update(
+            [
+                'id' => parent::$db->escape_string($this->id),
+                'first_name' => parent::$db->escape_string($this->first_name),
+                'last_name' => parent::$db->escape_string($this->last_name),
+                'email' => parent::$db->escape_string($this->email),
+                'address' => parent::$db->escape_string($this->address),
+                'gender' => parent::$db->escape_string($this->gender),
+                'birthday' => parent::$db->escape_string($this->birthday)
+            ]
+        );
+
+        if ($result) {
+            return TRUE;
+        }
+
+        return FALSE;
+    }
+
+    /**
      * Logs the user in
      * @return bool|string
      */
@@ -282,13 +343,8 @@ class UserModel extends \Model {
             return 'Email or password is invalid!';
         }
 
-        $user = [];
 
-        foreach ($mysqli_result as $key => $value) {
-            $user[self::$fields[$key]] = $value;
-        }
-
-        $this->init($user);
+        $this->init($this->mysqlResultToArray($mysqli_result));
 
         if (!password_verify($this->password, $this->hashed_password)) {
             return 'Email or password is invalid!';
@@ -301,7 +357,31 @@ class UserModel extends \Model {
     }
 
     /**
-     * Validate the instance
+     * @param int $id
+     * @return bool|mysqli_result|void
+     */
+    public function findById($id) {
+        $result = parent::findById($id);
+
+        $this->init($this->mysqlResultToArray($result));
+    }
+
+    /**
+     * @param $result
+     * @return array
+     */
+    public function mysqlResultToArray($result) {
+        $array = [];
+
+        foreach ($result as $key => $value) {
+            $array[self::$fields[$key]] = $value;
+        }
+
+        return $array;
+    }
+
+    /**
+     * Validate the instance when saving to the database
      */
     public function validate() {
         parent::$errors = [];
@@ -330,10 +410,13 @@ class UserModel extends \Model {
             parent::$errors[] = "Invalid email format";
         }
 
-        if (parent::isUnique('email', $this->email)) {
-            parent::$errors[] = "Already registered email!";
-        }
+        return parent::$errors;
+    }
 
+    /**
+     *
+     */
+    public function validatePassword() {
         if (empty($this->password)) {
             parent::$errors[] = 'Password can\'t be empty';
         }
@@ -353,7 +436,5 @@ class UserModel extends \Model {
         if(!preg_match("#[a-z]+#", $this->password)) {
             parent::$errors[] = "Your Password Must Contain At Least 1 Lowercase Letter!";
         }
-
-        return parent::$errors;
     }
 }

@@ -6,7 +6,7 @@ CREATE TABLE users (
     email varchar(255),
     address varchar(255),
     gender varchar(255),
-    age int,
+    birthday timestamp,
     hashed_password varchar(255),
   	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
 	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
@@ -15,12 +15,12 @@ CREATE TABLE users (
 CHARACTER SET 'latin2' 
 COLLATE 'latin2_hungarian_ci';
 
-INSERT INTO users (first_name, last_name, email, address, gender, age, hashed_password) VALUES ('Admin', 'Admin', 'admin@example.com', '', 'male', 40, '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
-INSERT INTO users (first_name, last_name, email, address, gender, age, hashed_password) VALUES ('Nagy', 'Elek', 'nagyelek@example.com', 'Szeged, Szilléri sgt. 32', 'male', 25, '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
-INSERT INTO users (first_name, last_name, email, address, gender, age, hashed_password) VALUES ('Kis', 'Jenő', 'kisjeno@example.com', 'Szeged, Kossuth u. 3B', 'male', 20, '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
-INSERT INTO users (first_name, last_name, email, address, gender, age, hashed_password) VALUES ('Lapos', 'Ödön', 'laposodon@example.com', 'Békéscsaba, Tata u. 12', 'male', 30, '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
-INSERT INTO users (first_name, last_name, email, address, gender, age, hashed_password) VALUES ('Csonka', 'Károly', 'csonkakaroly@example.com', 'Budapest, Deák tér 7', 'male', 43, '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
-INSERT INTO users (first_name, last_name, email, address, gender, age, hashed_password) VALUES ('Szarvas', 'Edina', 'szarvasedina@example.com', 'Orosháza, Petőfi u. 2', 'female', 18, '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Admin', 'Admin', 'admin@example.com', '', 'male', '1977-11-29', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Nagy', 'Elek', 'nagyelek@example.com', 'Szeged, Szilléri sgt. 32', 'male', '1985-07-12', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Kis', 'Jenő', 'kisjeno@example.com', 'Szeged, Kossuth u. 3B', 'male', '1980-09-01', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Lapos', 'Ödön', 'laposodon@example.com', 'Békéscsaba, Tata u. 12', 'male', '1996-10-10', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Csonka', 'Károly', 'csonkakaroly@example.com', 'Budapest, Deák tér 7', 'male', '1992-04-22', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Szarvas', 'Edina', 'szarvasedina@example.com', 'Orosháza, Petőfi u. 2', 'female', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
 # hashed_password = 'Password1'
 
 CREATE TABLE products (

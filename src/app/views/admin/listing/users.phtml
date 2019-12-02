@@ -1,0 +1,35 @@
+<?php
+include_once VIEW_PATH . 'common/header.phtml';
+
+$users = (UserModel::getInstance())->getAllUser();
+
+if (!empty($errors = \Model::$errors)) {
+    foreach ($errors as $error) { ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $error ?>
+        </div>
+        <?php
+    }
+}
+
+?>
+
+<ul class="list-group">
+    <?php foreach ($users as $user): ?>
+        <?php if ($user['id'] == (WebsiteModel::getInstance())->getId()): ?>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+        <?php else: ?>
+            <a href="<?= '/admin/users?id=' . $user['id'] ?>" class="list-group-item list-group-item-action flex-column align-items-start">
+        <?php endif; ?>
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><?= $user['first_name'] . ' ' . $user['last_name']?></h5>
+                    <small><?= $user['email'] ?></small>
+                </div>
+                <small><?= $user['address'] ?></small>
+            </a>
+    <?php endforeach; ?>
+</ul>
+
+<?php
+include_once VIEW_PATH . 'common/footer.phtml';
+?>

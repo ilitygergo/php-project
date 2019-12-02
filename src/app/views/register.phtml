@@ -1,7 +1,5 @@
 <?php
-$page_title = 'Register Page';
-
-include_once 'common/header.phtml';
+include_once VIEW_PATH . 'common/header.phtml';
 
 if (isPostRequest() && isset($_POST['user'])) {
     $user = UserModel::getInstance();
@@ -52,5 +50,5 @@ if (!empty($errors = \Model::$errors)) {
 </div>
 
 <?php
-include_once 'common/footer.phtml';
+include_once VIEW_PATH . 'common/footer.phtml';
 ?>

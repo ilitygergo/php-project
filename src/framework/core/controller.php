@@ -27,4 +27,13 @@ class Controller {
 
         exit;
     }
+
+    /**
+     *
+     */
+    public function redirectIfNotAdmin() {
+        if ((Session::getInstance())->getUserId() != (WebsiteModel::getInstance())->getId() ) {
+            redirect_to('/');
+        }
+    }
 }

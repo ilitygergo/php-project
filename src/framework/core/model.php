@@ -61,21 +61,20 @@ class Model {
      * @return mixed If succeed return the count of affected rows, else return false
      */
     public function update($list){
-        $uplist = '';
+        $uplist = [];
         $where = 0;
 
         foreach ($list as $k => $v) {
             if (in_array($k, static::$fields)) {
-                if ($k == static::$fields['pk']) {
-                    $where = "`$k`=$v";
+                if ($k == static::$fields[0]) {
+                    $where = "$k=$v;";
                 } else {
-                    $uplist .= "`$k`='$v'".",";
+                    $uplist[] = "$k='$v' ";
                 }
             }
         }
 
-        $uplist = rtrim($uplist,',');
-        $sql = "UPDATE " . static::$table . " SET {$uplist} WHERE {$where}";
+        $sql = "UPDATE " . static::$table . " SET " . implode($uplist, ', ') . " WHERE {$where}";
 
         if (self::$db->query($sql)) {
             if ($rows = self::$db->affected_rows) {
@@ -91,17 +90,13 @@ class Model {
     /**
      * Delete records
      * @access public
-     * @param $pk mixed could be an int or an array
-     * @return mixed If succeed, return the count of deleted records, if fail, return false
+     * @param $key int
+     * @return mixed If succeed, return the count of deleted record, if fail, return false
      */
     public function delete($key){
         $where = 0;
 
-        if (is_array($key)) {
-            $where = "'{" . static::$fields['pk'] . "}' in (".implode(',', $key).")";
-        } else {
-            $where = "'{" . static::$fields['pk'] . "}'=$key";
-        }
+        $where = static::$fields[0] . "='$key'";
 
         $sql = "DELETE FROM " . static::$table . " WHERE $where";
 

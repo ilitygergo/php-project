@@ -1,8 +1,5 @@
 <?php
-$page_title = 'Home Page';
-
-include_once 'common/header.phtml';
-
+include_once VIEW_PATH . 'common/header.phtml';
 ?>
 
 <h1>Winter collection</h1>
@@ -15,13 +12,13 @@ include_once 'common/header.phtml';
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="<?= '/?image=a.jpg' ?>" style="height: 550px" class="d-block w-100" alt="...">
+            <img src="<?= '/image?id=a.jpg' ?>" style="height: 550px" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
-            <img src="<?= '/?image=b.jpg' ?>" style="height: 550px" class="d-block w-100" alt="...">
+            <img src="<?= '/image?id=b.jpg' ?>" style="height: 550px" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
-            <img src="<?= '/?image=c.jpg' ?>" style="height: 550px" class="d-block w-100" alt="...">
+            <img src="<?= '/image?id=c.jpg' ?>" style="height: 550px" class="d-block w-100" alt="...">
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -35,5 +32,5 @@ include_once 'common/header.phtml';
 </div>
 
 <?php
-include_once 'common/footer.phtml';
+include_once  VIEW_PATH . 'common/footer.phtml';
 ?>

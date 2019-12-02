@@ -7,10 +7,14 @@ $session = Session::getInstance();
 <!DOCTYPE html>
     <html>
         <head>
-            <meta name="description" content="<?= $meta ?? 'Meta data' ?>" />
-            <title><?= $page_title ?? 'Page title' ?></title>
+            <meta name="description"/>
+            <title>Retail shop</title>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <link rel="stylesheet" href="/resources/demos/style.css">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
             <link rel="stylesheet" href="<?= PUBLIC_PATH . 'css/style.css' ?>" />
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         </head>
 
     <body>
@@ -55,25 +59,25 @@ $session = Session::getInstance();
                             </div>
                         </li>
                         <li>
-                            <form class="form-inline my-2 my-lg-0">
+                            <form action="<?= '/index/search' ?>" class="form-inline my-2 my-lg-0">
                                 <input class="form-control mr-sm-2" type="search" placeholder="Search for products" aria-label="Search">
-                                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="margin-right: 5px; margin-left: 5px">Search</button>
                             </form>
                         </li>
                         <?php if ((WebsiteModel::getInstance())->getId() == $session->getUserId()): ?>
                             <li>
-                                <form action="<?= '/' ?>" method="post" style="margin-right: 5px; margin-left: 5px">
+                                <form action="<?= '/admin/users' ?>" method="post" style="margin-right: 5px; margin-left: 5px">
                                     <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal">Manage Users</button>
                                 </form>
                             </li>
                             <li>
-                                <form action="<?= '/' ?>" method="post" style="margin-right: 5px; margin-left: 5px">
+                                <form action="<?= '/admin/orders' ?>" method="post" style="margin-right: 5px; margin-left: 5px">
                                     <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal">Manage Orders</button>
                                 </form>
                             </li>
                             <li>
-                                <form action="<?= '/' ?>" method="post" style="margin-right: 5px; margin-left: 5px">
-                                    <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal">Create Products</button>
+                                <form action="<?= '/admin/products' ?>" method="post" style="margin-right: 5px; margin-left: 5px">
+                                    <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal">Manage Products</button>
                                 </form>
                             </li>
                         <?php endif; ?>
