@@ -107,6 +107,20 @@ class WebsiteModel extends \Model {
     }
 
     /**
+     * @return string
+     */
+    public function getCurrency() {
+        return $this->currency;
+    }
+
+    /**
+     * @param string $currency
+     */
+    public function setCurrency(string $currency) {
+        $this->currency = $currency;
+    }
+
+    /**
      * @return DateTime
      */
     public function getCreatedAt() {

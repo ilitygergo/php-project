@@ -1,0 +1,119 @@
+<?php
+include_once VIEW_PATH . 'common/header.phtml';
+
+$product = ProductModel::getInstance();
+
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $product->findById($_GET['id']);
+}
+
+$categories = ProductModel::getCategories();
+$subcategories = ProductModel::getSubcategories();
+
+?>
+
+<form method="post">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" formaction="<?= '/product/delete' ?>">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" name="product[id]" value="<?= $product->getId() ?? '' ?>">
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="nameInput">Name</label>
+            <input type="text" class="form-control" name="product[name]" value="<?= $product->getName() ?? '' ?>">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="brandInput">Brand</label>
+            <input type="text" class="form-control" name="product[brand]" value="<?= $product->getBrand() ?? '' ?>">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="costInput">Cost</label>
+            <input type="text" class="form-control" name="product[cost]" value="<?= $product->getCost() ?? '' ?>">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="categoryInput">Category</label>
+            </div>
+            <select class="custom-select" id="category" name="product[category]" onchange="categoryChange()">
+                <option>Choose...</option>
+                <?php foreach ($categories as $key => $value) : ?>
+                    <option value="<?= $value ?>"
+                            <?php if (isset($product)) {
+                                    echo $product->getCategory() == $value ? 'selected' : '';
+                            }?>>
+                    <?= $value ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="subcategoryInput">Subcategory</label>
+            </div>
+            <select class="custom-select" name="product[subcategory]">
+                <option>Choose...</option>
+                <?php foreach ($subcategories as $key => $value) : ?>
+                    <option value="<?= $value ?>"
+                        <?php if (isset($product)) {
+                            echo $product->getSubcategory() == $value ? 'selected' : '';
+                        }?>>
+                        <?= $value ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="subcategoryInput">Image</label>
+            </div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="image"
+                       aria-describedby="inputGroupFileAddon01" name="product['image']">
+                <label class="custom-file-label" for="imageInput">Choose file</label>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" formaction="<?= '/product/update' ?>"><?php if ($product->getId()) { echo 'Update'; } else { echo 'Create'; } ?></button>
+    <?php if ($product->getId()): ?>
+        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
+    <?php endif; ?>
+    <button type="submit" class="btn btn-warning float-right" formaction="<?= '/admin/products' ?>">Back</button>
+</form>
+
+<script>
+    categoryChange();
+
+    function categoryChange() {
+        var e = document.getElementById("category");
+        var strUser = e.options[e.selectedIndex].value;
+
+        console.log(strUser);
+    }
+</script>
+
+<?php
+include_once VIEW_PATH . 'common/footer.phtml';
+?>

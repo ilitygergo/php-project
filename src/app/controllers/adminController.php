@@ -30,6 +30,10 @@ class AdminController extends \Controller {
     public function productsAction() {
         $this->redirectIfNotAdmin();
 
-        include CURR_VIEW_PATH . "admin/listing/products.phtml";
+        if (isset($_GET['id'])) {
+            include CURR_VIEW_PATH . "admin/edit/products.phtml";
+        } else {
+            include CURR_VIEW_PATH . "admin/listing/products.phtml";
+        }
     }
 }

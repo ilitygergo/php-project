@@ -291,7 +291,7 @@ class UserModel extends \Model {
     }
 
     /**
-     * Creating a user to the database
+     * Saving a user to the database
      * @return void|boolean
      */
     public function edit() {
@@ -390,7 +390,7 @@ class UserModel extends \Model {
             parent::$errors[] = 'First name can\'t be empty';
         }
 
-        if (!preg_match("/^[áéúőóüöA-Za-z-]+$/", $this->first_name)) {
+        if (!preg_match("/^[áéúőóüöÁÉÚŐÓÜÖA-Za-z-]+$/", $this->first_name)) {
             parent::$errors[] = 'First name: only letters allowed';
         }
 
@@ -398,7 +398,7 @@ class UserModel extends \Model {
             parent::$errors[] = 'Last name can\'t be empty';
         }
 
-        if (!preg_match("/^[áéúőóüöA-Za-z-]+$/", $this->last_name)) {
+        if (!preg_match("/^[áéúőóüöÁÉÚŐÓÜÖA-Za-z-]+$/", $this->last_name)) {
             parent::$errors[] = 'Last name: only letters allowed';
         }
 

@@ -1,8 +1,36 @@
 <?php
 include_once VIEW_PATH . 'common/header.phtml';
+
+$products = (ProductModel::getInstance())->getAllProducts();
+$website = WebsiteModel::getInstance();
+
+if (!empty($errors = \Model::$errors)) {
+    foreach ($errors as $error) { ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $error ?>
+        </div>
+        <?php
+    }
+}
+
 ?>
 
-
+<ul class="list-group">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <a href="<?= '/admin/products?id=create' ?>" class="btn btn-primary">Create Product</a>
+        </div>
+    </div>
+    <?php foreach ($products as $product): ?>
+        <a href="<?= '/admin/products?id=' . $product['id'] ?>" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><?= $product['name'] . ' (' . $product['brand'] . ')'?></h5>
+                <small><?= $product['cost'] . ' ' . $website->getCurrency()?></small>
+            </div>
+            <small><?= $product['category'] . ' - ' . $product['subcategory'] ?></small>
+        </a>
+        <?php endforeach; ?>
+</ul>
 
 <?php
 include_once VIEW_PATH . 'common/footer.phtml';

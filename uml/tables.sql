@@ -25,6 +25,7 @@ INSERT INTO users (first_name, last_name, email, address, gender, birthday, hash
 
 CREATE TABLE products (
 	id int NOT NULL AUTO_INCREMENT,
+	name varchar(255),
     brand varchar(255),
     cost int,
     category varchar(255),
@@ -37,11 +38,11 @@ CREATE TABLE products (
 CHARACTER SET 'latin2' 
 COLLATE 'latin2_hungarian_ci';
 
-INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Adidas', 76, 'shoe', 'sneaker', '');
-INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Nike', 89, 'shoe', 'sneaker', '');
-INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Lacoste', 129, 'shoe', 'sneaker', '');
-INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('NewBalance', 99, 'shoe', 'sneaker', '');
-INSERT INTO products (brand, cost, category, subcategory, image) VALUES ('Adidas', 85, 'shoe', 'sneaker', '');
+INSERT INTO products (name, brand, cost, category, subcategory, image) VALUES ('YEEZY Static', 'Adidas', 76, 'Shoes', 'Sneakers', '');
+INSERT INTO products (name, brand, cost, category, subcategory, image) VALUES ('Air Max 200', 'Nike', 89, 'Shoes', 'Sneakers', '');
+INSERT INTO products (name, brand, cost, category, subcategory, image) VALUES ('Ace 2018', 'Lacoste', 129, 'Shoes', 'Sneakers', '');
+INSERT INTO products (name, brand, cost, category, subcategory, image) VALUES ('547', 'NewBalance', 99, 'Shoes', 'Sneakers', '');
+INSERT INTO products (name, brand, cost, category, subcategory, image) VALUES ('Alphaedge 4', 'Adidas', 85, 'Shoes', 'Sneakers', '');
 
 CREATE TABLE availabilities (
     id int NOT NULL AUTO_INCREMENT,
