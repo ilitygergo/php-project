@@ -270,7 +270,7 @@ class ProductModel extends \Model {
      * Saving a product to the database
      * @return void|boolean
      */
-    public function edit() {
+    public function save() {
         $this->validate();
 
         $product = parent::isUnique('name', $this->name);
@@ -283,17 +283,30 @@ class ProductModel extends \Model {
             return;
         }
 
-        $result = parent::update(
-            [
-                'id' => parent::$db->escape_string($this->id),
-                'name' => parent::$db->escape_string($this->name),
-                'brand' => parent::$db->escape_string($this->brand),
-                'cost' => parent::$db->escape_string($this->cost),
-                'category' => parent::$db->escape_string($this->category),
-                'subcategory' => parent::$db->escape_string($this->subcategory),
-                'image' => parent::$db->escape_string($this->image)
-            ]
-        );
+        if ($this->getId() != '') {
+            $result = parent::update(
+                [
+                    'id' => parent::$db->escape_string($this->id),
+                    'name' => parent::$db->escape_string($this->name),
+                    'brand' => parent::$db->escape_string($this->brand),
+                    'cost' => parent::$db->escape_string($this->cost),
+                    'category' => parent::$db->escape_string($this->category),
+                    'subcategory' => parent::$db->escape_string($this->subcategory),
+                    'image' => parent::$db->escape_string($this->image)
+                ]
+            );
+        } else {
+            $result = parent::insert(
+                [
+                    'name' => parent::$db->escape_string($this->name),
+                    'brand' => parent::$db->escape_string($this->brand),
+                    'cost' => parent::$db->escape_string($this->cost),
+                    'category' => parent::$db->escape_string($this->category),
+                    'subcategory' => parent::$db->escape_string($this->subcategory),
+                    'image' => parent::$db->escape_string($this->image)
+                ]
+            );
+        }
 
         if ($result) {
             return TRUE;

@@ -8,7 +8,7 @@ class ProductController extends \Controller {
         if (isPostRequest()) {
             $product = ProductModel::getInstance();
             $product->init($_POST['product']);
-            $product->edit();
+            $product->save();
         }
 
         $this->redirectIfNotAdmin();
