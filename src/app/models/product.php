@@ -288,11 +288,7 @@ class Product extends \Model {
             );
         }
 
-        if ($result) {
-            return TRUE;
-        }
-
-        return FALSE;
+        return $result;
     }
 
     /**

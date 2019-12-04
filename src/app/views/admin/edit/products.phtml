@@ -101,35 +101,44 @@ $subcategories = Product::getSubcategories();
                 <label class="input-group-text" for="subcategoryInput">Image</label>
             </div>
             <div class="custom-file">
-                <input type="file" class="custom-file-input"
+                <input type="file" class="custom-file-input" id="fileInput"
                        aria-describedby="inputGroupFileAddon01" name="image">
                 <label class="custom-file-label" for="imageInput">Choose file</label>
             </div>
         </div>
     </div>
 
-    <hr>
+    <?php if ($product->getId()): ?>
+        <hr>
+        <button type="button" class="btn btn-outline-primary mb-3" onclick="addRow(<?=$counter?>)" data-toggle="modal">Add</button>
 
-    <?php foreach ($availabilities as $available) : ?>
-        <input type="hidden" name="availability<?=$counter?>[product_id]" value="<?= $product->getId() ?>">
+        <div class="availabilities-wrapper">
+            <?php foreach ($availabilities as $available) : ?>
+                <input type="hidden" name="availability<?=$counter?>[product_id]" id="<?=$counter?>RowProductId" value="<?= $product->getId() ?>">
 
-        <div class="input-group mb-3">
-            <span class="input-group-text">Size</span>
-            <input type="number" class="form-control" name="availability<?=$counter?>[size]" value="<?= $available['size'] ?>">
+                <div class="input-group mb-3" id="<?=$counter?>Row">
+                    <span class="input-group-text">Size</span>
+                    <input type="number" class="form-control" name="availability<?=$counter?>[size]" value="<?= $available['size'] ?>">
 
-            <span class="input-group-text">Color</span>
-            <input type="text" class="form-control" name="availability<?=$counter?>[color]" value="<?= $available['color'] ?>">
+                    <span class="input-group-text">Color</span>
+                    <input type="text" class="form-control" name="availability<?=$counter?>[color]" value="<?= $available['color'] ?>">
 
-            <span class="input-group-text">Amount</span>
-            <input type="number" class="form-control" name="availability<?=$counter?>[amount]" value="<?= $available['amount'] ?>">
+                    <span class="input-group-text">Amount</span>
+                    <input type="number" class="form-control" name="availability<?=$counter?>[amount]" value="<?= $available['amount'] ?>">
 
-            <span class="input-group-text">Sale</span>
-            <input type="number" class="form-control" name="availability<?=$counter?>[sale]" value="<?= $available['sale'] ?>">
+                    <span class="input-group-text">Sale</span>
+                    <input type="number" class="form-control" name="availability<?=$counter?>[sale]" value="<?= $available['sale'] ?>">
+
+                    <button type="button" class="btn btn-outline-danger" onclick="deleteRow(<?=$counter?>)" data-toggle="modal">X</button>
+                </div>
+
+                <input type="hidden" name="availability" id="<?=$counter?>RowAvailability" value="<?=$counter?>">
+                <?php $counter++; ?>
+            <?php endforeach; ?>
         </div>
 
-        <input type="hidden" name="availability" value="<?=$counter?>">
-        <?php $counter++; ?>
-    <?php endforeach; ?>
+        <hr>
+    <?php endif; ?>
 
     <button type="submit" class="btn btn-primary" formaction="<?= '/product/update' ?>"><?php if ($product->getId()) { echo 'Update'; } else { echo 'Create'; } ?></button>
     <?php if ($product->getId()): ?>
@@ -139,6 +148,7 @@ $subcategories = Product::getSubcategories();
 </form>
 
 <script>
+    var counter = <?=$counter?>;
     categoryChange();
 
     function categoryChange() {
@@ -147,6 +157,39 @@ $subcategories = Product::getSubcategories();
 
         console.log(strUser);
     }
+
+    function deleteRow(row) {
+        $("#" + row + "RowProductId").remove();
+        $("#" + row + "Row").remove();
+        $("#" + row + "RowAvailability").remove();
+    }
+
+    function addRow() {
+        $(".availabilities-wrapper").append(
+            "<input type=\"hidden\" name=\"availability" + counter + "[product_id]\" id=\"" + counter + "RowProductId\" value=\"<?= $product->getId() ?>\">\n" +
+            "<div class=\"input-group mb-3\" id=\"" + counter + "Row\"></div>\n" +
+            "<input type=\"hidden\" name=\"availability\" value=\"" + counter + "\"  id=\"" + counter + "RowAvailability\">"
+        );
+
+        $("#" + counter + "Row").append(
+            "<span class=\"input-group-text\">Size</span>\n" +
+            "<input type=\"number\" class=\"form-control\" name=\"availability" + counter + "[size]\">\n" +
+            "<span class=\"input-group-text\">Color</span>\n" +
+            "<input type=\"text\" class=\"form-control\" name=\"availability" + counter + "[color]\">\n" +
+            "<span class=\"input-group-text\">Amount</span>\n" +
+            "<input type=\"number\" class=\"form-control\" name=\"availability" + counter + "[amount]\">\n" +
+            "<span class=\"input-group-text\">Sale</span>\n" +
+            "<input type=\"number\" class=\"form-control\" name=\"availability" + counter + "[sale]\">\n" +
+            "<button type=\"button\" class=\"btn btn-outline-danger\" onclick=\"deleteRow(" + counter + ")\" data-toggle=\"modal\">X</button>"
+        );
+
+        counter++;
+    }
+
+    $('#fileInput').on('change', function () {
+        var fileName = $(this).val();
+        $(this).next('.custom-file-label').html(fileName.replace('C:\\fakepath\\', " "));
+    })
 </script>
 
 <?php

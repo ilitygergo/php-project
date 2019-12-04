@@ -17,6 +17,10 @@ class ProductController extends \Controller {
             $availability->deleteAllByProductId($_POST['product']['id']);
 
             for ($index = 0; $index <= $_POST['availability']; $index++) {
+                if(!$_POST['availability' . $index]) {
+                    continue;
+                }
+
                 $availability->init($_POST['availability' . $index]);
                 $availability->save();
             }
@@ -32,6 +36,9 @@ class ProductController extends \Controller {
      */
     public function deleteAction() {
         if (isPostRequest()) {
+            $availability = new Availability();
+            $availability->deleteAllByProductId($_POST['product']['id']);
+
             $product = new Product($_POST['product']);
             $product->delete(0, $product->getId());
         }
