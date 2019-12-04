@@ -2,11 +2,6 @@
 
 class ProductModel extends \Model {
     /**
-     * @var ProductModel
-     */
-    private static $instance = null;
-
-    /**
      * @var string
      */
     static protected $table = 'products';
@@ -109,25 +104,17 @@ class ProductModel extends \Model {
      * Product initialization.
      * @param $args
      */
-    public function init($args) {
-        $this->id = $args['id'] ?? '';
-        $this->name = $args['name'] ?? '';
-        $this->brand = $args['brand'] ?? '';
-        $this->cost = $args['cost'] ?? '';
-        $this->category = $args['category'] ?? '';
-        $this->subcategory = $args['subcategory'] ?? '';
-        $this->image = $args['image'] ?? '';
-    }
-
-    /**
-     * @return ProductModel
-     */
-    public static function getInstance() {
-        if (self::$instance == null)  {
-            self::$instance = new ProductModel();
+    public function __construct($args = NULL) {
+        if ($id = $args['id']) {
+            $this->findById($id);
         }
 
-        return self::$instance;
+        $this->name = $args['name'] ?? $this->name;
+        $this->brand = $args['brand'] ?? $this->brand;
+        $this->cost = $args['cost'] ?? $this->cost;
+        $this->category = $args['category'] ?? $this->category;
+        $this->subcategory = $args['subcategory'] ?? $this->subcategory;
+        $this->image = $args['image'] ?? $this->image;
     }
 
     /**
@@ -238,7 +225,7 @@ class ProductModel extends \Model {
     /**
      * @return array
      */
-    public function getAllProducts() {
+    public static function getAllProducts() {
         return parent::findAll('SELECT * FROM ' . self::$table);
     }
 
@@ -248,8 +235,15 @@ class ProductModel extends \Model {
      */
     public function findById($id) {
         $result = parent::findById($id);
+        $properties = $this->mysqlResultToArray($result);
 
-        $this->init($this->mysqlResultToArray($result));
+        $this->id = $properties['id'] ?? '';
+        $this->name = $properties['name'] ?? '';
+        $this->brand = $properties['brand'] ?? '';
+        $this->cost = $properties['cost'] ?? '';
+        $this->category = $properties['category'] ?? '';
+        $this->subcategory = $properties['subcategory'] ?? '';
+        $this->image = $properties['image'] ?? '';
     }
 
     /**

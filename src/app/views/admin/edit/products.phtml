@@ -1,7 +1,7 @@
 <?php
 include_once VIEW_PATH . 'common/header.phtml';
 
-$product = ProductModel::getInstance();
+$product = new ProductModel();
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $product->findById($_GET['id']);
@@ -12,7 +12,11 @@ $subcategories = ProductModel::getSubcategories();
 
 ?>
 
-<form method="post">
+<div class="text-center">
+    <img src="<?= '/image?product=' . $product->getImage() ?>" class="img-fluid" style="width: 500px" alt="Responsive image">
+</div>
+
+<form method="post" enctype="multipart/form-data">
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -89,8 +93,8 @@ $subcategories = ProductModel::getSubcategories();
                 <label class="input-group-text" for="subcategoryInput">Image</label>
             </div>
             <div class="custom-file">
-                <input type="file" class="custom-file-input" id="image"
-                       aria-describedby="inputGroupFileAddon01" name="product['image']">
+                <input type="file" class="custom-file-input"
+                       aria-describedby="inputGroupFileAddon01" name="image">
                 <label class="custom-file-label" for="imageInput">Choose file</label>
             </div>
         </div>

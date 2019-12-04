@@ -1,7 +1,7 @@
 <?php
 include_once VIEW_PATH . 'common/header.phtml';
 
-$products = (ProductModel::getInstance())->getAllProducts();
+$products = ProductModel::getAllProducts();
 $website = WebsiteModel::getInstance();
 
 if (!empty($errors = \Model::$errors)) {

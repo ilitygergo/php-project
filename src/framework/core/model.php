@@ -193,7 +193,7 @@ class Model {
      * @param $sql
      * @return array
      */
-    public function findAll($sql){
+    public static function findAll($sql){
         $result = self::$db->query($sql);
         $list = [];
 

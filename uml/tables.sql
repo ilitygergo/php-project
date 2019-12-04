@@ -83,7 +83,7 @@ CREATE TABLE reviews (
 CHARACTER SET 'latin2' 
 COLLATE 'latin2_hungarian_ci';
 
-INSERT INTO reviews (user_id, product_id, content, stars) VALUES (1, 1, 'Comfortable and doesn\'t get dirty easily. I love it!', 4);
+INSERT INTO reviews (user_id, product_id, content, stars) VALUES (1, 1, 'Comfortable and doesnt get dirty easily. I love it!', 4);
 INSERT INTO reviews (user_id, product_id, content, stars) VALUES (2, 1, 'It looked different in the picture', 3);
 
 CREATE TABLE baskets (
