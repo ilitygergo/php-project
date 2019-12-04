@@ -90,13 +90,14 @@ class Model {
     /**
      * Delete records
      * @access public
+     * @param $field_number int
      * @param $key int
      * @return mixed If succeed, return the count of deleted record, if fail, return false
      */
-    public function delete($key){
+    public function delete($field_number, $key){
         $where = 0;
 
-        $where = static::$fields[0] . "='$key'";
+        $where = static::$fields[$field_number] . "='$key'";
 
         $sql = "DELETE FROM " . static::$table . " WHERE $where";
 
@@ -202,5 +203,19 @@ class Model {
         }
 
         return $list;
+    }
+
+    /**
+     * @param $result
+     * @return array
+     */
+    public function mysqlResultToArray($result) {
+        $array = [];
+
+        foreach ($result as $key => $value) {
+            $array[static::$fields[$key]] = $value;
+        }
+
+        return $array;
     }
 }

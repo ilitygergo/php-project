@@ -1,6 +1,6 @@
 <?php
 
-class ProductModel extends \Model {
+class Product extends \Model {
     /**
      * @var string
      */
@@ -45,14 +45,14 @@ class ProductModel extends \Model {
      * @return array
      */
     static public function getCategories() {
-        return array_unique(array_values(ProductModel::$categories));
+        return array_unique(array_values(Product::$categories));
     }
 
     /**
      * @return array
      */
     static public function getSubcategories() {
-        return array_keys(ProductModel::$categories);
+        return array_keys(Product::$categories);
     }
 
     /**
@@ -109,12 +109,12 @@ class ProductModel extends \Model {
             $this->findById($id);
         }
 
-        $this->name = $args['name'] ?? $this->name;
-        $this->brand = $args['brand'] ?? $this->brand;
-        $this->cost = $args['cost'] ?? $this->cost;
-        $this->category = $args['category'] ?? $this->category;
-        $this->subcategory = $args['subcategory'] ?? $this->subcategory;
-        $this->image = $args['image'] ?? $this->image;
+        $this->name = $args['name'] ?? parent::$db->escape_string($this->name);
+        $this->brand = $args['brand'] ?? parent::$db->escape_string($this->brand);
+        $this->cost = $args['cost'] ?? parent::$db->escape_string($this->cost);
+        $this->category = $args['category'] ?? parent::$db->escape_string($this->category);
+        $this->subcategory = $args['subcategory'] ?? parent::$db->escape_string($this->subcategory);
+        $this->image = $args['image'] ?? parent::$db->escape_string($this->image);
     }
 
     /**
@@ -237,27 +237,13 @@ class ProductModel extends \Model {
         $result = parent::findById($id);
         $properties = $this->mysqlResultToArray($result);
 
-        $this->id = $properties['id'] ?? '';
-        $this->name = $properties['name'] ?? '';
-        $this->brand = $properties['brand'] ?? '';
-        $this->cost = $properties['cost'] ?? '';
-        $this->category = $properties['category'] ?? '';
-        $this->subcategory = $properties['subcategory'] ?? '';
-        $this->image = $properties['image'] ?? '';
-    }
-
-    /**
-     * @param $result
-     * @return array
-     */
-    public function mysqlResultToArray($result) {
-        $array = [];
-
-        foreach ($result as $key => $value) {
-            $array[self::$fields[$key]] = $value;
-        }
-
-        return $array;
+        $this->id = parent::$db->escape_string($properties['id']) ?? '';
+        $this->name = parent::$db->escape_string($properties['name']) ?? '';
+        $this->brand = parent::$db->escape_string($properties['brand']) ?? '';
+        $this->cost = parent::$db->escape_string($properties['cost']) ?? '';
+        $this->category = parent::$db->escape_string($properties['category']) ?? '';
+        $this->subcategory = parent::$db->escape_string($properties['subcategory']) ?? '';
+        $this->image = parent::$db->escape_string($properties['image']) ?? '';
     }
 
     /**

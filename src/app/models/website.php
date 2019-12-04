@@ -1,8 +1,8 @@
 <?php
 
-class WebsiteModel extends \Model {
+class Website extends \Model {
     /**
-     * @var WebsiteModel
+     * @var Website
      */
     private static $instance = null;
 
@@ -50,7 +50,7 @@ class WebsiteModel extends \Model {
     private $updated_at;
 
     /**
-     * WebsiteModel constructor.
+     * Website constructor.
      */
     public function __construct() {
         $mysqli_result = $this->findFirst('SELECT * FROM ' . self::$table);
@@ -75,11 +75,11 @@ class WebsiteModel extends \Model {
     }
 
     /**
-     * @return WebsiteModel
+     * @return Website
      */
     public static function getInstance() {
         if (self::$instance == null)  {
-            self::$instance = new WebsiteModel();
+            self::$instance = new Website();
         }
 
         return self::$instance;

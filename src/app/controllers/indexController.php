@@ -13,8 +13,7 @@ class IndexController extends \Controller {
      */
     public function loginAction() {
         if (isPostRequest() && isset($_POST['user'])) {
-            $user = UserModel::getInstance();
-            $user->init($_POST['user']);
+            $user = new User($_POST['user']);
             $user->setPassword($_POST['user']['password']);
             $user->login();
         }

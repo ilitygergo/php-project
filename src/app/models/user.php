@@ -1,11 +1,6 @@
 <?php
 
-class UserModel extends \Model {
-    /**
-     * @var UserModel
-     */
-    private static $instance = null;
-
+class User extends \Model {
     /**
      * @var string
      */
@@ -89,6 +84,23 @@ class UserModel extends \Model {
      * Users initialization.
      * @param $args
      */
+    public function __construct($args = NULL) {
+        if ($id = $args['id']) {
+            $this->findById($id);
+        }
+
+        $this->first_name = $args['first_name'] ?? $this->first_name;
+        $this->last_name = $args['last_name'] ?? $this->last_name;
+        $this->email = $args['email'] ?? $this->email;
+        $this->address = $args['address'] ?? $this->address;
+        $this->gender = $args['gender'] ?? $this->gender;
+        $this->birthday = $args['birthday'] ?? $this->birthday;
+        $this->hashed_password = $args['hashed_password'] ?? $this->hashed_password;
+    }
+
+    /**
+     * @param $args
+     */
     public function init($args) {
         $this->id = $args['id'] ?? '';
         $this->first_name = $args['first_name'] ?? '';
@@ -98,17 +110,6 @@ class UserModel extends \Model {
         $this->gender = $args['gender'] ?? '';
         $this->birthday = $args['birthday'] ?? '';
         $this->hashed_password = $args['hashed_password'] ?? '';
-    }
-
-    /**
-     * @return UserModel
-     */
-    public static function getInstance() {
-        if (self::$instance == null)  {
-            self::$instance = new UserModel();
-        }
-
-        return self::$instance;
     }
 
     /**
@@ -251,7 +252,7 @@ class UserModel extends \Model {
     /**
      * @return array
      */
-    public function getAllUser() {
+    public static function getAllUser() {
         return parent::findAll('SELECT * FROM ' . self::$table);
     }
 
@@ -343,7 +344,6 @@ class UserModel extends \Model {
             return 'Email or password is invalid!';
         }
 
-
         $this->init($this->mysqlResultToArray($mysqli_result));
 
         if (!password_verify($this->password, $this->hashed_password)) {
@@ -364,20 +364,6 @@ class UserModel extends \Model {
         $result = parent::findById($id);
 
         $this->init($this->mysqlResultToArray($result));
-    }
-
-    /**
-     * @param $result
-     * @return array
-     */
-    public function mysqlResultToArray($result) {
-        $array = [];
-
-        foreach ($result as $key => $value) {
-            $array[self::$fields[$key]] = $value;
-        }
-
-        return $array;
     }
 
     /**

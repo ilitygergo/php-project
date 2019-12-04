@@ -32,7 +32,7 @@ class Session {
     }
 
     /**
-     * @param UserModel $user
+     * @param User $user
      */
     public function login($user) {
         if ($user) {

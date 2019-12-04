@@ -1,8 +1,8 @@
 <?php
 include_once VIEW_PATH . 'common/header.phtml';
 
-$products = ProductModel::getAllProducts();
-$website = WebsiteModel::getInstance();
+$products = Product::getAllProducts();
+$website = Website::getInstance();
 
 if (!empty($errors = \Model::$errors)) {
     foreach ($errors as $error) { ?>

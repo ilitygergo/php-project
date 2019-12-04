@@ -1,14 +1,16 @@
 <?php
 include_once VIEW_PATH . 'common/header.phtml';
 
-$product = new ProductModel();
+$product = new Product();
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $product->findById($_GET['id']);
 }
 
-$categories = ProductModel::getCategories();
-$subcategories = ProductModel::getSubcategories();
+$counter = 0;
+$availabilities = Availability::getAllAvailabilityById($product->getId());
+$categories = Product::getCategories();
+$subcategories = Product::getSubcategories();
 
 ?>
 
@@ -38,18 +40,24 @@ $subcategories = ProductModel::getSubcategories();
 
     <div class="form-row">
         <div class="form-group col-md-12">
-            <label for="nameInput">Name</label>
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="subcategoryInput">Name</label>
+            </div>
             <input type="text" class="form-control" name="product[name]" value="<?= $product->getName() ?? '' ?>">
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="brandInput">Brand</label>
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="subcategoryInput">Brand</label>
+            </div>
             <input type="text" class="form-control" name="product[brand]" value="<?= $product->getBrand() ?? '' ?>">
         </div>
         <div class="form-group col-md-6">
-            <label for="costInput">Cost</label>
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="subcategoryInput">Cost</label>
+            </div>
             <input type="text" class="form-control" name="product[cost]" value="<?= $product->getCost() ?? '' ?>">
         </div>
     </div>
@@ -99,6 +107,29 @@ $subcategories = ProductModel::getSubcategories();
             </div>
         </div>
     </div>
+
+    <hr>
+
+    <?php foreach ($availabilities as $available) : ?>
+        <input type="hidden" name="availability<?=$counter?>[product_id]" value="<?= $product->getId() ?>">
+
+        <div class="input-group mb-3">
+            <span class="input-group-text">Size</span>
+            <input type="number" class="form-control" name="availability<?=$counter?>[size]" value="<?= $available['size'] ?>">
+
+            <span class="input-group-text">Color</span>
+            <input type="text" class="form-control" name="availability<?=$counter?>[color]" value="<?= $available['color'] ?>">
+
+            <span class="input-group-text">Amount</span>
+            <input type="number" class="form-control" name="availability<?=$counter?>[amount]" value="<?= $available['amount'] ?>">
+
+            <span class="input-group-text">Sale</span>
+            <input type="number" class="form-control" name="availability<?=$counter?>[sale]" value="<?= $available['sale'] ?>">
+        </div>
+
+        <input type="hidden" name="availability" value="<?=$counter?>">
+        <?php $counter++; ?>
+    <?php endforeach; ?>
 
     <button type="submit" class="btn btn-primary" formaction="<?= '/product/update' ?>"><?php if ($product->getId()) { echo 'Update'; } else { echo 'Create'; } ?></button>
     <?php if ($product->getId()): ?>

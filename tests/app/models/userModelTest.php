@@ -1,6 +1,6 @@
 <?php
 
-class UserModelTest extends \PHPUnit\Framework\TestCase {
+class UserTest extends \PHPUnit\Framework\TestCase {
 
     /**
      *

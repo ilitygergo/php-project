@@ -1,7 +1,6 @@
 <?php
 
 class Framework {
-
     /**
      *
      */
@@ -12,7 +11,7 @@ class Framework {
 
         Model::setDb((new Mysql())->getConnection());
 
-        WebsiteModel::getInstance();
+        Website::getInstance();
 
         self::dispatch();
     }
@@ -91,7 +90,7 @@ class Framework {
         spl_autoload_register(function($classname) {
             if (substr($classname, -10) == "Controller"){
                 require_once CURR_CONTROLLER_PATH . '/' . "$classname.php";
-            } elseif (substr($classname, -5) == "Model"){
+            } else {
                 require_once  MODEL_PATH . "$classname.php";
             }
         });

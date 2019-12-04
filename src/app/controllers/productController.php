@@ -10,8 +10,16 @@ class ProductController extends \Controller {
                 $_POST['product']['image'] = $this->uploadImage();
             }
 
-            $product = new ProductModel($_POST['product']);
+            $product = new Product($_POST['product']);
             $product->save();
+
+            $availability = new Availability();
+            $availability->deleteAllByProductId($_POST['product']['id']);
+
+            for ($index = 0; $index <= $_POST['availability']; $index++) {
+                $availability->init($_POST['availability' . $index]);
+                $availability->save();
+            }
         }
 
         $this->redirectIfNotAdmin();
@@ -24,8 +32,8 @@ class ProductController extends \Controller {
      */
     public function deleteAction() {
         if (isPostRequest()) {
-            $product = new ProductModel($_POST['product']);
-            $product->delete($product->getId());
+            $product = new Product($_POST['product']);
+            $product->delete(0, $product->getId());
         }
 
         $this->redirectIfNotAdmin();

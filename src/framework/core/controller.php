@@ -32,7 +32,7 @@ class Controller {
      *
      */
     public function redirectIfNotAdmin() {
-        if ((Session::getInstance())->getUserId() != (WebsiteModel::getInstance())->getId() ) {
+        if ((Session::getInstance())->getUserId() != (Website::getInstance())->getId() ) {
             redirect_to('/');
         }
     }

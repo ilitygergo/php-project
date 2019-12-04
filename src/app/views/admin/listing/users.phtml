@@ -1,7 +1,7 @@
 <?php
 include_once VIEW_PATH . 'common/header.phtml';
 
-$users = (UserModel::getInstance())->getAllUser();
+$users = User::getAllUser();
 
 if (!empty($errors = \Model::$errors)) {
     foreach ($errors as $error) { ?>
@@ -16,7 +16,7 @@ if (!empty($errors = \Model::$errors)) {
 
 <ul class="list-group">
     <?php foreach ($users as $user): ?>
-        <?php if ($user['id'] == (WebsiteModel::getInstance())->getId()): ?>
+        <?php if ($user['id'] == (Website::getInstance())->getId()): ?>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
         <?php else: ?>
             <a href="<?= '/admin/users?id=' . $user['id'] ?>" class="list-group-item list-group-item-action flex-column align-items-start">
