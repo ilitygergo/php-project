@@ -40,6 +40,9 @@ class ProductController extends \Controller {
             $availability->deleteAllByProductId($_POST['product']['id']);
 
             $product = new Product($_POST['product']);
+
+            unlink(PUBLIC_PATH . 'uploads/products/' . $product->getImage());
+
             $product->delete(0, $product->getId());
         }
 
