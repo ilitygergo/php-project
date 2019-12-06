@@ -1,0 +1,35 @@
+<?php
+include_once VIEW_PATH . 'common/header.phtml';
+
+$products = Product::getAllProducts();
+
+?>
+
+<style>
+    .card a {
+        color: black;
+        text-decoration: none !important;
+    }
+</style>
+
+<?php foreach ($products as $product): ?>
+    <div class="card" style="width: 18rem; display: inline-block; margin: 5px;">
+        <a href="">
+            <div style="width: 100%; height: 12vw;">
+                <img src="<?= '/image?product=' . $product['image']?>" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title"><?=$product['name']?></h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </a>
+
+        <div class="text-center">
+            <a href="#" class="btn btn-outline-success">Add to cart</a>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+<?php
+include_once  VIEW_PATH . 'common/footer.phtml';
+?>

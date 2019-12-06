@@ -1,8 +1,5 @@
 {
     "name": "gergo_ility/bench-project",
-    "require": {
-        "ext-mysqli": "*"
-    },
     "autoload": {
         "classmap": [
             "src/"

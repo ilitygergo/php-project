@@ -24,25 +24,26 @@ INSERT INTO users (first_name, last_name, email, address, gender, birthday, hash
 # hashed_password = 'Password1'
 
 CREATE TABLE products (
-	id int NOT NULL AUTO_INCREMENT,
-	name varchar(255),
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(255),
     brand varchar(255),
     cost int,
     category varchar(255),
     subcategory varchar(255),
-	image varchar(255),
-  	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
+    image varchar(255),
+    target_group varchar(255),
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     PRIMARY KEY (id)
 )
-CHARACTER SET 'latin2' 
-COLLATE 'latin2_hungarian_ci';
+    CHARACTER SET 'latin2'
+    COLLATE 'latin2_hungarian_ci';
 
-INSERT INTO products (name, brand, cost, category, subcategory, image) VALUES ('YEEZY Static', 'Adidas', 76, 'Shoes', 'Sneakers', '');
-INSERT INTO products (name, brand, cost, category, subcategory, image) VALUES ('Air Max 200', 'Nike', 89, 'Shoes', 'Sneakers', '');
-INSERT INTO products (name, brand, cost, category, subcategory, image) VALUES ('Ace 2018', 'Lacoste', 129, 'Shoes', 'Sneakers', '');
-INSERT INTO products (name, brand, cost, category, subcategory, image) VALUES ('547', 'NewBalance', 99, 'Shoes', 'Sneakers', '');
-INSERT INTO products (name, brand, cost, category, subcategory, image) VALUES ('Alphaedge 4', 'Adidas', 85, 'Shoes', 'Sneakers', '');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('YEEZY Static', 'Adidas', 76, 'Shoes', 'Sneakers', 'CNyuiZTP33eHVxkY9r2q.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Air Max 200', 'Nike', 89, 'Shoes', 'Sneakers', 'GdRjBhQpVWp66awRCGIb.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Ace 2018', 'Lacoste', 129, 'Shoes', 'Sneakers', 'HPgjwcaW3GTLjqvYG6B0.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('547', 'NewBalance', 99, 'Shoes', 'Sneakers', 'oeP3rU0v6jGxQNGK0eAO.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Alphaedge 4', 'Adidas', 85, 'Shoes', 'Sneakers', 'Ot5gSWGxFrTiMnvszB98.jpg', 'male');
 
 CREATE TABLE availabilities (
     id int NOT NULL AUTO_INCREMENT,
@@ -56,7 +57,7 @@ CREATE TABLE availabilities (
 	FOREIGN KEY (product_id) REFERENCES products(id),
 	PRIMARY KEY (id)
 )
-CHARACTER SET 'latin2' 
+CHARACTER SET 'latin2'
 COLLATE 'latin2_hungarian_ci';
 
 INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '42', 'black', 1, 0.75);

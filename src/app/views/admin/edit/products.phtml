@@ -96,7 +96,7 @@ $subcategories = Product::getSubcategories();
     </div>
 
     <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-6">
             <div class="input-group-prepend">
                 <label class="input-group-text" for="subcategoryInput">Image</label>
             </div>
@@ -105,6 +105,21 @@ $subcategories = Product::getSubcategories();
                        aria-describedby="inputGroupFileAddon01" name="image">
                 <label class="custom-file-label" for="imageInput">Choose file</label>
             </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="targetGroupInput">Gender</label>
+            </div>
+            <select class="custom-select" name="product[target_group]">
+                <?php foreach (Product::$targetGroupSelection as $group) : ?>
+                    <option value="<?= $group ?>"
+                        <?php if (isset($product)) {
+                            echo $product->getTargetGroup() == $group ? 'selected' : '';
+                        }?>>
+                        <?= $group ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
     </div>
 

@@ -85,8 +85,8 @@ class User extends \Model {
      * @param $args
      */
     public function __construct($args = NULL) {
-        if ($id = $args['id']) {
-            $this->findById($id);
+        if (isset($args['id'])) {
+            $this->findById($args['id']);
         }
 
         $this->first_name = $args['first_name'] ?? $this->first_name;

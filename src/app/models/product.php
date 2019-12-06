@@ -19,6 +19,7 @@ class Product extends \Model {
         'category',
         'subcategory',
         'image',
+        'target_group',
         'created_at',
         'updated_at',
     ];
@@ -39,6 +40,16 @@ class Product extends \Model {
         'Hats' => 'Accessories',
         'Jewelry' => 'Accessories',
         'Socks' => 'Accessories',
+    ];
+
+    /**
+     * @var []
+     */
+    static public $targetGroupSelection = [
+        'Male',
+        'Female',
+        'Unisex',
+        'Kids'
     ];
 
     /**
@@ -91,6 +102,11 @@ class Product extends \Model {
     private $image;
 
     /**
+     * @var string
+     */
+    private $target_group;
+
+    /**
      * @var DateTime
      */
     private $created_at;
@@ -115,6 +131,7 @@ class Product extends \Model {
         $this->category = $args['category'] ?? parent::$db->escape_string($this->category);
         $this->subcategory = $args['subcategory'] ?? parent::$db->escape_string($this->subcategory);
         $this->image = $args['image'] ?? parent::$db->escape_string($this->image);
+        $this->target_group = $args['target_group'] ?? parent::$db->escape_string($this->target_group);
     }
 
     /**
@@ -209,6 +226,20 @@ class Product extends \Model {
     }
 
     /**
+     * @return string
+     */
+    public function getTargetGroup() {
+        return $this->target_group;
+    }
+
+    /**
+     * @param string $target_group
+     */
+    public function setTargetGroup(string $target_group) {
+        $this->target_group = $target_group;
+    }
+
+    /**
      * @return DateTime
      */
     public function getCreatedAt() {
@@ -230,6 +261,16 @@ class Product extends \Model {
     }
 
     /**
+     * @return array
+     */
+    public static function getFilteredProducts($array) {
+        return parent::findAll(
+            'SELECT * FROM ' . self::$table .
+            ' WHERE '
+        );
+    }
+
+    /**
      * @param int $id
      * @return bool|mysqli_result|void
      */
@@ -244,6 +285,7 @@ class Product extends \Model {
         $this->category = parent::$db->escape_string($properties['category']) ?? '';
         $this->subcategory = parent::$db->escape_string($properties['subcategory']) ?? '';
         $this->image = parent::$db->escape_string($properties['image']) ?? '';
+        $this->target_group = parent::$db->escape_string($properties['target_group']) ?? '';
     }
 
     /**
@@ -272,7 +314,8 @@ class Product extends \Model {
                     'cost' => parent::$db->escape_string($this->cost),
                     'category' => parent::$db->escape_string($this->category),
                     'subcategory' => parent::$db->escape_string($this->subcategory),
-                    'image' => parent::$db->escape_string($this->image)
+                    'image' => parent::$db->escape_string($this->image),
+                    'target_group' => parent::$db->escape_string($this->target_group),
                 ]
             );
         } else {
@@ -283,7 +326,8 @@ class Product extends \Model {
                     'cost' => parent::$db->escape_string($this->cost),
                     'category' => parent::$db->escape_string($this->category),
                     'subcategory' => parent::$db->escape_string($this->subcategory),
-                    'image' => parent::$db->escape_string($this->image)
+                    'image' => parent::$db->escape_string($this->image),
+                    'target_group' => parent::$db->escape_string($this->target_group),
                 ]
             );
         }
@@ -319,6 +363,10 @@ class Product extends \Model {
 
         if (!in_array($this->subcategory, self::getSubcategories())) {
             parent::$errors[] = 'Invalid category';
+        }
+
+        if (empty($this->target_group)) {
+            parent::$errors[] = 'Target group can\'t be empty';
         }
 
         return parent::$errors;

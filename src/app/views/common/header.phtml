@@ -29,10 +29,10 @@ $session = Session::getInstance();
                                 Mens
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Footwear</a>
-                                <a class="dropdown-item" href="#">Clothing</a>
-                                <a class="dropdown-item" href="#">Accessories</a>
-                                <a class="dropdown-item" href="#">Sale items</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?c=Footwear&g=Male' ?>">Footwear</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?c=Clothing&g=Male' ?>">Clothing</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?c=Accessories&g=Male' ?>">Accessories</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?g=Male&sale=TRUE' ?>">Sale items</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -40,10 +40,10 @@ $session = Session::getInstance();
                                 Womens
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Footwear</a>
-                                <a class="dropdown-item" href="#">Clothing</a>
-                                <a class="dropdown-item" href="#">Accessories</a>
-                                <a class="dropdown-item" href="#">Sale Items</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?c=Footwear&g=Female' ?>">Footwear</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?c=Footwear&g=Female' ?>">Clothing</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?c=Footwear&g=Female' ?>">Accessories</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?g=Female&sale=TRUE' ?>">Sale Items</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -51,11 +51,11 @@ $session = Session::getInstance();
                                 Categories
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Kids</a>
-                                <a class="dropdown-item" href="#">New Arrivals</a>
-                                <a class="dropdown-item" href="#">Nike</a>
-                                <a class="dropdown-item" href="#">Jordan</a>
-                                <a class="dropdown-item" href="#">adidas</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?g=Kids' ?>">Kids</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?new=TRUE' ?>">New Arrivals</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?b=Nike' ?>">Nike</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?b=Jordan' ?>">Jordan</a>
+                                <a class="dropdown-item" href="<?= '/selection/search?b=adidas' ?>">adidas</a>
                             </div>
                         </li>
                         <li>
