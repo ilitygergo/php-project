@@ -39,11 +39,11 @@ CREATE TABLE products (
     CHARACTER SET 'latin2'
     COLLATE 'latin2_hungarian_ci';
 
-INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('YEEZY Static', 'Adidas', 76, 'Shoes', 'Sneakers', 'CNyuiZTP33eHVxkY9r2q.jpg', 'male');
-INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Air Max 200', 'Nike', 89, 'Shoes', 'Sneakers', 'GdRjBhQpVWp66awRCGIb.jpg', 'male');
-INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Ace 2018', 'Lacoste', 129, 'Shoes', 'Sneakers', 'HPgjwcaW3GTLjqvYG6B0.jpg', 'male');
-INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('547', 'NewBalance', 99, 'Shoes', 'Sneakers', 'oeP3rU0v6jGxQNGK0eAO.jpg', 'male');
-INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Alphaedge 4', 'Adidas', 85, 'Shoes', 'Sneakers', 'Ot5gSWGxFrTiMnvszB98.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('YEEZY Static', 'Adidas', 76, 'Footwear', 'Sneakers', 'CNyuiZTP33eHVxkY9r2q.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Air Max 200', 'Nike', 89, 'Footwear', 'Sneakers', 'GdRjBhQpVWp66awRCGIb.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Ace 2018', 'Lacoste', 129, 'Footwear', 'Sneakers', 'HPgjwcaW3GTLjqvYG6B0.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('547', 'NewBalance', 99, 'Footwear', 'Sneakers', 'oeP3rU0v6jGxQNGK0eAO.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Alphaedge 4', 'Adidas', 85, 'Footwear', 'Sneakers', 'Ot5gSWGxFrTiMnvszB98.jpg', 'male');
 
 CREATE TABLE availabilities (
     id int NOT NULL AUTO_INCREMENT,

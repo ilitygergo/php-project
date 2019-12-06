@@ -29,10 +29,10 @@ class Product extends \Model {
      * @var []
      */
     static public $categories = [
-        'Sneakers' => 'Shoes',
-        'Boots' => 'Shoes',
-        'Casual' => 'Shoes',
-        'Sandals' => 'Shoes',
+        'Sneakers' => 'Footwear',
+        'Boots' => 'Footwear',
+        'Casual' => 'Footwear',
+        'Sandals' => 'Footwear',
         'Sweatshirts' => 'Clothes',
         'Shirts' => 'Clothes',
         'Sweaters' => 'Clothes',
@@ -254,38 +254,82 @@ class Product extends \Model {
     }
 
     /**
-     * @return array
+     * @return bool
      */
-    public static function getAllProducts() {
-        return parent::findAll('SELECT * FROM ' . self::$table);
+    public function newProduct() {
+        if ($this->created_at < strtotime("-1 week")) {
+            return TRUE;
+        }
+
+        return FALSE;
     }
 
     /**
+     * @param $args
      * @return array
      */
-    public static function getFilteredProducts($array) {
-        return parent::findAll(
-            'SELECT * FROM ' . self::$table .
-            ' WHERE '
-        );
+    public static function getAllProducts($args = []) {
+        if ($args['brand'] != '') {
+            $args['brand'] =  'brand=\'' . parent::$db->escape_string($args['brand']) . '\'';
+        } else {
+            unset($args['brand']);
+        }
+
+        if ($args['category'] != '') {
+            $args['category'] =  'category=\'' . parent::$db->escape_string($args['category']) . '\'';
+        } else {
+            unset($args['category']);
+        }
+
+        if ($args['subcategory'] != '') {
+            $args['subcategory'] =  'subcategory=\'' . parent::$db->escape_string($args['subcategory']) . '\'';
+        } else {
+            unset($args['subcategory']);
+        }
+
+        if ($args['target_group'] != '') {
+            $args['target_group'] =  'target_group=\'' . parent::$db->escape_string($args['target_group']) . '\'';
+        } else {
+            unset($args['target_group']);
+        }
+
+        if ($args['sale'] != FALSE) {
+            $args['sale'] =  'sale!=\'0\'';
+        } else {
+            unset($args['sale']);
+        }
+
+        if ($args['new'] != FALSE) {
+            $args['new'] =  'created_at=\'' . parent::$db->escape_string($args['new']) . '\' ';
+        } else {
+            unset($args['new']);
+        }
+
+        if (!empty($args)) {
+            return parent::findAll('SELECT * FROM ' . self::$table . ' WHERE ' . implode(' AND ', $args));
+        } else {
+            return parent::findAll('SELECT * FROM ' . self::$table);
+        }
     }
 
     /**
      * @param int $id
-     * @return bool|mysqli_result|void
+     * @return bool|void
      */
     public function findById($id) {
         $result = parent::findById($id);
         $properties = $this->mysqlResultToArray($result);
 
-        $this->id = parent::$db->escape_string($properties['id']) ?? '';
-        $this->name = parent::$db->escape_string($properties['name']) ?? '';
-        $this->brand = parent::$db->escape_string($properties['brand']) ?? '';
-        $this->cost = parent::$db->escape_string($properties['cost']) ?? '';
-        $this->category = parent::$db->escape_string($properties['category']) ?? '';
-        $this->subcategory = parent::$db->escape_string($properties['subcategory']) ?? '';
-        $this->image = parent::$db->escape_string($properties['image']) ?? '';
-        $this->target_group = parent::$db->escape_string($properties['target_group']) ?? '';
+        $this->id = $properties['id'] ?? '';
+        $this->name = $properties['name'] ?? '';
+        $this->brand = $properties['brand'] ?? '';
+        $this->cost = $properties['cost'] ?? '';
+        $this->category = $properties['category'] ?? '';
+        $this->subcategory = $properties['subcategory'] ?? '';
+        $this->image = $properties['image'] ?? '';
+        $this->target_group = $properties['target_group'] ?? '';
+        $this->created_at = $properties['created_at'] ?? '';
+        $this->updated_at = $properties['updated_at'] ?? '';
     }
 
     /**

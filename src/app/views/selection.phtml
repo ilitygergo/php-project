@@ -1,7 +1,7 @@
 <?php
 include_once VIEW_PATH . 'common/header.phtml';
 
-$products = Product::getAllProducts();
+$productObject = new Product();
 
 ?>
 
@@ -13,13 +13,18 @@ $products = Product::getAllProducts();
 </style>
 
 <?php foreach ($products as $product): ?>
+    <?php $productObject->findById($product['id']) ?>
     <div class="card" style="width: 18rem; display: inline-block; margin: 5px;">
         <a href="">
             <div style="width: 100%; height: 12vw;">
-                <img src="<?= '/image?product=' . $product['image']?>" class="card-img-top" alt="...">
+                <img src="<?= '/image?product=' . $productObject->getImage()?>" class="card-img-top" alt="...">
             </div>
             <div class="card-body text-center">
-                <h5 class="card-title"><?=$product['name']?></h5>
+                <h5 class="card-title"><?=$productObject->getName()?>
+                    <?php if ($productObject->newProduct()): ?>
+                        <span class="badge badge-warning">New</span>
+                    <?php endif; ?>
+                </h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
         </a>

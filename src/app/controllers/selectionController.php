@@ -19,9 +19,20 @@ class SelectionController extends \Controller {
         $brand = htmlspecialchars($_GET['b']) ?? '';
         $category = htmlspecialchars($_GET['c']) ?? '';
         $subcategory = htmlspecialchars($_GET['s']) ?? '';
-        $group = htmlspecialchars($_GET['g']) ?? '';
+        $target_group = htmlspecialchars($_GET['g']) ?? '';
         $sale = htmlspecialchars($_GET['sale']) ?? FALSE;
         $new = htmlspecialchars($_GET['new']) ?? FALSE;
+
+        $products = Product::getAllProducts(
+            [
+                'brand' => $brand,
+                'category' => $category,
+                'subcategory' => $subcategory,
+                'target_group' => $target_group,
+                'sale' => $sale,
+                'new' => $new
+            ]
+        );
 
         include CURR_VIEW_PATH . "selection.phtml";
     }
