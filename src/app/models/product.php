@@ -316,6 +316,15 @@ class Product extends \Model {
     }
 
     /**
+     * Search for product with name
+     */
+    public static function searchProduct($name) {
+        $sql = 'SELECT * FROM ' . self::$table . ' WHERE name LIKE \'%' . $name . '%\'';
+
+        return parent::findAll($sql);
+    }
+
+    /**
      * @param int $id
      * @return bool|void
      */

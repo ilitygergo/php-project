@@ -1,0 +1,44 @@
+<?php
+include_once VIEW_PATH . 'common/header.phtml';
+?>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="text-center">
+            <img src="<?= '/image?product=' . $product->getImage() ?>" class="img-fluid" style="width: 500px" alt="Responsive image">
+        </div>
+    </div>
+    <div class="form-group col-md-6">
+        <div class="card bg-secondary mb-3" style="width: 18rem;">
+            <div class="card-header" style="color: white;">
+                <?= $product->getName() ?? '' ?>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <span class="badge badge-dark">Brand:</span>
+                    <span class="float-right"><?= $product->getBrand() ?? '' ?></span>
+                </li>
+                <li class="list-group-item">
+                    <span class="badge badge-dark">Cost:</span>
+                    <span class="float-right"><?= $product->getCost() ?? '' ?></span>
+                </li>
+                <li class="list-group-item">
+                    <span class="badge badge-dark">Category:</span>
+                    <span class="float-right"><?= $product->getCategory() ?? '' ?></span>
+                </li>
+                <li class="list-group-item">
+                    <span class="badge badge-dark">Subcategory:</span>
+                    <span class="float-right"><?= $product->getSubcategory() ?? '' ?></span>
+                </li>
+                <li class="list-group-item">
+                    <span class="badge badge-dark">Group:</span>
+                    <span class="float-right"><?= $product->getTargetGroup() ?? '' ?></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<?php
+include_once  VIEW_PATH . 'common/footer.phtml';
+?>

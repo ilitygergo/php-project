@@ -5,7 +5,7 @@ class SelectionController extends \Controller {
      *
      */
     public function indexAction() {
-        include CURR_VIEW_PATH . "selection.phtml";
+        include CURR_VIEW_PATH . "product/selection.phtml";
     }
 
     /**
@@ -13,7 +13,7 @@ class SelectionController extends \Controller {
      */
     public function searchAction() {
         if (!isGetRequest()) {
-            include CURR_VIEW_PATH . "selection.phtml";
+            include CURR_VIEW_PATH . "product/selection.phtml";
         }
 
         $products = Product::getAllProducts(
@@ -27,6 +27,6 @@ class SelectionController extends \Controller {
             ]
         );
 
-        include CURR_VIEW_PATH . "selection.phtml";
+        include CURR_VIEW_PATH . "product/selection.phtml";
     }
 }

@@ -85,4 +85,19 @@ class ProductController extends \Controller {
             return FALSE;
         }
     }
+
+    /**
+     *
+     */
+    public function showAction() {
+        if (isGetRequest() && ($id = $_GET['id'])) {
+
+            $product = new Product();
+            $product->findById($id);
+
+            include CURR_VIEW_PATH . "product/product.phtml";
+        } else {
+            include CURR_VIEW_PATH . "index.phtml";
+        }
+    }
 }

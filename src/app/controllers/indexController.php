@@ -37,6 +37,12 @@ class IndexController extends \Controller {
      * Search for products
      */
     public function searchAction() {
-        include  CURR_VIEW_PATH . "index.phtml";
+        if (isPostRequest() && ($value = $_POST['searchInput']) != '') {
+            $products = Product::searchProduct($value);
+
+            include CURR_VIEW_PATH . "product/selection.phtml";
+        } else {
+            include  CURR_VIEW_PATH . "index.phtml";
+        }
     }
 }

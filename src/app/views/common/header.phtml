@@ -59,8 +59,8 @@ $session = Session::getInstance();
                             </div>
                         </li>
                         <li>
-                            <form action="<?= '/index/search' ?>" class="form-inline my-2 my-lg-0">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Search for products" aria-label="Search">
+                            <form action="<?= '/index/search?'?>" method="post" class="form-inline my-2 my-lg-0">
+                                <input value="" name="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search for products" aria-label="Search">
                                 <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="margin-right: 5px; margin-left: 5px">Search</button>
                             </form>
                         </li>

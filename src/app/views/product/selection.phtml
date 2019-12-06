@@ -17,7 +17,7 @@ $id = '';
     <?php $id = $product['product_id'] ?? $product['id'] ?>
     <?php $productObject->findById($id) ?>
     <div class="card" style="width: 18rem; display: inline-block; margin: 5px;">
-        <a href="">
+        <a href="<?= '/product/show?id=' . $productObject->getId() ?>">
             <div style="width: 100%; height: 12vw;">
                 <img src="<?= '/image?product=' . $productObject->getImage()?>" class="card-img-top" alt="...">
             </div>
