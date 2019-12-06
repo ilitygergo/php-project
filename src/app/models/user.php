@@ -87,6 +87,7 @@ class User extends \Model {
     public function __construct($args = NULL) {
         if (isset($args['id'])) {
             $this->findById($args['id']);
+            return;
         }
 
         $this->first_name = $args['first_name'] ?? $this->first_name;
@@ -193,25 +194,28 @@ class User extends \Model {
      * @return String
      */
     public function getBirthday() {
-        return substr($this->birthday, 0, strrpos($this->birthday, ' '));
+        if (strpos($this->birthday, ' ') !== false) {
+            return substr($this->birthday, 0, strrpos($this->birthday, ' '));
+        }
+
+        return $this->birthday;
     }
 
     /**
      * @param int $birthday
      */
-    public function setBirthday(int $birthday) {
+    public function setBirthday($birthday) {
         $this->birthday = $birthday;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getAge() {
         $birthDate = explode("-", $this->birthday);
-        $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md")
+        return (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md")
             ? ((date("Y") - $birthDate[0]) - 2)
             : (date("Y") - $birthDate[0]));
-        return $age;
     }
 
     /**

@@ -16,13 +16,14 @@ if (!empty($errors = \Model::$errors)) {
 
 <ul class="list-group">
     <?php foreach ($users as $user): ?>
+        <?php $userObject = new User($user); ?>
         <?php if ($user['id'] == (Website::getInstance())->getId()): ?>
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
         <?php else: ?>
             <a href="<?= '/admin/users?id=' . $user['id'] ?>" class="list-group-item list-group-item-action flex-column align-items-start">
         <?php endif; ?>
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1"><?= $user['first_name'] . ' ' . $user['last_name']?></h5>
+                    <h5 class="mb-1"><?= $user['first_name'] . ' ' . $user['last_name'] . ' (' . $userObject->getAge() . ')'?></h5>
                     <small><?= $user['email'] ?></small>
                 </div>
                 <small><?= $user['address'] ?></small>

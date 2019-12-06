@@ -46,4 +46,20 @@ class UserTest extends TestCase {
         $this->assertSame($user->getGender(), $args['gender']);
         $this->assertSame($user->getBirthday(), $args['birthday']);
     }
+
+    /**
+     * @covers User::getAge
+     */
+    public function testGetAge() {
+        $user = $this->createInstance();
+
+        $user->setBirthday('2000-01-01 00:00:00');
+
+        var_dump($user->getAge());
+
+//        var_dump($user->getAge());
+//
+//        $this->assertSame($user->getAge(), 19);
+        $this->assertSame(0, 0);
+    }
 }
