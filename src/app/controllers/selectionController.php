@@ -16,21 +16,14 @@ class SelectionController extends \Controller {
             include CURR_VIEW_PATH . "selection.phtml";
         }
 
-        $brand = htmlspecialchars($_GET['b']) ?? '';
-        $category = htmlspecialchars($_GET['c']) ?? '';
-        $subcategory = htmlspecialchars($_GET['s']) ?? '';
-        $target_group = htmlspecialchars($_GET['g']) ?? '';
-        $sale = htmlspecialchars($_GET['sale']) ?? FALSE;
-        $new = htmlspecialchars($_GET['new']) ?? FALSE;
-
         $products = Product::getAllProducts(
             [
-                'brand' => $brand,
-                'category' => $category,
-                'subcategory' => $subcategory,
-                'target_group' => $target_group,
-                'sale' => $sale,
-                'new' => $new
+                'brand' => htmlspecialchars($_GET['b']) ?? '',
+                'category' => htmlspecialchars($_GET['c']) ?? '',
+                'subcategory' => htmlspecialchars($_GET['s']) ?? '',
+                'target_group' => htmlspecialchars($_GET['g']) ?? '',
+                'sale' => htmlspecialchars($_GET['sale']) ?? '',
+                'new' => htmlspecialchars($_GET['new']) ?? ''
             ]
         );
 

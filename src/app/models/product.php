@@ -257,7 +257,7 @@ class Product extends \Model {
      * @return bool
      */
     public function newProduct() {
-        if ($this->created_at < strtotime("-1 week")) {
+        if ($this->created_at > date('Y-m-d 00:00:00', strtotime("-1 week"))) {
             return TRUE;
         }
 
@@ -293,23 +293,26 @@ class Product extends \Model {
             unset($args['target_group']);
         }
 
-        if ($args['sale'] != FALSE) {
-            $args['sale'] =  'sale!=\'0\'';
-        } else {
+        if ($args['sale'] == '') {
             unset($args['sale']);
         }
 
-        if ($args['new'] != FALSE) {
-            $args['new'] =  'created_at=\'' . parent::$db->escape_string($args['new']) . '\' ';
+        if ($args['new'] != '') {
+            $args['new'] =  'created_at > \'' . date('Y-m-d 00:00:00', strtotime("-1 week")) . '\' ';
         } else {
             unset($args['new']);
         }
 
-        if (!empty($args)) {
-            return parent::findAll('SELECT * FROM ' . self::$table . ' WHERE ' . implode(' AND ', $args));
+        if ($args['sale']) {
+            unset($args['sale']);
+            $sql = 'SELECT * FROM ' . self::$table . ', availabilities WHERE products.id = availabilities.product_id AND sale!=\'0\' AND ' . implode(' AND ', $args);
+        } else if (!empty($args)) {
+            $sql = 'SELECT * FROM ' . self::$table . ' WHERE ' . implode(' AND ', $args);
         } else {
-            return parent::findAll('SELECT * FROM ' . self::$table);
+            $sql = 'SELECT * FROM ' . self::$table;
         }
+
+        return parent::findAll($sql);
     }
 
     /**
