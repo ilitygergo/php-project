@@ -11,7 +11,7 @@ $counter = 0;
 $availabilities = Availability::getAllAvailabilityById($product->getId());
 $categories = Product::getCategories();
 $subcategories = Product::getSubcategories();
-
+$categoriesAndSubcategories = Product::getCategoriesAndSubcategories();
 ?>
 
 <div class="text-center">
@@ -82,7 +82,7 @@ $subcategories = Product::getSubcategories();
             <div class="input-group-prepend">
                 <label class="input-group-text" for="subcategoryInput">Subcategory</label>
             </div>
-            <select class="custom-select" name="product[subcategory]">
+            <select class="custom-select subcategory-select" name="product[subcategory]">
                 <option>Choose...</option>
                 <?php foreach ($subcategories as $key => $value) : ?>
                     <option value="<?= $value ?>"
@@ -164,13 +164,35 @@ $subcategories = Product::getSubcategories();
 
 <script>
     var counter = <?=$counter?>;
-    categoryChange();
 
     function categoryChange() {
-        var e = document.getElementById("category");
-        var strUser = e.options[e.selectedIndex].value;
+        let e = document.getElementById("category");
+        let category = e.options[e.selectedIndex].value;
+        let subcategories = [];
 
-        console.log(strUser);
+        <?php foreach ($categoriesAndSubcategories as $key => $value) : ?>
+            if (category === '<?=$value?>') {
+                subcategories.push(['<?=$key?>']);
+            }
+        <?php endforeach; ?>
+
+        insertOption(subcategories);
+    }
+
+    function insertOption(subcategories) {
+        $('.subcategory-select')
+            .find('option')
+            .remove()
+            .end()
+            .append(
+                '<option>Choose...</option>'
+            );
+
+        subcategories.forEach(function (item, index) {
+            $('.subcategory-select').append(
+                '<option value="' + item + '">' + item + '</option>'
+            );
+        });
     }
 
     function deleteRow(row) {

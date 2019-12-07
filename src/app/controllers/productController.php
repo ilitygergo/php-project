@@ -93,9 +93,12 @@ class ProductController extends \Controller {
         if (isGetRequest() && ($id = $_GET['id'])) {
 
             $product = new Product();
-            $product->findById($id);
 
-            include CURR_VIEW_PATH . "product/product.phtml";
+            if ($product->findById(intval($id))) {
+                include CURR_VIEW_PATH . "product/product.phtml";
+            } else {
+                include CURR_VIEW_PATH . "pageNotFound.phtml";
+            }
         } else {
             include CURR_VIEW_PATH . "index.phtml";
         }

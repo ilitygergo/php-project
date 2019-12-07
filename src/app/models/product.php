@@ -55,6 +55,13 @@ class Product extends \Model {
     /**
      * @return array
      */
+    static public function getCategoriesAndSubcategories() {
+        return Product::$categories;
+    }
+
+    /**
+     * @return array
+     */
     static public function getCategories() {
         return array_unique(array_values(Product::$categories));
     }
@@ -125,13 +132,13 @@ class Product extends \Model {
             $this->findById($id);
         }
 
-        $this->name = $args['name'] ?? parent::$db->escape_string($this->name);
-        $this->brand = $args['brand'] ?? parent::$db->escape_string($this->brand);
-        $this->cost = $args['cost'] ?? parent::$db->escape_string($this->cost);
-        $this->category = $args['category'] ?? parent::$db->escape_string($this->category);
-        $this->subcategory = $args['subcategory'] ?? parent::$db->escape_string($this->subcategory);
-        $this->image = $args['image'] ?? parent::$db->escape_string($this->image);
-        $this->target_group = $args['target_group'] ?? parent::$db->escape_string($this->target_group);
+        $this->name = $args['name'] ?? $this->name;
+        $this->brand = $args['brand'] ?? $this->brand;
+        $this->cost = $args['cost'] ?? $this->cost;
+        $this->category = $args['category'] ?? $this->category;
+        $this->subcategory = $args['subcategory'] ?? $this->subcategory;
+        $this->image = $args['image'] ?? $this->image;
+        $this->target_group = $args['target_group'] ?? $this->target_group;
     }
 
     /**
@@ -330,18 +337,23 @@ class Product extends \Model {
      */
     public function findById($id) {
         $result = parent::findById($id);
-        $properties = $this->mysqlResultToArray($result);
 
-        $this->id = $properties['id'] ?? '';
-        $this->name = $properties['name'] ?? '';
-        $this->brand = $properties['brand'] ?? '';
-        $this->cost = $properties['cost'] ?? '';
-        $this->category = $properties['category'] ?? '';
-        $this->subcategory = $properties['subcategory'] ?? '';
-        $this->image = $properties['image'] ?? '';
-        $this->target_group = $properties['target_group'] ?? '';
-        $this->created_at = $properties['created_at'] ?? '';
-        $this->updated_at = $properties['updated_at'] ?? '';
+        if ($result) {
+            $properties = $this->mysqlResultToArray($result);
+
+            $this->id = $properties['id'] ?? '';
+            $this->name = $properties['name'] ?? '';
+            $this->brand = $properties['brand'] ?? '';
+            $this->cost = $properties['cost'] ?? '';
+            $this->category = $properties['category'] ?? '';
+            $this->subcategory = $properties['subcategory'] ?? '';
+            $this->image = $properties['image'] ?? '';
+            $this->target_group = $properties['target_group'] ?? '';
+            $this->created_at = $properties['created_at'] ?? '';
+            $this->updated_at = $properties['updated_at'] ?? '';
+        }
+
+        return $result;
     }
 
     /**
@@ -419,6 +431,10 @@ class Product extends \Model {
 
         if (!in_array($this->subcategory, self::getSubcategories())) {
             parent::$errors[] = 'Invalid category';
+        }
+
+        if (!in_array($this->subcategory, array_keys($this->getCategoriesAndSubcategories(), $this->category))) {
+            parent::$errors[] = 'Category and subcategory mismatch';
         }
 
         if (empty($this->target_group)) {

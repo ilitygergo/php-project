@@ -175,11 +175,25 @@ class Availability extends \Model {
     }
 
     /**
+     * @param $product_id
      * @return array
      */
     public static function getAllAvailabilityById($product_id) {
         return parent::findAll("SELECT * FROM " . self::$table .
             " WHERE product_id='" . $product_id . "';");
+    }
+
+    /**
+     * @param $product_id
+     * @param $size
+     * @param $color
+     * @return array
+     */
+    public static function getFilteredAvailabilityById($product_id, $size, $color) {
+        return parent::findAll("SELECT * FROM " . self::$table .
+            " WHERE product_id='" . $product_id . "'" .
+            " AND size='" . $size . "'" .
+            " AND color='" . $color . "';")[0];
     }
 
     /**
@@ -189,11 +203,11 @@ class Availability extends \Model {
     public function save() {
         return parent::insert(
             [
-                'product_id' => $this->product_id,
-                'size' => $this->size,
-                'color' => $this->color,
-                'amount' => $this->amount,
-                'sale' => $this->sale
+                'product_id' => parent::$db->escape_string($this->product_id),
+                'size' => parent::$db->escape_string($this->size),
+                'color' => parent::$db->escape_string($this->color),
+                'amount' => parent::$db->escape_string($this->amount),
+                'sale' => parent::$db->escape_string($this->sale)
             ]
         );
     }
