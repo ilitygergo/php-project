@@ -1,5 +1,6 @@
 .idea/
 /vendor/
 /.mysql-data/
+/node_modules
 .phpunit.result.cache
 env.php
