@@ -74,8 +74,8 @@ class Order extends \Model {
      * @param $args
      */
     public function __construct($args = NULL) {
-        if ($id = $args['id']) {
-            $this->findById($id);
+        if (isset($args['id'])) {
+            $this->findById($args['id']);
         }
 
         $this->user_id = $args['user_id'] ?? $this->user_id;

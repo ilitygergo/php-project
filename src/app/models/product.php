@@ -128,8 +128,8 @@ class Product extends \Model {
      * @param $args
      */
     public function __construct($args = NULL) {
-        if ($id = $args['id']) {
-            $this->findById($id);
+        if (isset($args['id'])) {
+            $this->findById($args['id']);
         }
 
         $this->name = $args['name'] ?? $this->name;
@@ -276,41 +276,41 @@ class Product extends \Model {
      * @return array
      */
     public static function getAllProducts($args = []) {
-        if ($args['brand'] != '') {
+        if (isset($args['brand']) && $args['brand'] != '') {
             $args['brand'] =  'brand=\'' . parent::$db->escape_string($args['brand']) . '\'';
         } else {
             unset($args['brand']);
         }
 
-        if ($args['category'] != '') {
+        if (isset($args['category']) && $args['category'] != '') {
             $args['category'] =  'category=\'' . parent::$db->escape_string($args['category']) . '\'';
         } else {
             unset($args['category']);
         }
 
-        if ($args['subcategory'] != '') {
+        if (isset($args['subcategory']) && $args['subcategory'] != '') {
             $args['subcategory'] =  'subcategory=\'' . parent::$db->escape_string($args['subcategory']) . '\'';
         } else {
             unset($args['subcategory']);
         }
 
-        if ($args['target_group'] != '') {
+        if (isset($args['target_group']) && $args['target_group'] != '') {
             $args['target_group'] =  'target_group=\'' . parent::$db->escape_string($args['target_group']) . '\'';
         } else {
             unset($args['target_group']);
         }
 
-        if ($args['sale'] == '') {
+        if (isset($args['sale']) && $args['sale'] == '') {
             unset($args['sale']);
         }
 
-        if ($args['new'] != '') {
+        if (isset($args['new']) && $args['new'] != '') {
             $args['new'] =  'created_at > \'' . date('Y-m-d 00:00:00', strtotime("-1 week")) . '\' ';
         } else {
             unset($args['new']);
         }
 
-        if ($args['sale']) {
+        if (isset($args['sale']) && $args['sale']) {
             unset($args['sale']);
             $sql = 'SELECT * FROM ' . self::$table . ', availabilities WHERE products.id = availabilities.product_id AND sale!=\'0\' AND ' . implode(' AND ', $args);
         } else if (!empty($args)) {

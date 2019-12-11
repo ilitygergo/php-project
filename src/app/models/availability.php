@@ -67,8 +67,8 @@ class Availability extends \Model {
      * @param $args
      */
     public function __construct($args = NULL) {
-        if ($id = $args['id']) {
-            $this->findById($id);
+        if (isset($args['id'])) {
+            $this->findById($args['id']);
         }
 
         $this->size = $args['size'] ?? $this->size;
