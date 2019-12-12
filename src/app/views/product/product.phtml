@@ -1,8 +1,5 @@
 <?php
-include_once VIEW_PATH . 'common/header.phtml';
-
-$availabilities = Availability::getAllAvailabilityById($product->getId());
-$colors = [];
+include_once getenv("VIEW_PATH") . 'common/header.phtml';
 ?>
 
 <div class="text-center mb-3">
@@ -96,5 +93,5 @@ $colors = [];
 </script>
 
 <?php
-include_once  VIEW_PATH . 'common/footer.phtml';
+include_once getenv("VIEW_PATH") . 'common/footer.phtml';
 ?>

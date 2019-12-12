@@ -24,11 +24,11 @@ class Mysql {
      * @param $config array
      */
     public function __construct($config = array()){
-        $host = $config['host'] ?? 'db';
-        $user = $config['user'] ?? 'docker';
-        $password = $config['password'] ?? 'docker';
-        $dbname = $config['dbname'] ?? 'docker';
-        $port = $config['port'] ?? '3306';
+        $host = $config['host'] ?? getenv("DB_HOST");
+        $user = $config['user'] ?? getenv("DB_USERNAME");
+        $password = $config['password'] ?? getenv("DB_PASSWORD");
+        $dbname = $config['dbname'] ?? getenv("DB_NAME");
+        $port = $config['port'] ?? getenv("PORT");
 
         $this->conn = mysqli_connect($host, $user, $password, $dbname, $port) or die('Database connection error');
 

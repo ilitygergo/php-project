@@ -1,5 +1,5 @@
 <?php
-include_once VIEW_PATH . 'common/header.phtml';
+include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
 if (isPostRequest() && isset($_POST['user'])) {
     $user = new User($_POST['user']);
@@ -49,5 +49,5 @@ if (!empty($errors = \Model::$errors)) {
 </div>
 
 <?php
-include_once VIEW_PATH . 'common/footer.phtml';
+include_once getenv("VIEW_PATH") . 'common/footer.phtml';
 ?>

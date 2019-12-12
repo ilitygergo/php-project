@@ -16,6 +16,7 @@ services:
     image: php:7-fpm
     volumes:
       - ./src:/src
+      - ./env.php:/env.php
     build:
       context: ./
       dockerfile: Dockerfile

@@ -9,9 +9,9 @@ class AdminController extends \Controller {
         $this->redirectIfNotAdmin();
 
         if (isset($_GET['id'])) {
-            include CURR_VIEW_PATH . "admin/edit/users.phtml";
+            include getenv("CURR_VIEW_PATH") . "admin/edit/users.phtml";
         } else {
-            include CURR_VIEW_PATH . "admin/listing/users.phtml";
+            include getenv("CURR_VIEW_PATH") . "admin/listing/users.phtml";
         }
     }
 
@@ -21,7 +21,7 @@ class AdminController extends \Controller {
     public function ordersAction() {
         $this->redirectIfNotAdmin();
 
-        include CURR_VIEW_PATH . "admin/listing/orders.phtml";
+        include getenv("CURR_VIEW_PATH") . "admin/listing/orders.phtml";
     }
 
     /**
@@ -31,9 +31,9 @@ class AdminController extends \Controller {
         $this->redirectIfNotAdmin();
 
         if (isset($_GET['id'])) {
-            include CURR_VIEW_PATH . "admin/edit/products.phtml";
+            include getenv("CURR_VIEW_PATH") . "admin/edit/products.phtml";
         } else {
-            include CURR_VIEW_PATH . "admin/listing/products.phtml";
+            include getenv("CURR_VIEW_PATH") . "admin/listing/products.phtml";
         }
     }
 }

@@ -1,5 +1,5 @@
 <?php
-include_once VIEW_PATH . 'common/header.phtml';
+include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
 $productObject = new Product();
 $id = '';
@@ -34,5 +34,5 @@ $id = '';
 <?php endforeach; ?>
 
 <?php
-include_once  VIEW_PATH . 'common/footer.phtml';
+include_once  getenv("VIEW_PATH") . 'common/footer.phtml';
 ?>
