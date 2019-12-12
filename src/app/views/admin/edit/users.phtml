@@ -66,7 +66,10 @@ if ($user->getId() == 1) {
     <button type="submit" class="btn btn-primary" formaction="<?= '/user/update' ?>">Update</button>
     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
     <button type="submit" class="btn btn-warning float-right" formaction="<?= '/admin/users' ?>">Back</button>
-    <p class="text-center">Last changes: <?=$lastChange?></p>
+
+    <?php if ($lastChange): ?>
+        <p class="text-center">Last changes: <?=$lastChange?></p>
+    <?php endif; ?>
 </form>
 
 <script>
