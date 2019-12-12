@@ -5,7 +5,7 @@ class BasketController extends \Controller {
      *
      */
     public function indexAction() {
-        include CURR_VIEW_PATH . "user/basket.phtml";
+        include getenv("CURR_VIEW_PATH") . "user/basket.phtml";
     }
 
     /**
@@ -29,9 +29,9 @@ class BasketController extends \Controller {
 
             $order->save();
 
-            include CURR_VIEW_PATH . "user/basket.phtml";
+            include getenv("CURR_VIEW_PATH") . "user/basket.phtml";
         } else {
-            include CURR_VIEW_PATH . "pageNotFound.phtml";
+            include getenv("CURR_VIEW_PATH") . "pageNotFound.phtml";
         }
     }
 }

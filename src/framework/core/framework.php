@@ -13,8 +13,6 @@ class Framework {
 
         Website::getInstance();
 
-//        include __DIR__ . '/../../../env.php';
-
         self::dispatch();
     }
 
@@ -30,7 +28,7 @@ class Framework {
 
         require getenv("CORE_PATH") . "loader.php";
 
-        require getenv("CORE_PATH") . "mysql.php";
+        require getenv("DB_PATH") . "mysql.php";
 
         require getenv("CORE_PATH") . "model.php";
 

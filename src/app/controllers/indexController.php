@@ -5,7 +5,7 @@ class IndexController extends \Controller {
      * Handles images in the query string and displays the index page otherwise
      */
     public function indexAction() {
-        include  CURR_VIEW_PATH . "index.phtml";
+        include  getenv("CURR_VIEW_PATH") . "index.phtml";
     }
 
     /**

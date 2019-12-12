@@ -1,5 +1,5 @@
 <?php
-include_once VIEW_PATH . 'common/header.phtml';
+include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
 $basketElements = Order::getAllOrdersByUserId(Session::getInstance()->getUserId(), 'basket');
 
@@ -18,5 +18,5 @@ $basketElements = Order::getAllOrdersByUserId(Session::getInstance()->getUserId(
 </ul>
 
 <?php
-include_once  VIEW_PATH . 'common/footer.phtml';
+include_once  getenv("VIEW_PATH") . 'common/footer.phtml';
 ?>

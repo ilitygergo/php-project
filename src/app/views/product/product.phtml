@@ -1,5 +1,8 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
+
+$availabilities = Availability::getAllAvailabilityById($id);
+$colors = [];
 ?>
 
 <div class="text-center mb-3">
@@ -12,7 +15,7 @@ include_once getenv("VIEW_PATH") . 'common/header.phtml';
             <input type="hidden" name="product[product_id]" value="<?= $product->getId() ?? '' ?>">
             <div class="card-header" style="color: white;">
                 <?=$product->getName() ?? ''?>
-                <span class="badge badge-pill badge-warning">
+                <span class="badge badge-pill badge-warning float-right">
                 <?=$product->getCost() ?? ''?><?=' ' . (Website::getInstance())->getCurrency()?>
             </span>
             </div>
