@@ -1,9 +1,6 @@
 <?php
 
 class ProductController extends \Controller {
-    /**
-     *
-     */
     public function updateAction() {
         if (isPostRequest()) {
             if ($_FILES['image']['name'] != '') {
@@ -31,9 +28,6 @@ class ProductController extends \Controller {
         include getenv("CURR_VIEW_PATH") . "admin/listing/products.phtml";
     }
 
-    /**
-     *
-     */
     public function deleteAction() {
         if (isPostRequest()) {
             $availability = new Availability();
@@ -51,9 +45,6 @@ class ProductController extends \Controller {
         include getenv("CURR_VIEW_PATH") . "admin/listing/products.phtml";
     }
 
-    /**
-     *
-     */
     public function uploadImage() {
         $fileExtensions = ['jpeg','jpg','png'];
 
@@ -86,9 +77,6 @@ class ProductController extends \Controller {
         }
     }
 
-    /**
-     *
-     */
     public function showAction() {
         if (isGetRequest() && ($id = $_GET['id'])) {
 

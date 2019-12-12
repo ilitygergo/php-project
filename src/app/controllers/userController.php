@@ -1,9 +1,6 @@
 <?php
 
 class UserController extends \Controller {
-    /**
-     *
-     */
     public function profileAction() {
         if (isset($_GET['id']) && $_GET['id'] == Session::getInstance()->getUserId()) {
             include getenv("CURR_VIEW_PATH") . "admin/edit/users.phtml";
@@ -12,9 +9,6 @@ class UserController extends \Controller {
         }
     }
 
-    /**
-     *
-     */
     public function updateAction() {
         if (isPostRequest()) {
             $user = new User($_POST['user']);
@@ -34,9 +28,6 @@ class UserController extends \Controller {
         include getenv("CURR_VIEW_PATH") . "admin/listing/users.phtml";
     }
 
-    /**
-     *
-     */
     public function deleteAction() {
         if (isPostRequest()) {
             $user = new User($_POST['user']);

@@ -1,16 +1,10 @@
 <?php
 
 class BasketController extends \Controller {
-    /**
-     *
-     */
     public function indexAction() {
         include getenv("CURR_VIEW_PATH") . "user/basket.phtml";
     }
 
-    /**
-     *
-     */
     public function addAction() {
         if (isPostRequest()) {
             $availability = Availability::getFilteredAvailabilityById(

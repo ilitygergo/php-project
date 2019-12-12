@@ -1,16 +1,10 @@
 <?php
 
 class SelectionController extends \Controller {
-    /**
-     *
-     */
     public function indexAction() {
         include getenv("CURR_VIEW_PATH") . "product/selection.phtml";
     }
 
-    /**
-     *
-     */
     public function searchAction() {
         if (!isGetRequest()) {
             include getenv("CURR_VIEW_PATH") . "product/selection.phtml";

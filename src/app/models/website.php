@@ -14,6 +14,7 @@ class Website extends \Model {
     /**
      * The first element is the primary key
      * The order is important!
+     *
      * @var []
      */
     static protected $fields = [
@@ -49,9 +50,6 @@ class Website extends \Model {
      */
     private $updated_at;
 
-    /**
-     * Website constructor.
-     */
     public function __construct() {
         $mysqli_result = $this->findFirst('SELECT * FROM ' . self::$table);
 
@@ -65,7 +63,6 @@ class Website extends \Model {
     }
 
     /**
-     * Website initialization.
      * @param $args
      */
     public function init($args) {

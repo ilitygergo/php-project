@@ -81,7 +81,6 @@ class User extends \Model {
     private $updated_at;
 
     /**
-     * Users initialization.
      * @param $args
      */
     public function __construct($args = NULL) {
@@ -224,9 +223,6 @@ class User extends \Model {
         $this->password = $password;
     }
 
-    /**
-     *
-     */
     public function setHashedPassword() {
         $this->hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
     }
@@ -260,8 +256,7 @@ class User extends \Model {
     }
 
     /**
-     * Creating a user to the database
-     * @return void|boolean
+     * @return bool|string|void
      */
     public function create() {
         $this->validate();
@@ -295,8 +290,7 @@ class User extends \Model {
     }
 
     /**
-     * Saving a user to the database
-     * @return void|boolean
+     * @return bool|void
      */
     public function edit() {
         $this->validate();
@@ -331,8 +325,7 @@ class User extends \Model {
     }
 
     /**
-     * Logs the user in
-     * @return bool|string
+     * @return $this|string
      */
     public function login() {
         if (!isset($this->email)) {
@@ -361,6 +354,7 @@ class User extends \Model {
 
     /**
      * @param int $id
+     *
      * @return bool|mysqli_result|void
      */
     public function findById($id) {
@@ -370,7 +364,7 @@ class User extends \Model {
     }
 
     /**
-     * Validate the instance when saving to the database
+     * @return array
      */
     public function validate() {
         parent::$errors = [];
@@ -402,9 +396,6 @@ class User extends \Model {
         return parent::$errors;
     }
 
-    /**
-     *
-     */
     public function validatePassword() {
         if (empty($this->password)) {
             parent::$errors[] = 'Password can\'t be empty';

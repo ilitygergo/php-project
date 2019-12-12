@@ -9,6 +9,7 @@ class Order extends \Model {
     /**
      * The first element is the primary key
      * The order is important!
+     *
      * @var []
      */
     static protected $fields = [
@@ -22,6 +23,7 @@ class Order extends \Model {
 
     /**
      * The order is important!
+     *
      * @var []
      */
     static public $statusStates = [
@@ -70,7 +72,6 @@ class Order extends \Model {
     private $updated_at;
 
     /**
-     * Product initialization.
      * @param $args
      */
     public function __construct($args = NULL) {
@@ -148,7 +149,8 @@ class Order extends \Model {
 
     /**
      * @param int $id
-     * @return bool|void
+     *
+     * @return bool
      */
     public function findById($id) {
         $result = parent::findById($id);
@@ -169,7 +171,9 @@ class Order extends \Model {
 
     /**
      * @param $user_id
+     *
      * @param $status
+     *
      * @return array
      */
     public static function getAllOrdersByUserId($user_id, $status) {
@@ -179,8 +183,7 @@ class Order extends \Model {
     }
 
     /**
-     * Saving an order to the database
-     * @return void|boolean
+     * @return boolean
      */
     public function save() {
         $this->validate();
@@ -194,9 +197,6 @@ class Order extends \Model {
         );
     }
 
-    /**
-     * Validate the instance when saving to the database
-     */
     public function validate() {
         return;
     }

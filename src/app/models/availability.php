@@ -9,6 +9,7 @@ class Availability extends \Model {
     /**
      * The first element is the primary key
      * The order is important!
+     *
      * @var []
      */
     static protected $fields = [
@@ -63,7 +64,6 @@ class Availability extends \Model {
     private $updated_at;
 
     /**
-     * Product constructor.
      * @param $args
      */
     public function __construct($args = NULL) {
@@ -78,7 +78,6 @@ class Availability extends \Model {
     }
 
     /**
-     * Product initialization.
      * @param $args
      */
     public function init($args = NULL) {
@@ -176,6 +175,7 @@ class Availability extends \Model {
 
     /**
      * @param $product_id
+     *
      * @return array
      */
     public static function getAllAvailabilityById($product_id) {
@@ -185,8 +185,11 @@ class Availability extends \Model {
 
     /**
      * @param $product_id
+     *
      * @param $size
+     *
      * @param $color
+     *
      * @return array
      */
     public static function getFilteredAvailabilityById($product_id, $size, $color) {
@@ -197,7 +200,6 @@ class Availability extends \Model {
     }
 
     /**
-     * Saving a availability to the database
      * @return void|boolean
      */
     public function save() {

@@ -9,6 +9,7 @@ class Product extends \Model {
     /**
      * The first element is the primary key
      * The order is important!
+     *
      * @var []
      */
     static protected $fields = [
@@ -26,6 +27,7 @@ class Product extends \Model {
 
     /**
      * subcategory => category
+     *
      * @var []
      */
     static public $categories = [
@@ -124,7 +126,6 @@ class Product extends \Model {
     private $updated_at;
 
     /**
-     * Product initialization.
      * @param $args
      */
     public function __construct($args = NULL) {
@@ -273,6 +274,7 @@ class Product extends \Model {
 
     /**
      * @param $args
+     *
      * @return array
      */
     public static function getAllProducts($args = []) {
@@ -323,7 +325,9 @@ class Product extends \Model {
     }
 
     /**
-     * Search for product with name
+     * @param $name
+     *
+     * @return array
      */
     public static function searchProduct($name) {
         $sql = 'SELECT * FROM ' . self::$table . ' WHERE name LIKE \'%' . $name . '%\'';
@@ -333,7 +337,8 @@ class Product extends \Model {
 
     /**
      * @param int $id
-     * @return bool|void
+     *
+     * @return bool|mysqli_result
      */
     public function findById($id) {
         $result = parent::findById($id);
@@ -357,8 +362,7 @@ class Product extends \Model {
     }
 
     /**
-     * Saving a product to the database
-     * @return void|boolean
+     * @return bool|mixed|resource|void
      */
     public function save() {
         $this->validate();
@@ -404,7 +408,7 @@ class Product extends \Model {
     }
 
     /**
-     * Validate the instance when saving to the database
+     * @return array
      */
     public function validate() {
         parent::$errors = [];

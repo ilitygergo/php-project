@@ -1,16 +1,10 @@
 <?php
 
 class IndexController extends \Controller {
-    /**
-     * Handles images in the query string and displays the index page otherwise
-     */
     public function indexAction() {
         include  getenv("CURR_VIEW_PATH") . "index.phtml";
     }
 
-    /**
-     * Logs in the user
-     */
     public function loginAction() {
         if (isPostRequest() && isset($_POST['user'])) {
             $user = new User($_POST['user']);
@@ -21,9 +15,6 @@ class IndexController extends \Controller {
         include  getenv("CURR_VIEW_PATH") . "index.phtml";
     }
 
-    /**
-     * Logs the user out
-     */
     public function logoutAction() {
         if (isPostRequest()) {
             $session = Session::getInstance();
@@ -33,9 +24,6 @@ class IndexController extends \Controller {
         include  getenv("CURR_VIEW_PATH") . "index.phtml";
     }
 
-    /**
-     * Search for products
-     */
     public function searchAction() {
         if (isPostRequest() && ($value = $_POST['searchInput']) != '') {
             $products = Product::searchProduct($value);

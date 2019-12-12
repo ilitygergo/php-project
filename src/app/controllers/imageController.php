@@ -1,10 +1,6 @@
 <?php
 
 class ImageController extends \Controller {
-
-    /**
-     *
-     */
     public function indexAction() {
         if (isset($_GET['id'])) {
             $this->showImage($image = getenv("PUBLIC_PATH") . 'images/' . $_GET['id']);
