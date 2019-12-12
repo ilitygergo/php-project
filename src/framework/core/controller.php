@@ -22,7 +22,7 @@ class Controller {
         if ($wait == 0){
             header("Location:$url");
         } else {
-            include CURR_VIEW_PATH . "message.html";
+            include getenv("CURR_VIEW_PATH") . "message.html";
         }
 
         exit;

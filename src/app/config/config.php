@@ -1,7 +1,4 @@
 <?php
-
-    ob_start();
-
     function isPostRequest() {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }

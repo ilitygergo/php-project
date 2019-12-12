@@ -6,9 +6,9 @@ class UserController extends \Controller {
      */
     public function profileAction() {
         if (isset($_GET['id']) && $_GET['id'] == Session::getInstance()->getUserId()) {
-            include CURR_VIEW_PATH . "admin/edit/users.phtml";
+            include getenv("CURR_VIEW_PATH") . "admin/edit/users.phtml";
         } else {
-            include CURR_VIEW_PATH . "index.phtml";
+            include getenv("CURR_VIEW_PATH") . "index.phtml";
         }
     }
 
@@ -23,7 +23,7 @@ class UserController extends \Controller {
 
         $this->redirectIfNotAdmin();
 
-        include CURR_VIEW_PATH . "admin/listing/users.phtml";
+        include getenv("CURR_VIEW_PATH") . "admin/listing/users.phtml";
     }
 
     /**
@@ -42,6 +42,6 @@ class UserController extends \Controller {
 
         $this->redirectIfNotAdmin();
 
-        include CURR_VIEW_PATH . "admin/listing/users.phtml";
+        include getenv("CURR_VIEW_PATH") . "admin/listing/users.phtml";
     }
 }

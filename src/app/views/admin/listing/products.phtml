@@ -1,5 +1,5 @@
 <?php
-include_once VIEW_PATH . 'common/header.phtml';
+include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
 $products = Product::getAllProducts();
 $website = Website::getInstance();
@@ -33,5 +33,5 @@ if (!empty($errors = \Model::$errors)) {
 </ul>
 
 <?php
-include_once VIEW_PATH . 'common/footer.phtml';
+include_once getenv("VIEW_PATH") . 'common/footer.phtml';
 ?>

@@ -18,7 +18,7 @@ class IndexController extends \Controller {
             $user->login();
         }
 
-        include  CURR_VIEW_PATH . "index.phtml";
+        include  getenv("CURR_VIEW_PATH") . "index.phtml";
     }
 
     /**
@@ -30,7 +30,7 @@ class IndexController extends \Controller {
             $session->logout();
         }
 
-        include  CURR_VIEW_PATH . "index.phtml";
+        include  getenv("CURR_VIEW_PATH") . "index.phtml";
     }
 
     /**
@@ -40,9 +40,9 @@ class IndexController extends \Controller {
         if (isPostRequest() && ($value = $_POST['searchInput']) != '') {
             $products = Product::searchProduct($value);
 
-            include CURR_VIEW_PATH . "product/selection.phtml";
+            include getenv("CURR_VIEW_PATH") . "product/selection.phtml";
         } else {
-            include  CURR_VIEW_PATH . "index.phtml";
+            include  getenv("CURR_VIEW_PATH") . "index.phtml";
         }
     }
 }

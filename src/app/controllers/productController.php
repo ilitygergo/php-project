@@ -28,7 +28,7 @@ class ProductController extends \Controller {
 
         $this->redirectIfNotAdmin();
 
-        include CURR_VIEW_PATH . "admin/listing/products.phtml";
+        include getenv("CURR_VIEW_PATH") . "admin/listing/products.phtml";
     }
 
     /**
@@ -41,14 +41,14 @@ class ProductController extends \Controller {
 
             $product = new Product($_POST['product']);
 
-            unlink(PUBLIC_PATH . 'uploads/products/' . $product->getImage());
+            unlink(getenv("PUBLIC_PATH") . 'uploads/products/' . $product->getImage());
 
             $product->delete(0, $product->getId());
         }
 
         $this->redirectIfNotAdmin();
 
-        include CURR_VIEW_PATH . "admin/listing/products.phtml";
+        include getenv("CURR_VIEW_PATH") . "admin/listing/products.phtml";
     }
 
     /**
@@ -63,7 +63,7 @@ class ProductController extends \Controller {
         $fileExtension = strtolower(end(explode('.',$fileName)));
         $name = generateRandomString();
 
-        $uploadPath = PUBLIC_PATH . 'uploads/products/' . basename($name) . '.' . $fileExtension;
+        $uploadPath = getenv("PUBLIC_PATH") . 'uploads/products/' . basename($name) . '.' . $fileExtension;
 
         if (! in_array($fileExtension,$fileExtensions)) {
             \Model::$errors[] = "This file extension is not allowed. Please upload a JPEG or PNG file";
@@ -95,9 +95,9 @@ class ProductController extends \Controller {
             $product = new Product();
             $product->findById($id);
 
-            include CURR_VIEW_PATH . "product/product.phtml";
+            include getenv("CURR_VIEW_PATH") . "product/product.phtml";
         } else {
-            include CURR_VIEW_PATH . "index.phtml";
+            include getenv("CURR_VIEW_PATH") . "index.phtml";
         }
     }
 }
