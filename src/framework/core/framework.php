@@ -13,6 +13,8 @@ class Framework {
 
         Website::getInstance();
 
+//        include __DIR__ . '/../../../env.php';
+
         self::dispatch();
     }
 

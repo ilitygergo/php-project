@@ -1,6 +1,6 @@
 <?php
 
-class Mysql{
+class Mysql {
 
     /**
      * @var bool|false|resource

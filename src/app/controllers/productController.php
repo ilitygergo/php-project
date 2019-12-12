@@ -93,7 +93,6 @@ class ProductController extends \Controller {
         if (isGetRequest() && ($id = $_GET['id'])) {
 
             $product = new Product();
-            $product->findById($id);
 
             include getenv("CURR_VIEW_PATH") . "product/product.phtml";
         } else {
