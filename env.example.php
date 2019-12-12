@@ -25,6 +25,7 @@ putenv("DB_PATH=" . getenv("FRAMEWORK_PATH") . "database" . getenv("DS"));
 putenv("LIB_PATH=" . getenv("FRAMEWORK_PATH") . "libraries" . getenv("DS"));
 putenv("HELPER_PATH=" . getenv("FRAMEWORK_PATH") . "helpers" . getenv("DS"));
 putenv("UPLOAD_PATH=" . getenv("PUBLIC_PATH") . "uploads" . getenv("DS"));
+putenv("LOGS_PATH=" . getenv("PUBLIC_PATH") . "logs" . getenv("DS"));
 putenv("CONTROLLER=" . $controller);
 putenv("ACTION=" . $action);
 putenv("CURR_CONTROLLER_PATH=" . getenv("CONTROLLER_PATH") . getenv("DS"));

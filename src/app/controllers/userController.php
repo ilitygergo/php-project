@@ -19,6 +19,14 @@ class UserController extends \Controller {
         if (isPostRequest()) {
             $user = new User($_POST['user']);
             $user->edit();
+
+            $message = Session::getInstance()->getUserId() . " " . $user->getId() . " " . date("Y-m-d H-i-s") . "\n";
+
+            file_put_contents(
+                getenv("LOGS_PATH") . "userUpdate",
+                $message,
+                FILE_APPEND
+            );
         }
 
         $this->redirectIfNotAdmin();
