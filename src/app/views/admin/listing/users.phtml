@@ -18,7 +18,7 @@ if (!empty($errors = \Model::$errors)) {
     <?php foreach ($users as $user): ?>
         <?php $userObject = new User($user); ?>
         <?php if ($user['id'] == (Website::getInstance())->getId()): ?>
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <a href="<?= '/admin/users?id=' . $user['id'] ?>" class="list-group-item list-group-item-action flex-column align-items-start active">
             <small>Admin</small>
         <?php else: ?>
             <a href="<?= '/admin/users?id=' . $user['id'] ?>" class="list-group-item list-group-item-action flex-column align-items-start">

@@ -87,22 +87,6 @@ COLLATE 'latin2_hungarian_ci';
 INSERT INTO reviews (user_id, product_id, content, stars) VALUES (1, 1, 'Comfortable and doesn\'t get dirty easily. I love it!', 4);
 INSERT INTO reviews (user_id, product_id, content, stars) VALUES (2, 1, 'It looked different in the picture', 3);
 
-CREATE TABLE orders (
-     id int NOT NULL AUTO_INCREMENT,
-     user_id int NOT NULL,
-     availability_id int NOT NULL,
-     status varchar(255),
-     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-     updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
-     FOREIGN KEY (availability_id) REFERENCES availabilities(id),
-     PRIMARY KEY (id)
-)
-CHARACTER SET 'latin2' 
-COLLATE 'latin2_hungarian_ci';
-
-INSERT INTO orders (user_id, availability_id, status) VALUES (1, 130, 'basket');
-INSERT INTO orders (user_id, availability_id, status) VALUES (1, 130, 'basket');
-
 CREATE TABLE website (
      id int NOT NULL AUTO_INCREMENT,
      internal_id int,
@@ -119,7 +103,6 @@ INSERT INTO website (internal_id, currency) VALUES (1, 'EUR');
 
 # Deleting everything
 DROP TABLE reviews;
-DROP TABLE orders;
 DROP TABLE availabilities;
 DROP TABLE website;
 DROP TABLE users;

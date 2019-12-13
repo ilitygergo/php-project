@@ -1,7 +1,4 @@
 <?php
-$controller = $url[1] != "" ? $url[1] : "index";
-$action = $url[2] ?? "index";
-
 putenv("DB_HOST=db");
 putenv("DB_USERNAME=docker");
 putenv("DB_PASSWORD=docker");

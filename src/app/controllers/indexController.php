@@ -5,6 +5,10 @@ class IndexController extends \Controller {
         include  getenv("CURR_VIEW_PATH") . "index.phtml";
     }
 
+    public function not_foundAction() {
+        include  getenv("CURR_VIEW_PATH") . "pageNotFound.phtml";
+    }
+
     public function loginAction() {
         if (isPostRequest() && isset($_POST['user'])) {
             $user = new User($_POST['user']);

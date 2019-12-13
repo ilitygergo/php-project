@@ -1,7 +1,6 @@
 <?php
 
 class Session {
-
     /**
      * @var Session
      */
@@ -12,9 +11,6 @@ class Session {
      */
     private $user_id;
 
-    /**
-     * Session constructor.
-     */
     public function __construct() {
         session_start();
         $this->checkStoredLogin();
@@ -58,9 +54,6 @@ class Session {
         return TRUE;
     }
 
-    /**
-     *
-     */
     private function checkStoredLogin() {
         if (isset($_SESSION['user_id'])) {
             $this->user_id = $_SESSION['user_id'];

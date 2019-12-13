@@ -1,9 +1,6 @@
 <?php
 
 class Framework {
-    /**
-     *
-     */
     public static function run() {
         self::init();
 
@@ -16,11 +13,10 @@ class Framework {
         self::dispatch();
     }
 
-    /**
-     * Initializing
-     */
     private static function init() {
         $url = explode('/', strtok($_SERVER["REQUEST_URI"],'?'));
+        $controller = $url[1] != '' ? $url[1] : 'index';
+        $action = $url[2] ?? 'index';
 
         require __DIR__ . '/../../../env.php';
 
@@ -41,26 +37,34 @@ class Framework {
         $session = new Session();
     }
 
-    /**
-     * Auto loading
-     */
     private static function autoload() {
         spl_autoload_register(function($classname) {
-            if (substr($classname, -10) == "Controller"){
-                require_once getenv("CURR_CONTROLLER_PATH") . '/' . "$classname.php";
-            } else {
-                require_once  getenv("MODEL_PATH") . "$classname.php";
+            if (substr($classname, -10) == "Controller"
+                && file_exists($path = getenv("CURR_CONTROLLER_PATH") . '/' . "$classname.php")
+            ){
+                require_once $path;
+            } elseif (file_exists($path = getenv("MODEL_PATH") . "$classname.php")) {
+                require_once $path;
             }
         });
     }
 
-    /**
-     * Instantiate the controller class and call its action method
-     */
     private static function dispatch() {
         $controller_name = getenv("CONTROLLER") . "Controller";
         $action_name = getenv("ACTION") . "Action";
-        $controller = new $controller_name;
-        $controller->$action_name();
+
+        if (class_exists($controller_name)) {
+            $controller = new $controller_name;
+
+            if (method_exists($controller, $action_name)) {
+                $controller->$action_name();
+            } else {
+                $controller = new IndexController();
+                $controller->not_foundAction();
+            }
+        } else {
+            $controller = new IndexController();
+            $controller->not_foundAction();
+        }
     }
 }

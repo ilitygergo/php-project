@@ -159,7 +159,7 @@ $categoriesAndSubcategories = Product::getCategoriesAndSubcategories();
     <?php if ($product->getId()): ?>
         <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
     <?php endif; ?>
-    <button type="submit" class="btn btn-warning float-right" formaction="<?= '/admin/products' ?>">Back</button>
+    <button type="submit" class="btn btn-warning float-right" formaction="<?= $_SERVER['HTTP_REFERER'] ?>">Back</button>
 </form>
 
 <script>

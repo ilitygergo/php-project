@@ -1,21 +1,20 @@
 <?php
 
-class Controller {
+abstract class Controller {
     /**
      * @var Loader
      */
     protected $loader;
 
-    /**
-     * Controller constructor.
-     */
     public function __construct(){
         $this->loader = new Loader();
     }
 
     /**
      * @param $url
+     *
      * @param $message
+     *
      * @param int $wait
      */
     public function redirect($url, $message, $wait = 0){
@@ -28,9 +27,6 @@ class Controller {
         exit;
     }
 
-    /**
-     *
-     */
     public function redirectIfNotAdmin() {
         if ((Session::getInstance())->getUserId() != (Website::getInstance())->getId() ) {
             redirect_to('/');

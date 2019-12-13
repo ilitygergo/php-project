@@ -1,7 +1,6 @@
 <?php
 
 class Mysql {
-
     /**
      * @var bool|false|resource
      */
@@ -20,8 +19,7 @@ class Mysql {
     }
 
     /**
-     * Constructor, to connect to database, select database and set charset
-     * @param $config array
+     * @param array $config
      */
     public function __construct($config = array()){
         $host = $config['host'] ?? getenv("DB_HOST");

@@ -19,12 +19,6 @@ class AdminController extends \Controller {
         }
     }
 
-    public function ordersAction() {
-        $this->redirectIfNotAdmin();
-
-        include getenv("CURR_VIEW_PATH") . "admin/listing/orders.phtml";
-    }
-
     public function productsAction() {
         $this->redirectIfNotAdmin();
 

@@ -2,7 +2,7 @@ https://app.quickdatabasediagrams.com/#/
 
 Users
 -
-id int PK FK >- Baskets.user_id FK >- Reviews.user_id FK >- Website.internal
+id int PK FK >- Reviews.user_id FK >- Website.internal
 first_name varchar(255)
 last_name varchar(255)
 email varchar(255)
@@ -25,7 +25,7 @@ updated_at timestamp
 
 Availabilities as ol
 -
-id int PK FK >- Baskets.availability_id
+id int PK
 product_id
 size varchar(255) 
 color varchar(255)
@@ -40,24 +40,6 @@ user_id int
 product_id int
 content varchar(255)
 stars int
-created_at timestamp
-updated_at timestamp
-
-Baskets
--
-id int PK FK >- Orders.basket_id
-user_id int
-availability_id int
-amount int
-status varchar(255)
-created_at timestamp
-updated_at timestamp
-
-Orders
--
-id int PK
-basket_id int
-status varchar(255)
 created_at timestamp
 updated_at timestamp
 

@@ -38,7 +38,8 @@ class Model {
 
     /**
      * @param $data
-     * @return bool|resource
+     *
+     * @return mixed|string
      */
     function insert($data) {
         $fields = array_keys($data);
@@ -55,10 +56,9 @@ class Model {
     }
 
     /**
-     * Update records
-     * @access public
-     * @param $list array associative array needs to be updated
-     * @return mixed If succeed return the count of affected rows, else return false
+     * @param $list
+     *
+     * @return bool|int
      */
     public function update($list){
         $uplist = [];
@@ -88,11 +88,11 @@ class Model {
     }
 
     /**
-     * Delete records
-     * @access public
-     * @param $field_number int
-     * @param $key int
-     * @return mixed If succeed, return the count of deleted record, if fail, return false
+     * @param $field_number
+     *
+     * @param $key
+     *
+     * @return bool|int
      */
     public function delete($field_number, $key){
         $where = 0;
@@ -113,8 +113,7 @@ class Model {
     }
 
     /**
-     * Find the count of all records
-     *
+     * @return mixed
      */
     public function total(){
         $sql = "SELECT count(*) FROM " . static::$table;
@@ -123,10 +122,12 @@ class Model {
     }
 
     /**
-     * Get info of pagination
-     * @param $offset int offset value
-     * @param $limit int number of records of each fetch
-     * @param $where string where condition,default is empty
+     * @param $offset
+     *
+     * @param $limit
+     *
+     * @param string $where
+     *
      * @return array
      */
     public function pageRows($offset, $limit,$where = ''){
@@ -140,10 +141,11 @@ class Model {
     }
 
     /**
-     * Checks if the field has a unique value
      * @param $field
+     *
      * @param $value
-     * @return bool
+     *
+     * @return mixed
      */
     public function isUnique($field, $value) {
         $sql = "SELECT * FROM " . static::$table . " WHERE " . $field . "='$value'";
@@ -152,9 +154,9 @@ class Model {
     }
 
     /**
-     * Get info based on id
-     * @param $email string
-     * @return bool|mysqli_result
+     * @param $email
+     *
+     * @return mixed
      */
     public function findByEmail($email){
         $sql = "SELECT * FROM " . static::$table . " WHERE email='$email';";
@@ -163,9 +165,9 @@ class Model {
     }
 
     /**
-     * Get info based on id
-     * @param $id int Primary Key
-     * @return bool|mysqli_result
+     * @param $id
+     *
+     * @return mixed
      */
     public function findById($id){
         $sql = "SELECT * FROM " . static::$table . " WHERE " . static::$fields[0] . "=$id";
@@ -174,8 +176,8 @@ class Model {
     }
 
     /**
-     * Get the first record
      * @param $sql
+     *
      * @return mixed
      */
     public function findFirst($sql){
@@ -190,8 +192,8 @@ class Model {
     }
 
     /**
-     * Find all records
      * @param $sql
+     *
      * @return array
      */
     public static function findAll($sql){
@@ -207,6 +209,7 @@ class Model {
 
     /**
      * @param $result
+     *
      * @return array
      */
     public function mysqlResultToArray($result) {

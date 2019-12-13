@@ -1,7 +1,5 @@
 <?php
-
 $session = Session::getInstance();
-
 ?>
 
 <!DOCTYPE html>
@@ -71,11 +69,6 @@ $session = Session::getInstance();
                                 </form>
                             </li>
                             <li>
-                                <form action="<?= '/admin/orders' ?>" method="post" style="margin-right: 5px; margin-left: 5px">
-                                    <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal">Manage Orders</button>
-                                </form>
-                            </li>
-                            <li>
                                 <form action="<?= '/admin/products' ?>" method="post" style="margin-right: 5px; margin-left: 5px">
                                     <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal">Manage Products</button>
                                 </form>
@@ -89,9 +82,6 @@ $session = Session::getInstance();
                             <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Sign up</button>
                         </form>
                     <?php else: ?>
-                        <form action="<?= '/basket'?>" method="get" style="margin-right: 5px; margin-left: 5px">
-                            <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal">Basket</button>
-                        </form>
                         <form action="<?= '/user/profile?id=' . Session::getInstance()->getUserId() ?>" method="post" style="margin-right: 5px; margin-left: 5px">
                             <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="modal">Profile</button>
                         </form>

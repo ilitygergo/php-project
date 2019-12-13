@@ -3,8 +3,9 @@ include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
 $user = new User();
 $user->findById($_GET['id']);
+$isAdmin = Session::getInstance()->getUserId() == 1;
 
-if ($user->getId() == 1) {
+if ($user->getId() == 1 && !$isAdmin) {
     redirect_to('/admin/users');
 }
 
@@ -63,9 +64,12 @@ if ($user->getId() == 1) {
         </div>
     </div>
 
+
     <button type="submit" class="btn btn-primary" formaction="<?= '/user/update' ?>">Update</button>
-    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
-    <button type="submit" class="btn btn-warning float-right" formaction="<?= '/admin/users' ?>">Back</button>
+    <?php if ($user->getId() != 1): ?>
+        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenter">Delete</button>
+    <?php endif; ?>
+    <button type="submit" class="btn btn-warning float-right" formaction="<?= $_SERVER['HTTP_REFERER'] ?>">Back</button>
 
     <?php if ($lastChange): ?>
         <p class="text-center">Last changes: <?=$lastChange?></p>
