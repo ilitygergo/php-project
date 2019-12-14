@@ -12,6 +12,12 @@ My task is to build an online retail shop by following these bulletpoints:
 
 # Setup
 
+#### Packages
+
+For using the correct package versions, you have to install composer and npm, than run the following commands:
+- `npm install`
+- `composer install`
+
 #### Containers
 
 If you are using Windows, you have to install Docker Desktop and share the drive you pulled the project into.
@@ -23,8 +29,7 @@ You can stop them with `docker-compose stop`
 #### Database
 
 Connect to the docker database with a program of your choice (I chose sql developer). The credentials 
-can be found in the _env.example.php_ file. When you have a connection run the _uml/tables.sql_ SQL 
-commands in the database to initialize the data.
+can be found in the _env.example.php_ file.
 
 ---
 

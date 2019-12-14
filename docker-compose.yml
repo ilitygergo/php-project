@@ -17,6 +17,7 @@ services:
     volumes:
       - ./src:/src
       - ./env.php:/env.php
+      - ./node_modules:/node_modules
     build:
       context: ./
       dockerfile: Dockerfile
@@ -34,6 +35,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
+      - ./db/custom.cnf:/etc/mysql/conf.d/custom.cnf
       - my-datavolume:/var/lib/mysql
+      - ./db/tables.sql:/docker-entrypoint-initdb.d/0_init.sql
 volumes:
   my-datavolume:

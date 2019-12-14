@@ -15,7 +15,7 @@ CREATE TABLE users (
 CHARACTER SET 'latin2' 
 COLLATE 'latin2_hungarian_ci';
 
-INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Admin', 'Admin', 'admin@example.com', '', 'male', '1977-11-29', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Admin', 'Admin', 'admin@example.com', '', 'male', '1977-11-29', '$2y$10$te5meb.j9zZH9YAYzYzdgurUrFI9glnVetNX6gTMuVm1.YlodDKGG');
 INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Nagy', 'Elek', 'nagyelek@example.com', 'Szeged, Szilléri sgt. 32', 'male', '1985-07-12', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
 INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Kis', 'Jenő', 'kisjeno@example.com', 'Szeged, Kossuth u. 3B', 'male', '1980-09-01', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
 INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Lapos', 'Ödön', 'laposodon@example.com', 'Békéscsaba, Tata u. 12', 'male', '1996-10-10', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
@@ -102,8 +102,8 @@ COLLATE 'latin2_hungarian_ci';
 INSERT INTO website (internal_id, currency) VALUES (1, 'EUR');
 
 # Deleting everything
-DROP TABLE reviews;
-DROP TABLE availabilities;
-DROP TABLE website;
-DROP TABLE users;
-DROP TABLE products;
+# DROP TABLE reviews;
+# DROP TABLE availabilities;
+# DROP TABLE website;
+# DROP TABLE users;
+# DROP TABLE products;
