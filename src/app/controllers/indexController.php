@@ -30,7 +30,7 @@ class IndexController extends \Controller {
 
     public function searchAction() {
         if (isPostRequest() && ($value = $_POST['searchInput']) != '') {
-            $products = Product::searchProduct($value);
+            $products = Product::search($value);
 
             include getenv("CURR_VIEW_PATH") . "product/selection.phtml";
         } else {

@@ -10,7 +10,7 @@ class SelectionController extends \Controller {
             include getenv("CURR_VIEW_PATH") . "product/selection.phtml";
         }
 
-        $products = Product::getAllProducts(
+        $products = Product::getAll(
             [
                 'brand' => htmlspecialchars($_GET['b']) ?? '',
                 'category' => htmlspecialchars($_GET['c']) ?? '',

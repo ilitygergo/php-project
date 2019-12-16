@@ -264,7 +264,7 @@ class Product extends \Model {
     /**
      * @return bool
      */
-    public function newProduct() {
+    public function isNew() {
         if ($this->created_at > date('Y-m-d 00:00:00', strtotime("-1 week"))) {
             return TRUE;
         }
@@ -277,7 +277,7 @@ class Product extends \Model {
      *
      * @return array
      */
-    public static function getAllProducts($args = []) {
+    public static function getAll($args = []) {
         if (isset($args['brand']) && $args['brand'] != '') {
             $args['brand'] =  'brand=\'' . parent::$db->escape_string($args['brand']) . '\'';
         } else {
@@ -329,7 +329,7 @@ class Product extends \Model {
      *
      * @return array
      */
-    public static function searchProduct($name) {
+    public static function search($name) {
         $sql = 'SELECT * FROM ' . self::$table . ' WHERE name LIKE \'%' . $name . '%\'';
 
         return parent::findAll($sql);

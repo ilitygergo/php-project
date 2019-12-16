@@ -178,7 +178,7 @@ class Availability extends \Model {
      *
      * @return array
      */
-    public static function getAllAvailabilityById($product_id) {
+    public static function getAllById($product_id) {
         return parent::findAll("SELECT * FROM " . self::$table .
             " WHERE product_id='" . $product_id . "';");
     }
@@ -192,7 +192,7 @@ class Availability extends \Model {
      *
      * @return array
      */
-    public static function getFilteredAvailabilityById($product_id, $size, $color) {
+    public static function getFilteredById($product_id, $size, $color) {
         return parent::findAll("SELECT * FROM " . self::$table .
             " WHERE product_id='" . $product_id . "'" .
             " AND size='" . $size . "'" .

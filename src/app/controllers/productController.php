@@ -25,7 +25,7 @@ class ProductController extends \Controller {
 
         $this->redirectIfNotAdmin();
 
-        include getenv("CURR_VIEW_PATH") . "admin/listing/products.phtml";
+        redirect_to('/admin/products?id=' . $_POST['product']['id']);
     }
 
     public function deleteAction() {

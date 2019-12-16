@@ -251,7 +251,7 @@ class User extends \Model {
     /**
      * @return array
      */
-    public static function getAllUser() {
+    public static function getAll() {
         return parent::findAll('SELECT * FROM ' . self::$table);
     }
 

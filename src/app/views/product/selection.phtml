@@ -23,7 +23,7 @@ $id = '';
             </div>
             <div class="card-body text-center">
                 <h5 class="card-title"><?=$productObject->getName()?>
-                    <?php if ($productObject->newProduct()): ?>
+                    <?php if ($productObject->isNew()): ?>
                         <span class="badge badge-warning">New</span>
                     <?php endif; ?>
                 </h5>

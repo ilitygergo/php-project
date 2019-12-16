@@ -1,7 +1,7 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
-$users = User::getAllUser();
+$users = User::getAll();
 
 if (!empty($errors = \Model::$errors)) {
     foreach ($errors as $error) { ?>

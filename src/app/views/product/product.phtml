@@ -1,7 +1,8 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
-$availabilities = Availability::getAllAvailabilityById($id);
+$availabilities = Availability::getAllById($id);
+$reviews = Review::getAllByProductId($id);
 $colors = [];
 ?>
 
@@ -9,57 +10,78 @@ $colors = [];
     <img src="<?= '/image?product=' . $product->getImage() ?>" class="img-fluid" style="width: 500px" alt="Responsive image">
 </div>
 
-<form action="<?= '/basket/add' ?>" method="post">
-    <div class="form-row d-flex justify-content-center">
-        <div class="card bg-secondary w-50">
-            <input type="hidden" name="product[product_id]" value="<?= $product->getId() ?? '' ?>">
-            <div class="card-header" style="color: white;">
-                <?=$product->getName() ?? ''?>
-                <span class="badge badge-pill badge-warning float-right">
-                <?=$product->getCost() ?? ''?><?=' ' . (Website::getInstance())->getCurrency()?>
-            </span>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <span class="badge badge-dark">Brand:</span>
-                    <span class="float-right"><?= $product->getBrand() ?? '' ?></span>
-                </li>
-                <li class="list-group-item">
-                    <span class="badge badge-dark">Cost:</span>
-                    <span class="float-right"><?= $product->getCost() ?? '' ?></span>
-                </li>
-                <li class="list-group-item">
-                    <span class="badge badge-dark">Category:</span>
-                    <span class="float-right"><?= $product->getCategory() ?? '' ?></span>
-                </li>
-                <li class="list-group-item">
-                    <span class="badge badge-dark">Subcategory:</span>
-                    <span class="float-right"><?= $product->getSubcategory() ?? '' ?></span>
-                </li>
-                <li class="list-group-item">
-                    <span class="badge badge-dark">Group:</span>
-                    <span class="float-right"><?= $product->getTargetGroup() ?? '' ?></span>
-                </li>
-                <li class="list-group-item">
-                    <span class="badge badge-dark">Color:</span>
-                    <div class="btn-group btn-group-toggle float-right" id="colorRadio" data-toggle="buttons">
-                        <?php foreach ($availabilities as $availability): ?>
-                            <?php if ($availability['amount'] != 0 && !in_array($availability['color'], $colors)): ?>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="product[color]" value="<?=$availability['color'];?>" autocomplete="off" checked> <?=$availability['color'];?>
-                                </label>
-                                <?php $colors[] = $availability['color'];
-                            endif; ?>
-                        <?php endforeach; ?>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <span class="badge badge-dark">Size:</span>
-                    <div class="btn-group btn-group-toggle float-right" id="sizeRadio" data-toggle="buttons"></div>
-                </li>
-            </ul>
+
+<div class="form-row d-flex justify-content-center">
+    <div class="card bg-secondary w-50 mb-3">
+        <input type="hidden" name="product[product_id]" value="<?= $product->getId() ?? '' ?>">
+        <div class="card-header" style="color: white;">
+            <?=$product->getName() ?? ''?>
+            <span class="badge badge-pill badge-warning float-right">
+            <?=$product->getCost() ?? ''?><?=' ' . (Website::getInstance())->getCurrency()?>
+        </span>
         </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <span class="badge badge-dark">Brand:</span>
+                <span class="float-right"><?= $product->getBrand() ?? '' ?></span>
+            </li>
+            <li class="list-group-item">
+                <span class="badge badge-dark">Cost:</span>
+                <span class="float-right"><?= $product->getCost() ?? '' ?></span>
+            </li>
+            <li class="list-group-item">
+                <span class="badge badge-dark">Category:</span>
+                <span class="float-right"><?= $product->getCategory() ?? '' ?></span>
+            </li>
+            <li class="list-group-item">
+                <span class="badge badge-dark">Subcategory:</span>
+                <span class="float-right"><?= $product->getSubcategory() ?? '' ?></span>
+            </li>
+            <li class="list-group-item">
+                <span class="badge badge-dark">Group:</span>
+                <span class="float-right"><?= $product->getTargetGroup() ?? '' ?></span>
+            </li>
+            <li class="list-group-item">
+                <span class="badge badge-dark">Color:</span>
+                <div class="btn-group btn-group-toggle float-right" id="colorRadio" data-toggle="buttons">
+                    <?php foreach ($availabilities as $availability): ?>
+                        <?php if ($availability['amount'] != 0 && !in_array($availability['color'], $colors)): ?>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="product[color]" value="<?=$availability['color'];?>" autocomplete="off" checked> <?=$availability['color'];?>
+                            </label>
+                            <?php $colors[] = $availability['color'];
+                        endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <span class="badge badge-dark">Size:</span>
+                <div class="btn-group btn-group-toggle float-right" id="sizeRadio" data-toggle="buttons"></div>
+            </li>
+        </ul>
+    </div>
+
+<form class="form-row justify-content-center col-md-12 mb-5" action="<?= '/review' ?>" method="post">
+    <div class="col-md-6">
+        <input type="hidden" name="review[user_id]" value="<?= Session::getInstance()->getUserId() ?>">
+        <input type="hidden" name="review[product_id]" value="<?= $product->getId() ?? '' ?>">
+        <textarea class="form-control" aria-label="With textarea" name="review[content]" placeholder="Write a review..."></textarea>
+        <input type="hidden" name="review[stars]" value="5">
+        <button type="submit" class="btn btn-warning float-right">Send</button>
+    </div>
 </form>
+
+<?php foreach ($reviews as $review) : ?>
+    <div class="col-md-12 jumbotron jumbotron-fluid">
+        <div class="container">
+            <?php
+                $user = new User(['id' => $review['user_id']]);
+            ?>
+            <h1 class="display-4"><?= $user->getFirstName() . ' ' . $user->getLastName()  ?></h1>
+            <p class="lead"><?= $review['content'] ?></p>
+        </div>
+    </div>
+<?php endforeach; ?>
 
 <script>
 
