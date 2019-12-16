@@ -1,0 +1,23 @@
+{
+  "name": "bench-project",
+  "version": "1.0.0",
+  "description": "My task is to build an online retail shop by following these bulletpoints:\r * PHP OOP\r * docke-compose.yml to run the project\r * MySQL (I used MariaDB)\r * PhpUnit\r * .env configuration\r * SOLID principles\r * Sass\r * File handling",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "flatpickr": "^4.6.3",
+    "node-sass": "^4.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.epam.com/gergo_ility/bench-project.git"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -3,5 +3,4 @@
 /.mysql-data/
 /node_modules
 .phpunit.result.cache
-package.json
 env.php
