@@ -1,0 +1,16 @@
+$porcelain: #edeeef;
+$navbar: #e1e6ea;
+
+body {
+  background-color: $porcelain;
+
+  header {
+    .navbar {
+      background-color: $navbar !important;
+    }
+  }
+
+  .jumbotron {
+    background-color: white;
+  }
+}

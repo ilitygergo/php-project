@@ -10,8 +10,11 @@
     "flatpickr": "^4.6.3",
     "node-sass": "^4.13.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
   "scripts": {
+    "build-css": "node-sass --include-path scss src/public/scss/main.scss src/public/css/main.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
