@@ -129,7 +129,7 @@ class Product extends \Model {
      * @param $args
      */
     public function __construct($args = NULL) {
-        if (isset($args['id'])) {
+        if (isset($args['id']) && $args['id'] != '') {
             $this->findById($args['id']);
         }
 
@@ -273,11 +273,17 @@ class Product extends \Model {
     }
 
     /**
-     * @param $args
+     * @param array $args
+     *
+     * @param bool $count
+     *
+     * @param int $limit
+     *
+     * @param int $offset
      *
      * @return array
      */
-    public static function getAll($args = []) {
+    public static function getAll($args = [], $count = FALSE, $limit = 0, $offset = 0) {
         if (isset($args['brand']) && $args['brand'] != '') {
             $args['brand'] =  'brand=\'' . parent::$db->escape_string($args['brand']) . '\'';
         } else {
@@ -319,6 +325,18 @@ class Product extends \Model {
             $sql = 'SELECT * FROM ' . self::$table . ' WHERE ' . implode(' AND ', $args);
         } else {
             $sql = 'SELECT * FROM ' . self::$table;
+        }
+
+        if ($limit != 0) {
+            $sql .= ' LIMIT ' . $limit . ' ';
+        }
+
+        if ($offset != 0) {
+            $sql .= ' OFFSET ' . $offset . ' ';
+        }
+
+        if ($count) {
+            $sql = str_replace('SELECT * FROM', 'SELECT COUNT(*) FROM', $sql);
         }
 
         return parent::findAll($sql);
