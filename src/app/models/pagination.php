@@ -127,9 +127,13 @@ class Pagination {
     }
 
     /**
-     * @return string
+     * @return string|void
      */
     public function navigationButtons() {
+        if (!$this->total_count) {
+            return;
+        }
+
         $nav = "<nav  aria-label=\"\">";
         $nav .= "<ul class=\"pagination pagination-sm\">";
         $nav .= $this->previousButton();

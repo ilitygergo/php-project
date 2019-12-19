@@ -2,8 +2,9 @@
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
 $productObject = new Product();
-echo $pagination->navigationButtons();
 ?>
+
+<?= $pagination->navigationButtons(); ?>
 
 <?php foreach ($products as $product): ?>
     <?php $id = $product['product_id'] ?? $product['id'] ?>
