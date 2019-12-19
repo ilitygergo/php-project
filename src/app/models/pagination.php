@@ -51,7 +51,7 @@ class Pagination {
      */
     public function previous_page() {
         $previous = $this->current_page - 1;
-        return ($previous > 0) ? $previous : false;
+        return ($previous > 0) ? $previous : FALSE;
     }
 
     /**
@@ -59,7 +59,7 @@ class Pagination {
      */
     public function next_page() {
         $next = $this->current_page + 1;
-        return ($next <= $this->total_pages()) ? $next : false;
+        return ($next <= $this->total_pages()) ? $next : FALSE;
     }
 
     /**
@@ -85,13 +85,9 @@ class Pagination {
      * @return string
      */
     public function previousButton() {
-        $button = '';
-
-        if ($this->previous_page()) {
-            $button .= "<a href=\"" . '/selection/search?' .  $this->pageQueryParam($this->current_page - 1) . "\">";
-            $button .= "<button type=\"submit\" class=\"btn btn-dark\">&larr;</button>";
-            $button .= "</a>";
-        }
+        $button = "<li class=\"page-item " . ($this->previous_page() == FALSE ? "disabled" : "") . "\" >";
+        $button .= "<a class=\"page-link\" href=\"" . getURL()['path'] . "?" .  $this->pageQueryParam($this->current_page - 1) . "\">Previous</a>";
+        $button .= "</li>";
 
         return $button;
     }
@@ -100,13 +96,9 @@ class Pagination {
      * @return string
      */
     public function nextButton() {
-        $button = '';
-
-        if ($this->next_page()) {
-            $button .= "<a href=\"" . '/selection/search?' .  $this->pageQueryParam($this->current_page + 1) . "\">";
-            $button .= "<button type=\"submit\" class=\"btn btn-dark\">&rarr;</button>";
-            $button .= "</a>";
-        }
+        $button = "<li class=\"page-item " . ($this->next_page() == FALSE ? "disabled" : "") . "\" >";
+        $button .= "<a class=\"page-link\" href=\"" . getURL()['path'] . "?" .  $this->pageQueryParam($this->current_page + 1) . "\">Next</a>";
+        $button .= "</li>";
 
         return $button;
     }
@@ -119,13 +111,15 @@ class Pagination {
 
         for ($i = 1; $i <= $this->total_pages(); $i++) {
             if ($i == $this->current_page) {
-                $buttons .= "<a href=\"" . '/selection/search?' .  $this->pageQueryParam($i) . "\">";
-                $buttons .= "<button disabled type=\"submit\" class=\"btn btn-dark\">" . $i . "</button>";
-                $buttons .= "</a>";
+                $buttons .= "<li class=\"page-item active\">";
+                $buttons .= "<span class=\"page-link\">" . $i;
+                $buttons .= "<span class=\"sr-only\">(current)</span>";
+                $buttons .= "</span>";
+                $buttons .= "</li>";
             } else {
-                $buttons .= "<a href=\"" . '/selection/search?' .  $this->pageQueryParam($i) . "\">";
-                $buttons .= "<button type=\"submit\" class=\"btn btn-dark\">" . $i . "</button>";
-                $buttons .= "</a>";
+                $buttons .= "<li class=\"page-item\">";
+                $buttons .= "<a class=\"page-link\" href=\"" . getURL()['path'] . "?" .  $this->pageQueryParam($i) . "\">" . $i . "</a>";
+                $buttons .= "</li>";
             }
         }
 
@@ -136,11 +130,13 @@ class Pagination {
      * @return string
      */
     public function navigationButtons() {
-        $nav = "<div class=\"col-md-12\">";
+        $nav = "<nav  aria-label=\"\">";
+        $nav .= "<ul class=\"pagination pagination-sm\">";
         $nav .= $this->previousButton();
         $nav .= $this->numberButtons();
         $nav .= $this->nextButton();
-        $nav .= "<div>";
+        $nav .= "</ul>";
+        $nav .= "</nav>";
         return $nav;
     }
 }

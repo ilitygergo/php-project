@@ -249,10 +249,31 @@ class User extends \Model {
     }
 
     /**
-     * @return array
+     * @param type $limit
+     * 
+     * @param type $offset
+     * 
+     * @return type
      */
-    public static function getAll() {
-        return parent::findAll('SELECT * FROM ' . self::$table);
+    public static function getAll($limit = 0, $offset = 0) {
+        $sql = 'SELECT * FROM ' . self::$table;
+
+        if ($limit != 0) {
+            $sql .= ' LIMIT ' . $limit . ' ';
+        }
+
+        if ($offset != 0) {
+            $sql .= ' OFFSET ' . $offset . ' ';
+        }
+
+        return parent::findAll($sql);
+    }
+
+    /**
+     * @return int
+     */
+    public static function countAll() {
+        return parent::findAll('SELECT COUNT(*) FROM ' . self::$table);
     }
 
     /**
@@ -368,7 +389,7 @@ class User extends \Model {
      */
     public function validate() {
         parent::$errors = [];
-
+        
         if (empty($this->first_name)) {
             parent::$errors[] = 'First name can\'t be empty';
         }

@@ -1,7 +1,7 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
-$users = User::getAll();
+$users = User::getAll($pagination->per_page, $pagination->offset());
 
 if (!empty($errors = \Model::$errors)) {
     foreach ($errors as $error) { ?>
@@ -11,9 +11,9 @@ if (!empty($errors = \Model::$errors)) {
         <?php
     }
 }
-
-echo $pagination->navigationButtons();
 ?>
+
+<?= $pagination->navigationButtons(); ?>
 
 <ul class="list-group">
     <?php foreach ($users as $user): ?>

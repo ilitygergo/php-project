@@ -15,7 +15,7 @@ class AdminController extends \Controller {
 
             include getenv("CURR_VIEW_PATH") . "admin/edit/users.phtml";
         } else {
-            $pagination = $this->setPagination();
+            $pagination = new Pagination($_GET['page'] ?? 1, 5, User::countAll());
 
             include getenv("CURR_VIEW_PATH") . "admin/listing/users.phtml";
         }
@@ -27,7 +27,7 @@ class AdminController extends \Controller {
         if (isset($_GET['id'])) {
             include getenv("CURR_VIEW_PATH") . "admin/edit/products.phtml";
         } else {
-            $pagination = $this->setPagination();
+            $pagination = new Pagination($_GET['page'] ?? 1, 5, Product::getAll([], TRUE));
 
             include getenv("CURR_VIEW_PATH") . "admin/listing/products.phtml";
         }
@@ -68,16 +68,5 @@ class AdminController extends \Controller {
         $time = str_replace("-",":", $last[3]);
 
         return $user->getFirstName() . ' ' . $user->getLastName() . ' ' . $last[2] . ' ' . $time;
-    }
-
-    /**
-     * @return Pagination
-     */
-    public function setPagination() {
-        $current_page = $_GET['page'] ?? 1;
-        $per_page = 5;
-        $total_count = 2;
-
-        return new Pagination($current_page, $per_page, $total_count);
     }
 }

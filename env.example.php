@@ -3,7 +3,7 @@ putenv("DB_HOST=db");
 putenv("DB_USERNAME=docker");
 putenv("DB_PASSWORD=docker");
 putenv("DB_NAME=docker");
-putenv("PORT=3308");
+putenv("PORT=3306");
 
 // Define path constants
 

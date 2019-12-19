@@ -1,7 +1,7 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
-$products = Product::getAll();
+$products = Product::getAll([], FALSE, $pagination->per_page, $pagination->offset());
 $website = Website::getInstance();
 
 if (!empty($errors = \Model::$errors)) {
@@ -12,7 +12,6 @@ if (!empty($errors = \Model::$errors)) {
         <?php
     }
 }
-
 ?>
 
 <ul class="list-group">
@@ -20,6 +19,11 @@ if (!empty($errors = \Model::$errors)) {
         <div class="form-group col-md-6">
             <a href="<?= '/admin/products?id=create' ?>" class="btn btn-primary">Create Product</a>
         </div>
+        
+        <div class="col-md-12">
+            <?= $pagination->navigationButtons(); ?>
+        </div>
+
     </div>
     <?php foreach ($products as $product): ?>
         <a href="<?= '/admin/products?id=' . $product['id'] ?>" class="list-group-item list-group-item-action flex-column align-items-start">
