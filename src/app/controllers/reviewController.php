@@ -9,4 +9,18 @@ class ReviewController extends \Controller {
 
         redirect_to('/product/show?id=' . $_POST['review']['product_id']);
     }
+
+    public function updateAction() {
+        if (isset($_GET['id'])) {
+        }
+
+        redirect_to('/product/show?id=' . $_GET['id']);
+    }
+
+    public function deleteAction() {
+        if (isset($_GET['id'])) {
+        }
+
+        redirect_to('/product/show?id=' . $_GET['id']);
+    }
 }

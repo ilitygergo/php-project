@@ -20,7 +20,20 @@ INSERT INTO users (first_name, last_name, email, address, gender, birthday, hash
 INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Kis', 'Jenő', 'kisjeno@example.com', 'Szeged, Kossuth u. 3B', 'male', '1980-09-01', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
 INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Lapos', 'Ödön', 'laposodon@example.com', 'Békéscsaba, Tata u. 12', 'male', '1996-10-10', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
 INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Csonka', 'Károly', 'csonkakaroly@example.com', 'Budapest, Deák tér 7', 'male', '1992-04-22', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
-INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('Szarvas', 'Edina', 'szarvasedina@example.com', 'Orosháza, Petőfi u. 2', 'female', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test', 'test', 'test@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test1', 'test1', 'test1@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test2', 'test2', 'test2@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test3', 'test3', 'test3@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test4', 'test4', 'test4@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test5', 'test5', 'test5@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test6', 'test6', 'test6@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test7', 'test7', 'test7@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test8', 'test8', 'test8@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test9', 'test9', 'test9@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test10', 'test10', 'test10@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test11', 'test11', 'test11@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+INSERT INTO users (first_name, last_name, email, address, gender, birthday, hashed_password) VALUES ('test12', 'test12', 'test12@example.com', 'Orosháza, Petőfi u. 2', 'male', '1985-01-19', '$2y$10$R5g/6fT8PaYLWDUxtrw9QeA.2/Rq.treWad6j5c600H9IvIBVyylO');
+
 # hashed_password = 'Password1'
 
 CREATE TABLE products (
@@ -79,6 +92,7 @@ INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '4
 INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '46', 'white', 20, 0);
 
 CREATE TABLE reviews (
+    id int NOT NULL,
 	user_id int NOT NULL,
 	product_id int NOT NULL,
 	content varchar(255),
@@ -86,13 +100,14 @@ CREATE TABLE reviews (
   	created_at TIMESTAMP NOT NULL DEFAULT NOW(),
 	updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
 	FOREIGN KEY (user_id) REFERENCES users(id),
-	FOREIGN KEY (product_id) REFERENCES products(id)
+	FOREIGN KEY (product_id) REFERENCES products(id),
+    PRIMARY KEY (id)
 )
 CHARACTER SET 'latin2' 
 COLLATE 'latin2_hungarian_ci';
 
-INSERT INTO reviews (user_id, product_id, content, stars) VALUES (1, 1, 'Comfortable and doesn\'t get dirty easily. I love it!', 4);
-INSERT INTO reviews (user_id, product_id, content, stars) VALUES (2, 1, 'It looked different in the picture', 3);
+INSERT INTO reviews (id, user_id, product_id, content, stars) VALUES (1, 1, 1, 'Comfortable and doesnt get dirty easily. I love it!', 4);
+INSERT INTO reviews (id, user_id, product_id, content, stars) VALUES (2, 2, 1, 'It looked different in the picture', 3);
 
 CREATE TABLE website (
      id int NOT NULL AUTO_INCREMENT,

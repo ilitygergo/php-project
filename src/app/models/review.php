@@ -12,6 +12,7 @@ class Review extends \Model {
      * @var []
      */
     static protected $fields = [
+        'id',
         'user_id',
         'product_id',
         'content',
@@ -19,6 +20,11 @@ class Review extends \Model {
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * @var int
+     */
+    private $id;
 
     /**
      * @var int
@@ -54,10 +60,25 @@ class Review extends \Model {
      * @param $args
      */
     public function __construct($args = NULL) {
+        $this->id = $args['id'] ?? $this->id;
         $this->user_id = $args['user_id'] ?? $this->user_id;
         $this->product_id = $args['product_id'] ?? $this->product_id;
         $this->content = $args['content'] ?? $this->content;
         $this->stars = $args['stars'] ?? $this->stars;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id) {
+        $this->id = $id;
     }
 
     /**
@@ -166,6 +187,10 @@ class Review extends \Model {
      */
     public function validate() {
         parent::$errors = [];
+
+        if (empty($this->id)) {
+            parent::$errors[] = 'Id can\'t be empty';
+        }
 
         if (empty($this->user_id)) {
             parent::$errors[] = 'User id can\'t be empty';

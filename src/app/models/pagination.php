@@ -1,6 +1,6 @@
 <?php
 
-class Pagination {
+class Pagination extends \Model {
     /**
      * @var int
      */
