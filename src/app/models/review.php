@@ -60,6 +60,10 @@ class Review extends \Model {
      * @param $args
      */
     public function __construct($args = NULL) {
+        if (isset($args['id'])) {
+            $this->findById($args['id']);
+        }
+
         $this->id = $args['id'] ?? $this->id;
         $this->user_id = $args['user_id'] ?? $this->user_id;
         $this->product_id = $args['product_id'] ?? $this->product_id;
@@ -152,6 +156,24 @@ class Review extends \Model {
     }
 
     /**
+     * @param int $id
+     *
+     * @return bool|mysqli_result|void
+     */
+    public function findById($id) {
+        $result = parent::findById($id);
+        $array = $this->mysqlResultToArray($result);
+
+        $this->id = $array['id'] ?? '';
+        $this->user_id = $array['user_id'] ?? '';
+        $this->product_id = $array['product_id'] ?? '';
+        $this->content = $array['content'] ?? '';
+        $this->stars = $array['stars'] ?? '';
+        $this->created_at = $array['created_at'] ?? '';
+        $this->updated_at = $array['updated_at'] ?? '';
+    }
+
+    /**
      * @param $product_id
      *
      * @return array
@@ -187,10 +209,6 @@ class Review extends \Model {
      */
     public function validate() {
         parent::$errors = [];
-
-        if (empty($this->id)) {
-            parent::$errors[] = 'Id can\'t be empty';
-        }
 
         if (empty($this->user_id)) {
             parent::$errors[] = 'User id can\'t be empty';

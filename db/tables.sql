@@ -92,7 +92,7 @@ INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '4
 INSERT INTO availabilities (product_id, size, color, amount, sale) VALUES (1, '46', 'white', 20, 0);
 
 CREATE TABLE reviews (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
 	product_id int NOT NULL,
 	content varchar(255),

@@ -86,10 +86,8 @@ $colors = [];
                     </svg>
                 </a>
             <?php endif; ?>
-            <?php
-                $user = new User(['id' => $review['user_id']]);
-            ?>
-            <h1 class="display-4"><?= $user->getFirstName() . ' ' . $user->getLastName()  ?></h1>
+            <?php $user = new User(['id' => $review['user_id']]);?>
+            <h1 class="display-4"><?= $user->getFirstName() . ' ' . $user->getLastName() ?></h1>
             <p class="lead"><?= $review['content'] ?></p>
         </div>
     </div>

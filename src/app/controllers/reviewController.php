@@ -19,8 +19,13 @@ class ReviewController extends \Controller {
 
     public function deleteAction() {
         if (isset($_GET['id'])) {
+            $review = new Review($_GET);
+
+            $product_id = $review->getProductId();
+
+            $review->delete(0, $review->getId());
         }
 
-        redirect_to('/product/show?id=' . $_GET['id']);
+        redirect_to('/product/show?id=' . $product_id);
     }
 }
