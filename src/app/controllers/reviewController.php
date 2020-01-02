@@ -23,7 +23,7 @@ class ReviewController extends \Controller {
 
             $product_id = $review->getProductId();
 
-            $review->delete(0, $review->getId());
+            $review->delete(Review::PRIMARY_KEY, $review->getId());
         }
 
         redirect_to('/product/show?id=' . $product_id);

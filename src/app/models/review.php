@@ -1,14 +1,14 @@
 <?php
 
 class Review extends \Model {
+    const PRIMARY_KEY = 0;
+
     /**
      * @var string
      */
     static protected $table = 'reviews';
 
     /**
-     * The order is important!
-     *
      * @var []
      */
     static protected $fields = [

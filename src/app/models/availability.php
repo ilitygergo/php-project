@@ -1,15 +1,15 @@
 <?php
 
 class Availability extends \Model {
+    const PRIMARY_KEY = 0;
+    const FOREIGN_KEY_PRODUCT = 1;
+
     /**
      * @var string
      */
     static protected $table = 'availabilities';
 
     /**
-     * The first element is the primary key
-     * The order is important!
-     *
      * @var []
      */
     static protected $fields = [
@@ -218,6 +218,6 @@ class Availability extends \Model {
      * @return bool|mixed
      */
     public function deleteAllByProductId($product_id) {
-        return parent::delete(1, $product_id);
+        return parent::delete(self::FOREIGN_KEY_PRODUCT, $product_id);
     }
 }

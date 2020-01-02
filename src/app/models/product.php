@@ -1,15 +1,14 @@
 <?php
 
 class Product extends \Model {
+    const PRIMARY_KEY = 0;
+
     /**
      * @var string
      */
     static protected $table = 'products';
 
     /**
-     * The first element is the primary key
-     * The order is important!
-     *
      * @var []
      */
     static protected $fields = [

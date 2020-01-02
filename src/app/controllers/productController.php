@@ -37,7 +37,7 @@ class ProductController extends \Controller {
 
             unlink(getenv("PUBLIC_PATH") . 'uploads/products/' . $product->getImage());
 
-            $product->delete(0, $product->getId());
+            $product->delete(Product::PRIMARY_KEY, $product->getId());
         }
 
         $this->redirectIfNotAdmin();
