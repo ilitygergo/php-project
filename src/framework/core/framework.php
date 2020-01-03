@@ -14,9 +14,9 @@ class Framework {
     private static function init() {
         require __DIR__ . '/../../../env.php';
 
+        require getenv("CORE_PATH") . "alert.php";
+
         require getenv("CORE_PATH") . "controller.php";
-    
-        require getenv("CORE_PATH") . "loader.php";
     
         require getenv("DB_PATH") . "mysql.php";
     

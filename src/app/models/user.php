@@ -284,11 +284,10 @@ class User extends \Model {
         $this->validatePassword();
 
         if (parent::isUnique('email', $this->email)) {
-            parent::$errors[] = "Already registered email!";
+            Alert::getInstance()->add('Already registered email!');
         }
 
-
-        if (!empty(parent::$errors)) {
+        if (!Alert::getInstance()->isAlertEmpty()) {
             return;
         }
 
@@ -319,10 +318,10 @@ class User extends \Model {
         $user = parent::isUnique('email', $this->email);
 
         if ($user && $user[0] != $this->getId()) {
-            parent::$errors[] = "Already registered email!";
+            Alert::getInstance()->add('Already registered email!');
         }
 
-        if (!empty(parent::$errors)) {
+        if (!Alert::getInstance()->isAlertEmpty()) {
             return;
         }
 
@@ -388,54 +387,52 @@ class User extends \Model {
      * @return array
      */
     public function validate() {
-        parent::$errors = [];
-        
         if (empty($this->first_name)) {
-            parent::$errors[] = 'First name can\'t be empty';
+            Alert::getInstance()->add('First name can\'t be empty');
         }
 
         if (!preg_match("/^[áéúőóüöÁÉÚŐÓÜÖA-Za-z-]+$/", $this->first_name)) {
-            parent::$errors[] = 'First name: only letters allowed';
+            Alert::getInstance()->add('First name: only letters allowed');
         }
 
         if (empty($this->last_name)) {
-            parent::$errors[] = 'Last name can\'t be empty';
+            Alert::getInstance()->add('Last name can\'t be empty');
         }
 
         if (!preg_match("/^[áéúőóüöÁÉÚŐÓÜÖA-Za-z-]+$/", $this->last_name)) {
-            parent::$errors[] = 'Last name: only letters allowed';
+            Alert::getInstance()->add('Last name: only letters allowed');
         }
 
         if (empty($this->email)) {
-            parent::$errors[] = 'Email can\'t be empty';
+            Alert::getInstance()->add('Email can\'t be empty');
         }
 
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            parent::$errors[] = "Invalid email format";
+            Alert::getInstance()->add('Invalid email format');
         }
 
-        return parent::$errors;
+        return Alert::getInstance()->isAlertEmpty();
     }
 
     public function validatePassword() {
         if (empty($this->password)) {
-            parent::$errors[] = 'Password can\'t be empty';
+            Alert::getInstance()->add('Password can\'t be empty');
         }
 
         if (strlen($this->password) < 8) {
-            parent::$errors[] = "Your Password Must Contain At Least 8 Characters!";
+            Alert::getInstance()->add('Your Password Must Contain At Least 8 Characters!');
         }
 
         if(!preg_match("#[0-9]+#", $this->password)) {
-            parent::$errors[] = "Your Password Must Contain At Least 1 Number!";
+            Alert::getInstance()->add('Your Password Must Contain At Least 1 Number!');
         }
 
         if(!preg_match("#[A-Z]+#", $this->password)) {
-            parent::$errors[] = "Your Password Must Contain At Least 1 Capital Letter!";
+            Alert::getInstance()->add('Your Password Must Contain At Least 1 Capital Letter!');
         }
 
         if(!preg_match("#[a-z]+#", $this->password)) {
-            parent::$errors[] = "Your Password Must Contain At Least 1 Lowercase Letter!";
+            Alert::getInstance()->add('Your Password Must Contain At Least 1 Lowercase Letter!');
         }
     }
 }

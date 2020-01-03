@@ -111,11 +111,12 @@ $session = Session::getInstance();
                                 <input type="password" name="user[password]" class="form-control" placeholder="Password" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Login</button>
+                            <a class="float-right" style="margin-top: 1vh;" href="<?= '/register' ?>">New around here? Sign up</a>
                         </form>
-
-                        <a href="<?= '/register' ?>">New around here? Sign up</a><br>
-                        <a href="#">Forgot password?</a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <?= Alert::getInstance()->alertMessages() ?>
+        <?= Alert::getInstance()->removeAlerts(); ?>

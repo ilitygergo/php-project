@@ -24,7 +24,6 @@ class UserController extends \Controller {
         }
 
         $this->redirectIfNotAdmin();
-
         redirect_to('/admin/users?id=' . $_POST['user']['id']);
     }
 
@@ -40,7 +39,6 @@ class UserController extends \Controller {
         }
 
         $this->redirectIfNotAdmin();
-
         include getenv("CURR_VIEW_PATH") . "admin/listing/users.phtml";
     }
 }

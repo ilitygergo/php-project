@@ -12,15 +12,9 @@ abstract class Model {
     static protected $table;
 
     /**
-     * The first element is the primary key
      * @var array
      */
     static protected $fields = [];
-
-    /**
-     * @var array
-     */
-    static public $errors = [];
 
     /**
      * @param $db
@@ -170,7 +164,7 @@ abstract class Model {
      * @return mixed
      */
     public function findById($id){
-        $sql = "SELECT * FROM " . static::$table . " WHERE " . static::$fields[0] . "=$id";
+        $sql = "SELECT * FROM " . static::$table . " WHERE " . static::$fields[static::PRIMARY_KEY] . "=$id";
 
         return $this->findFirst($sql);
     }

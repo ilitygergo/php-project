@@ -5,3 +5,4 @@
     Model::setDb((new Mysql())->getConnection());
     Website::getInstance();
     Session::getInstance();
+    Alert::getInstance();

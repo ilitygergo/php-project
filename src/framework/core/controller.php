@@ -2,15 +2,6 @@
 
 abstract class Controller {
     /**
-     * @var Loader
-     */
-    protected $loader;
-
-    public function __construct(){
-        $this->loader = new Loader();
-    }
-
-    /**
      * @param $url
      *
      * @param $message

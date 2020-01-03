@@ -24,7 +24,6 @@ class ProductController extends \Controller {
         }
 
         $this->redirectIfNotAdmin();
-
         redirect_to('/admin/products?id=' . $_POST['product']['id']);
     }
 
@@ -35,13 +34,14 @@ class ProductController extends \Controller {
 
             $product = new Product($_POST['product']);
 
-            unlink(getenv("PUBLIC_PATH") . 'uploads/products/' . $product->getImage());
+            if (!$product->getImage() == '' && file_exists($filename = getenv("PUBLIC_PATH") . 'uploads/products/' . $product->getImage())) {
+                unlink($filename);
+            }
 
             $product->delete(Product::PRIMARY_KEY, $product->getId());
         }
 
         $this->redirectIfNotAdmin();
-
         include getenv("CURR_VIEW_PATH") . "admin/listing/products.phtml";
     }
 
@@ -57,14 +57,14 @@ class ProductController extends \Controller {
         $uploadPath = getenv("PUBLIC_PATH") . 'uploads/products/' . basename($name) . '.' . $fileExtension;
 
         if (! in_array($fileExtension,$fileExtensions)) {
-            \Model::$errors[] = "This file extension is not allowed. Please upload a JPEG or PNG file";
+            Alert::getInstance()->add('This file extension is not allowed. Please upload a JPEG or PNG file');
         }
 
         if ($fileSize > 2000000) {
-            \Model::$errors[] = "This file is more than 2MB. Sorry, it has to be less than or equal to 2MB";
+            Alert::getInstance()->add("This file is more than 2MB. Sorry, it has to be less than or equal to 2MB");
         }
 
-        if (!empty(\Model::$errors)) {
+        if (!Alert::getInstance()->isAlertEmpty()) {
             return FALSE;
         }
 
@@ -79,7 +79,6 @@ class ProductController extends \Controller {
 
     public function showAction() {
         if (isGetRequest() && ($id = $_GET['id'])) {
-
             $product = new Product(['id' => $id]);
 
             include getenv("CURR_VIEW_PATH") . "product/product.phtml";

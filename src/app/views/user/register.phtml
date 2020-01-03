@@ -1,22 +1,5 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
-
-if (isPostRequest() && isset($_POST['user'])) {
-    $user = new User($_POST['user']);
-    $user->setPassword($_POST['user']['password']);
-    $user->create();
-
-    redirect_to('/');
-}
-
-if (!empty($errors = \Model::$errors)) {
-    foreach ($errors as $error) { ?>
-        <div class="alert alert-danger" role="alert">
-            <?= $error ?>
-        </div>
-        <?php
-    }
-}
 ?>
 
 <div class="card">

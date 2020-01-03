@@ -188,9 +188,7 @@ class Review extends \Model {
      * @return mixed|string|void
      */
     public function save() {
-        $this->validate();
-
-        if (!empty(parent::$errors)) {
+        if (!$this->validate()) {
             return;
         }
 
@@ -205,31 +203,31 @@ class Review extends \Model {
     }
 
     /**
-     * @return array
+     * @return bool
      */
     public function validate() {
-        parent::$errors = [];
+        Alert::getInstance()->removeAlerts();
 
         if (empty($this->user_id)) {
-            parent::$errors[] = 'User id can\'t be empty';
+            Alert::getInstance()->add('You have to log in!');
         }
 
         if (empty($this->product_id)) {
-            parent::$errors[] = 'Product id can\'t be empty';
+            Alert::getInstance()->add('Product id can\'t be empty');
         }
 
         if (empty($this->content)) {
-            parent::$errors[] = 'Content name can\'t be empty';
+            Alert::getInstance()->add('Content name can\'t be empty');
         }
 
         if (empty($this->stars)) {
-            parent::$errors[] = 'Stars field can\'t be empty';
+            Alert::getInstance()->add('Stars field can\'t be empty');
         }
 
         if (!preg_match("/\d{1,5}/", $this->stars)) {
-            parent::$errors[] = 'Stars can only be a number from 1 to 5';
+            Alert::getInstance()->add('Stars can only be a number from 1 to 5');
         }
 
-        return parent::$errors;
+        return Alert::getInstance()->isAlertEmpty();
     }
 }

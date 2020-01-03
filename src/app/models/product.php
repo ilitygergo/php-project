@@ -382,15 +382,7 @@ class Product extends \Model {
      * @return bool|mixed|resource|void
      */
     public function save() {
-        $this->validate();
-
-        $product = parent::isUnique('name', $this->name);
-
-        if ($product && $product[0] != $this->getId()) {
-            parent::$errors[] = "Already registered product name!";
-        }
-
-        if (!empty(parent::$errors)) {
+        if (!$this->validate()) {
             return;
         }
 
@@ -425,43 +417,47 @@ class Product extends \Model {
     }
 
     /**
-     * @return array
+     * @return bool
      */
     public function validate() {
-        parent::$errors = [];
-
         if (empty($this->name)) {
-            parent::$errors[] = 'Product name can\'t be empty';
+            Alert::getInstance()->add('Product name can\'t be empty');
         }
 
         if (empty($this->brand)) {
-            parent::$errors[] = 'Brand name can\'t be empty';
+            Alert::getInstance()->add('Brand name can\'t be empty');
         }
 
         if (empty($this->cost)) {
-            parent::$errors[] = 'Cost can\'t be empty';
+            Alert::getInstance()->add('Cost can\'t be empty');
         }
 
         if (!is_numeric($this->cost)) {
-            parent::$errors[] = 'Cost has to be a number';
+            Alert::getInstance()->add('Cost has to be a number');
         }
 
         if (!in_array($this->category, self::getCategories())) {
-            parent::$errors[] = 'Invalid category';
+            Alert::getInstance()->add('Invalid category');
         }
 
         if (!in_array($this->subcategory, self::getSubcategories())) {
-            parent::$errors[] = 'Invalid category';
+            Alert::getInstance()->add('Invalid category');
         }
 
         if (!in_array($this->subcategory, array_keys($this->getCategoriesAndSubcategories(), $this->category))) {
-            parent::$errors[] = 'Category and subcategory mismatch';
+            Alert::getInstance()->add('Category and subcategory mismatch');
         }
 
         if (empty($this->target_group)) {
-            parent::$errors[] = 'Target group can\'t be empty';
+            Alert::getInstance()->add('Target group can\'t be empty');
         }
 
-        return parent::$errors;
+        $product = parent::isUnique('name', $this->name);
+
+        if ($product && $product[0] != $this->getId()) {
+            Alert::getInstance()->add('Already registered product name!');
+        }
+
+        return Alert::getInstance()->isAlertEmpty();
     }
 }

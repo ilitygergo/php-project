@@ -15,8 +15,6 @@ class AdminController extends \Controller {
 
             include getenv("CURR_VIEW_PATH") . "admin/edit/users.phtml";
         } else {
-            $pagination = new Pagination($_GET['page'] ?? 1, 5, User::countAll());
-
             include getenv("CURR_VIEW_PATH") . "admin/listing/users.phtml";
         }
     }
@@ -27,8 +25,6 @@ class AdminController extends \Controller {
         if (isset($_GET['id'])) {
             include getenv("CURR_VIEW_PATH") . "admin/edit/products.phtml";
         } else {
-            $pagination = new Pagination($_GET['page'] ?? 1, 5, Product::getAll([], TRUE));
-
             include getenv("CURR_VIEW_PATH") . "admin/listing/products.phtml";
         }
     }

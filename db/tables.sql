@@ -57,13 +57,13 @@ INSERT INTO products (name, brand, cost, category, subcategory, image, target_gr
 INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Ace 2018', 'Lacoste', 129, 'Footwear', 'Sneakers', 'HPgjwcaW3GTLjqvYG6B0.jpg', 'male');
 INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('547', 'NewBalance', 99, 'Footwear', 'Sneakers', 'oeP3rU0v6jGxQNGK0eAO.jpg', 'male');
 INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Alphaedge 4', 'Adidas', 85, 'Footwear', 'Sneakers', 'Ot5gSWGxFrTiMnvszB98.jpg', 'male');
-INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Nike Blue Sneaker', 'Nike', 100, 'Footwear', 'Sneakers', 'Ot5gSWGxFrTiMnvszB98.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Nike Blue Sneaker', 'Nike', 100, 'Footwear', 'Sneakers', 'hygqodK6xXTAC4DveV8B.jpg', 'male');
 INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Old Skool', 'Vans', 100, 'Footwear', 'Sneakers', 'dn036jYfGZa9NwNUA7tQ.jpg', 'male');
 INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Reebok Sport', 'Reebok', 100, 'Footwear', 'Sneakers', 'AvxRZ2tMJLXrSrAqkUmj.jpg', 'male');
 INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('SandPaper 2', 'EasyFit', 134, 'Footwear', 'Sneakers', 'A5AejmzM5vojeCkIcjxu.jpg', 'male');
 INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('White Sneaker', 'EasyFit', 89, 'Footwear', 'Sneakers', 'S2JVvjA8yzKkoMQd13im.jpg', 'male');
 INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Plain White', 'Vans', 65, 'Footwear', 'Sneakers', 'S2JVvjA8yzKkoMQd13im.jpg', 'male');
-INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Reebok Classic 85', 'Reebok', 135, 'Footwear', 'Sneakers', 'edwyM6j63bFwADTHxc52.jpg', 'male');
+INSERT INTO products (name, brand, cost, category, subcategory, image, target_group) VALUES ('Reebok Classic 85', 'Reebok', 135, 'Footwear', 'Sneakers', 'idcTLJPR4MoXet0A7N6T.jpg', 'male');
 
 CREATE TABLE availabilities (
     id int NOT NULL AUTO_INCREMENT,

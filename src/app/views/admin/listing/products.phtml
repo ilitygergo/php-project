@@ -1,17 +1,9 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
+$pagination = new Pagination($_GET['page'] ?? 1, 10, Product::getAll([], TRUE));
 $products = Product::getAll([], FALSE, $pagination->per_page, $pagination->offset());
 $website = Website::getInstance();
-
-if (!empty($errors = \Model::$errors)) {
-    foreach ($errors as $error) { ?>
-        <div class="alert alert-danger" role="alert">
-            <?= $error ?>
-        </div>
-        <?php
-    }
-}
 ?>
 
 <ul class="list-group">

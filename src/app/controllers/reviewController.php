@@ -11,20 +11,24 @@ class ReviewController extends \Controller {
     }
 
     public function updateAction() {
-        if (isset($_GET['id'])) {
+        if (!isset($_GET['id'])) {
+            redirect_to('/index');
         }
 
-        redirect_to('/product/show?id=' . $_GET['id']);
+        $review = new Review($_GET);
+        $product_id = $review->getProductId();
+
+        redirect_to('/product/show?id=' . $product_id);
     }
 
     public function deleteAction() {
-        if (isset($_GET['id'])) {
-            $review = new Review($_GET);
-
-            $product_id = $review->getProductId();
-
-            $review->delete(Review::PRIMARY_KEY, $review->getId());
+        if (!isset($_POST['id'])) {
+            redirect_to('/index');
         }
+
+        $review = new Review($_POST);
+        $product_id = $review->getProductId();
+        $review->delete(Review::PRIMARY_KEY, $review->getId());
 
         redirect_to('/product/show?id=' . $product_id);
     }

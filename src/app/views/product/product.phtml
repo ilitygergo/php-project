@@ -75,26 +75,47 @@ $colors = [];
     <div class="col-md-12 jumbotron jumbotron-fluid">
         <div class="container">
             <?php if (Session::getInstance()->getUserId() == $review['user_id']): ?>
-                <a href="<?= '/review/delete?id=' . $review['id'] ?>">
-                    <svg class="float-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                        <path d="M2 30 L30 2 M30 30 L2 2" />
-                    </svg>
-                </a>
-                <a href="<?= '/review/update?id=' . $review['id'] ?>">
-                    <svg class="float-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <form action="<?= '/review/delete' ?>" method="POST">
+                    <input type="hidden" name="id" value="<?= $review['id'] ?>">
+                    <button type="submit" class="btn btn-danger float-right">
+                        <svg class="float-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="M2 30 L30 2 M30 30 L2 2" />
+                        </svg>
+                    </button>
+                </form>
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#reviewChangeModal" data-whatever="@mdo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                         <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
                     </svg>
-                </a>
+                </button>
             <?php endif; ?>
             <?php $user = new User(['id' => $review['user_id']]);?>
             <h1 class="display-4"><?= $user->getFirstName() . ' ' . $user->getLastName() ?></h1>
-            <p class="lead"><?= $review['content'] ?></p>
+            <p class="lead"><?= htmlspecialchars($review['content']) ?></p>
         </div>
     </div>
 <?php endforeach; ?>
 
-<script>
+<div class="modal fade" id="reviewChangeModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Review:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<script>
     $( "#colorRadio" ).on( "click", function() {
         setTimeout(function(){
             addSizes( $( "input:checked" ).val());
