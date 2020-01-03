@@ -22,7 +22,7 @@ For using the correct package versions, you have to install composer and npm, th
 
 If you are using Windows, you have to install Docker Desktop and share the drive you pulled the project into.
 
-First, you have to install docker and docker-compose on your system and run `docker-compose build` 
+First, you have to install docker and docker-compose on your system and run `docker-compose --build` 
 from the bench-project directory. After that, run `docker-compose up -d` to run the containers.
 You can stop them with `docker-compose stop`
 
