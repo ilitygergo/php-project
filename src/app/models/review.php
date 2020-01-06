@@ -192,14 +192,26 @@ class Review extends \Model {
             return;
         }
 
-        return parent::insert(
-            [
-                'user_id' => parent::$db->escape_string($this->user_id),
-                'product_id' => parent::$db->escape_string($this->product_id),
-                'content' => parent::$db->escape_string($this->content),
-                'stars' => parent::$db->escape_string($this->stars)
-            ]
-        );
+        if (isset($this->id)) {
+            return parent::update(
+                [
+                    'id' => parent::$db->escape_string($this->id),
+                    'user_id' => parent::$db->escape_string($this->user_id),
+                    'product_id' => parent::$db->escape_string($this->product_id),
+                    'content' => parent::$db->escape_string($this->content),
+                    'stars' => parent::$db->escape_string($this->stars)
+                ]
+            );
+        } else {
+            return parent::insert(
+                [
+                    'user_id' => parent::$db->escape_string($this->user_id),
+                    'product_id' => parent::$db->escape_string($this->product_id),
+                    'content' => parent::$db->escape_string($this->content),
+                    'stars' => parent::$db->escape_string($this->stars)
+                ]
+            );
+        }
     }
 
     /**

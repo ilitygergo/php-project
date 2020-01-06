@@ -83,7 +83,7 @@ $colors = [];
                         </svg>
                     </button>
                 </form>
-                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#reviewChangeModal" data-whatever="@mdo">
+                <button type="button" onclick="changeReviewText(<?= $review['id'] ?>)" class="btn btn-primary float-right" data-toggle="modal" data-target="#reviewChangeModal" data-whatever="@mdo">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                         <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
                     </svg>
@@ -100,22 +100,27 @@ $colors = [];
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        <form>
-          <div class="form-group">
+        <form action="<?= '/review/update' ?>" method="POST">
+          <div class="form-group-review">
             <label for="message-text" class="col-form-label">Review:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <input type="hidden" id="reviewContentInput" name="content">
+            <textarea class="form-control" id="review-message-text"></textarea>
           </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="deleteHiddenReviewInputs()">Cancel</button>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary">Save</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+    $(document).ready(function(){
+        $("#review-message-text").on("input", function(){
+            $("#reviewContentInput").val($(this).val());
+        });
+    });
+
     $( "#colorRadio" ).on( "click", function() {
         setTimeout(function(){
             addSizes( $( "input:checked" ).val());
@@ -143,6 +148,32 @@ $colors = [];
                     '</label>'
                 );
         });
+    }
+
+    function changeReviewText(id) {
+        <?php foreach($reviews as $review): ?>
+            if (<?=$review['id']?> == id) {
+                addHiddenReviewInput(id);
+                $("#review-message-text").val('<?=htmlspecialchars($review['content'])?>');
+            }
+        <?php endforeach; ?>
+    }
+
+    function addHiddenReviewInput(id) {
+        var reviewIdInput = document.createElement("input");
+
+        reviewIdInput.setAttribute("type", "hidden");
+        reviewIdInput.setAttribute("id", "reviewHiddenIdElement");
+        reviewIdInput.setAttribute("name", "id");
+        reviewIdInput.setAttribute("value", id);
+
+        $(".form-group-review").append(reviewIdInput);
+    }
+
+    function deleteHiddenReviewInputs() {
+        if ($("#reviewHiddenIdElement")) {
+            $("#reviewHiddenIdElement").remove();
+        }
     }
 </script>
 

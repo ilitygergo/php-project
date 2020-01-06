@@ -11,11 +11,13 @@ class ReviewController extends \Controller {
     }
 
     public function updateAction() {
-        if (!isset($_GET['id'])) {
+        if (!isset($_POST['id']) && !isset($_POST['content'])) {
             redirect_to('/index');
         }
 
-        $review = new Review($_GET);
+        $review = new Review($_POST);
+        $review->setContent($_POST['content']);
+        $review->save();
         $product_id = $review->getProductId();
 
         redirect_to('/product/show?id=' . $product_id);
