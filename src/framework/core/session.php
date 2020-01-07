@@ -66,4 +66,11 @@ class Session {
     public function getUserId() {
         return $this->user_id;
     }
+
+    /**
+     * @return bool
+     */
+    public static function isAdmin() {
+        return Session::getInstance()->getUserId() == User::ADMIN_ID;
+    }
 }

@@ -1,7 +1,10 @@
 <?php
 
 class User extends \Model {
+    use ModelTrait;
+
     const PRIMARY_KEY = 0;
+    const ADMIN_ID = 1;
 
     /**
      * @var string
@@ -95,20 +98,6 @@ class User extends \Model {
         $this->gender = $args['gender'] ?? $this->gender;
         $this->birthday = $args['birthday'] ?? $this->birthday;
         $this->hashed_password = $args['hashed_password'] ?? $this->hashed_password;
-    }
-
-    /**
-     * @param $args
-     */
-    public function init($args) {
-        $this->id = $args['id'] ?? '';
-        $this->first_name = $args['first_name'] ?? '';
-        $this->last_name = $args['last_name'] ?? '';
-        $this->email = $args['email'] ?? '';
-        $this->address = $args['address'] ?? '';
-        $this->gender = $args['gender'] ?? '';
-        $this->birthday = $args['birthday'] ?? '';
-        $this->hashed_password = $args['hashed_password'] ?? '';
     }
 
     /**

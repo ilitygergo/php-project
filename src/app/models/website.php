@@ -1,6 +1,7 @@
 <?php
 
 class Website extends \Model {
+    use ModelTrait;
     /**
      * @var Website
      */
@@ -60,15 +61,6 @@ class Website extends \Model {
         }
 
         $this->init($website);
-    }
-
-    /**
-     * @param $args
-     */
-    public function init($args) {
-        $this->id = $args['id'] ?? '';
-        $this->internal = $args['internal'] ?? '';
-        $this->currency = $args['currency'] ?? '';
     }
 
     /**

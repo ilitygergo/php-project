@@ -142,7 +142,7 @@ $categoriesAndSubcategories = Product::getCategoriesAndSubcategories();
                     <input type="number" class="form-control" name="availability<?=$counter?>[amount]" value="<?= $available['amount'] ?>">
 
                     <span class="input-group-text">Sale</span>
-                    <input type="number" class="form-control" name="availability<?=$counter?>[sale]" value="<?= $available['sale'] ?>">
+                    <input type="number" step="0.01" class="form-control" name="availability<?=$counter?>[sale]" value="<?= $available['sale'] ?>">
 
                     <button type="button" class="btn btn-outline-danger" onclick="deleteRow(<?=$counter?>)" data-toggle="modal">X</button>
                 </div>
@@ -216,7 +216,7 @@ $categoriesAndSubcategories = Product::getCategoriesAndSubcategories();
             "<span class=\"input-group-text\">Amount</span>\n" +
             "<input type=\"number\" class=\"form-control\" name=\"availability" + counter + "[amount]\">\n" +
             "<span class=\"input-group-text\">Sale</span>\n" +
-            "<input type=\"number\" class=\"form-control\" name=\"availability" + counter + "[sale]\">\n" +
+            "<input type=\"number\" step=\"0.01\" class=\"form-control\" name=\"availability" + counter + "[sale]\">\n" +
             "<button type=\"button\" class=\"btn btn-outline-danger\" onclick=\"deleteRow(" + counter + ")\" data-toggle=\"modal\">X</button>"
         );
 

@@ -1,6 +1,8 @@
 <?php
 
-class Availability extends \Model {
+class Availability extends \Model implements modelInterface {
+    use ModelTrait;
+
     const PRIMARY_KEY = 0;
     const FOREIGN_KEY_PRODUCT = 1;
 
@@ -69,24 +71,9 @@ class Availability extends \Model {
     public function __construct($args = NULL) {
         if (isset($args['id'])) {
             $this->findById($args['id']);
+        } else {
+            $this->init($args);
         }
-
-        $this->size = $args['size'] ?? $this->size;
-        $this->color = $args['color'] ?? $this->color;
-        $this->amount = $args['amount'] ?? $this->amount;
-        $this->sale = $args['sale'] ?? $this->sale;
-    }
-
-    /**
-     * @param $args
-     */
-    public function init($args = NULL) {
-        $this->id = $args['id'] ?? $this->id;
-        $this->product_id = $args['product_id'] ?? $this->product_id;
-        $this->size = $args['size'] ?? $this->size;
-        $this->color = $args['color'] ?? $this->color;
-        $this->amount = $args['amount'] ?? $this->amount;
-        $this->sale = $args['sale'] ?? $this->sale;
     }
 
     /**
@@ -200,17 +187,11 @@ class Availability extends \Model {
     }
 
     /**
-     * @return void|boolean
+     * @return boolean
      */
     public function save() {
         return parent::insert(
-            [
-                'product_id' => parent::$db->escape_string($this->product_id),
-                'size' => parent::$db->escape_string($this->size),
-                'color' => parent::$db->escape_string($this->color),
-                'amount' => parent::$db->escape_string($this->amount),
-                'sale' => parent::$db->escape_string($this->sale)
-            ]
+            $this->escapedPropertiesToArray()
         );
     }
 
