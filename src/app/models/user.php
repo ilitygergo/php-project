@@ -91,13 +91,7 @@ class User extends \Model {
             $this->findById($args['id']);
         }
 
-        $this->first_name = $args['first_name'] ?? $this->first_name;
-        $this->last_name = $args['last_name'] ?? $this->last_name;
-        $this->email = $args['email'] ?? $this->email;
-        $this->address = $args['address'] ?? $this->address;
-        $this->gender = $args['gender'] ?? $this->gender;
-        $this->birthday = $args['birthday'] ?? $this->birthday;
-        $this->hashed_password = $args['hashed_password'] ?? $this->hashed_password;
+        $this->init($args);
     }
 
     /**
@@ -337,22 +331,8 @@ class User extends \Model {
      * @return $this|string
      */
     public function login() {
-        if (!isset($this->email)) {
-            return 'Email or password is invalid!';
-        }
-
-        if (!isset($this->password)) {
-            return 'Email or password is invalid!';
-        }
-
-        if (!($mysqli_result = $this->findByEmail($this->email))) {
-            return 'Email or password is invalid!';
-        }
-
-        $this->init($this->mysqlResultToArray($mysqli_result));
-
-        if (!password_verify($this->password, $this->hashed_password)) {
-            return 'Email or password is invalid!';
+        if(!$this->validateLogin()) {
+            return;
         }
 
         $session = Session::getInstance();
@@ -423,5 +403,30 @@ class User extends \Model {
         if(!preg_match("#[a-z]+#", $this->password)) {
             Alert::getInstance()->add('Your Password Must Contain At Least 1 Lowercase Letter!');
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function validateLogin() {
+        if (!isset($this->email)) {
+            Alert::getInstance()->add('Email or password is invalid!');
+        }
+
+        if (!isset($this->password)) {
+            Alert::getInstance()->add('Email or password is invalid!');
+        }
+
+        if (!($mysqli_result = $this->findByEmail($this->email))) {
+            Alert::getInstance()->add('Email or password is invalid!');
+        }
+
+        $this->init($this->mysqlResultToArray($mysqli_result));
+
+        if (!password_verify($this->password, $this->hashed_password)) {
+            Alert::getInstance()->add('Email or password is invalid!');
+        }
+
+        return Alert::getInstance()->isAlertEmpty();
     }
 }

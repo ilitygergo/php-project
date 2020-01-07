@@ -1,6 +1,8 @@
 <?php
 
-class Product extends \Model {
+class Product extends \Model implements modelInterface {
+    use modelTrait;
+
     const PRIMARY_KEY = 0;
 
     /**
@@ -132,13 +134,7 @@ class Product extends \Model {
             $this->findById($args['id']);
         }
 
-        $this->name = $args['name'] ?? $this->name;
-        $this->brand = $args['brand'] ?? $this->brand;
-        $this->cost = $args['cost'] ?? $this->cost;
-        $this->category = $args['category'] ?? $this->category;
-        $this->subcategory = $args['subcategory'] ?? $this->subcategory;
-        $this->image = $args['image'] ?? $this->image;
-        $this->target_group = $args['target_group'] ?? $this->target_group;
+        $this->init($args);
     }
 
     /**
@@ -354,28 +350,12 @@ class Product extends \Model {
 
     /**
      * @param int $id
-     *
-     * @return bool|mysqli_result
      */
     public function findById($id) {
-        $result = parent::findById($id);
-
-        if ($result) {
+        if ($result = parent::findById($id)) {
             $properties = $this->mysqlResultToArray($result);
-
-            $this->id = $properties['id'] ?? '';
-            $this->name = $properties['name'] ?? '';
-            $this->brand = $properties['brand'] ?? '';
-            $this->cost = $properties['cost'] ?? '';
-            $this->category = $properties['category'] ?? '';
-            $this->subcategory = $properties['subcategory'] ?? '';
-            $this->image = $properties['image'] ?? '';
-            $this->target_group = $properties['target_group'] ?? '';
-            $this->created_at = $properties['created_at'] ?? '';
-            $this->updated_at = $properties['updated_at'] ?? '';
+            $this->init($properties);
         }
-
-        return $result;
     }
 
     /**
@@ -386,31 +366,14 @@ class Product extends \Model {
             return;
         }
 
-        if ($this->getId() != '') {
-            $result = parent::update(
-                [
-                    'id' => parent::$db->escape_string($this->id),
-                    'name' => parent::$db->escape_string($this->name),
-                    'brand' => parent::$db->escape_string($this->brand),
-                    'cost' => parent::$db->escape_string($this->cost),
-                    'category' => parent::$db->escape_string($this->category),
-                    'subcategory' => parent::$db->escape_string($this->subcategory),
-                    'image' => parent::$db->escape_string($this->image),
-                    'target_group' => parent::$db->escape_string($this->target_group),
-                ]
-            );
+        $data = $this->escapedPropertiesToArray();
+
+        if (isset($this->id)) {
+            $data['id'] = parent::$db->escape_string($this->id);
+
+            $result = parent::update($data);
         } else {
-            $result = parent::insert(
-                [
-                    'name' => parent::$db->escape_string($this->name),
-                    'brand' => parent::$db->escape_string($this->brand),
-                    'cost' => parent::$db->escape_string($this->cost),
-                    'category' => parent::$db->escape_string($this->category),
-                    'subcategory' => parent::$db->escape_string($this->subcategory),
-                    'image' => parent::$db->escape_string($this->image),
-                    'target_group' => parent::$db->escape_string($this->target_group),
-                ]
-            );
+            $result = parent::insert($data);
         }
 
         return $result;

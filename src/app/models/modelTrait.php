@@ -1,6 +1,6 @@
 <?php
 trait ModelTrait {
-        /**
+    /**
      * @param $args
      */
     public function init($args = NULL) {

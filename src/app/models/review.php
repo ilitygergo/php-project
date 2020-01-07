@@ -1,6 +1,7 @@
 <?php
 
-class Review extends \Model {
+class Review extends \Model implements modelInterdace{
+    use modelTrait;
     const PRIMARY_KEY = 0;
 
     /**
@@ -64,11 +65,7 @@ class Review extends \Model {
             $this->findById($args['id']);
         }
 
-        $this->id = $args['id'] ?? $this->id;
-        $this->user_id = $args['user_id'] ?? $this->user_id;
-        $this->product_id = $args['product_id'] ?? $this->product_id;
-        $this->content = $args['content'] ?? $this->content;
-        $this->stars = $args['stars'] ?? $this->stars;
+        $this->init($args);
     }
 
     /**
@@ -162,15 +159,8 @@ class Review extends \Model {
      */
     public function findById($id) {
         $result = parent::findById($id);
-        $array = $this->mysqlResultToArray($result);
 
-        $this->id = $array['id'] ?? '';
-        $this->user_id = $array['user_id'] ?? '';
-        $this->product_id = $array['product_id'] ?? '';
-        $this->content = $array['content'] ?? '';
-        $this->stars = $array['stars'] ?? '';
-        $this->created_at = $array['created_at'] ?? '';
-        $this->updated_at = $array['updated_at'] ?? '';
+        $this->init($this->mysqlResultToArray($result));
     }
 
     /**
@@ -192,25 +182,14 @@ class Review extends \Model {
             return;
         }
 
+        $data = $this->escapedPropertiesToArray();
+
         if (isset($this->id)) {
-            return parent::update(
-                [
-                    'id' => parent::$db->escape_string($this->id),
-                    'user_id' => parent::$db->escape_string($this->user_id),
-                    'product_id' => parent::$db->escape_string($this->product_id),
-                    'content' => parent::$db->escape_string($this->content),
-                    'stars' => parent::$db->escape_string($this->stars)
-                ]
-            );
+            $data['id'] = parent::$db->escape_string($this->id);
+
+            return parent::update($data);
         } else {
-            return parent::insert(
-                [
-                    'user_id' => parent::$db->escape_string($this->user_id),
-                    'product_id' => parent::$db->escape_string($this->product_id),
-                    'content' => parent::$db->escape_string($this->content),
-                    'stars' => parent::$db->escape_string($this->stars)
-                ]
-            );
+            return parent::insert($data);
         }
     }
 
