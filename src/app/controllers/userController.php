@@ -35,7 +35,7 @@ class UserController extends \Controller {
                 Session::getInstance()->logout();
             }
 
-            $user->delete(User::PRIMARY_KEY, $user->getId());
+            $user->delete();
         }
 
         $this->redirectIfNotAdmin();

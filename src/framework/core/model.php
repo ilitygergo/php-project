@@ -82,16 +82,13 @@ abstract class Model {
     }
 
     /**
-     * @param $field_number
-     *
-     * @param $key
-     *
      * @return bool|int
      */
-    public function delete($field_number, $key){
+    public function delete(){
         $where = 0;
+        $key = $this->getId();
 
-        $where = static::$fields[$field_number] . "='$key'";
+        $where = static::$fields[static::PRIMARY_KEY] . "='$key'";
 
         $sql = "DELETE FROM " . static::$table . " WHERE $where";
 

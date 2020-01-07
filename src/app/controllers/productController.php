@@ -38,7 +38,7 @@ class ProductController extends \Controller {
                 unlink($filename);
             }
 
-            $product->delete(Product::PRIMARY_KEY, $product->getId());
+            $product->delete();
         }
 
         $this->redirectIfNotAdmin();
