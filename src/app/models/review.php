@@ -1,6 +1,6 @@
 <?php
 
-class Review extends \Model implements modelInterdace{
+class Review extends \Model implements modelInterface{
     use modelTrait;
     const PRIMARY_KEY = 0;
 

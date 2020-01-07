@@ -308,23 +308,10 @@ class User extends \Model {
             return;
         }
 
-        $result = parent::update(
-            [
-                'id' => parent::$db->escape_string($this->id),
-                'first_name' => parent::$db->escape_string($this->first_name),
-                'last_name' => parent::$db->escape_string($this->last_name),
-                'email' => parent::$db->escape_string($this->email),
-                'address' => parent::$db->escape_string($this->address),
-                'gender' => parent::$db->escape_string($this->gender),
-                'birthday' => parent::$db->escape_string($this->birthday)
-            ]
-        );
+        $data = $this->escapedPropertiesToArray();
+        $data['id'] = parent::$db->escape_string($this->id);
 
-        if ($result) {
-            return TRUE;
-        }
-
-        return FALSE;
+        return parent::update($data);
     }
 
     /**
