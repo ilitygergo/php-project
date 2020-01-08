@@ -411,12 +411,12 @@ class User extends \Model implements modelInterface {
     public function validateEmailUniqueness() {
         $userWithEmail = parent::isUnique('email', $this->email);
 
-        if ($this->isUserRegistered()) {
-            if ($userWithEmail && $userWithEmail[0] != $this->getId()) {
+        if ($this->isNewInstance()) {
+            if ($userWithEmail) {
                 Alert::getInstance()->add('Already registered email!');
             }
         } else {
-            if ($userWithEmail) {
+            if ($userWithEmail && $userWithEmail[0] != $this->getId()) {
                 Alert::getInstance()->add('Already registered email!');
             }
         }
