@@ -91,7 +91,7 @@ $colors = [];
             <?php endif; ?>
             <?php $user = new User(['id' => $review['user_id']]);?>
             <h1 class="display-4"><?= $user->getFirstName() . ' ' . $user->getLastName() ?></h1>
-            <p class="lead"><?= htmlspecialchars($review['content']) ?></p>
+            <p class="lead"><?= nl2br(htmlspecialchars($review['content'])) ?></p>
         </div>
     </div>
 <?php endforeach; ?>
@@ -154,7 +154,8 @@ $colors = [];
         <?php foreach($reviews as $review): ?>
             if (<?=$review['id']?> == id) {
                 addHiddenReviewInput(id);
-                $("#review-message-text").val('<?=htmlspecialchars($review['content'])?>');
+
+                $("#review-message-text").val(<?= json_encode($review['content']) ?>);
             }
         <?php endforeach; ?>
     }

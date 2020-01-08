@@ -1,11 +1,9 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
-$user = new User();
-$user->findById($_GET['id']);
-$isAdmin = Session::getInstance()->getUserId() == 1;
+$user = new User($_GET);
 
-if ($user->getId() == 1 && !$isAdmin) {
+if ($user->getId() == 1 && !Session::getInstance()->isAdmin()) {
     redirect_to('/admin/users');
 }
 
