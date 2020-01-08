@@ -1,6 +1,6 @@
 <?php
 
-class Review extends \Model implements modelInterface{
+class Review extends \Model implements modelInterface {
     use modelTrait;
     const PRIMARY_KEY = 0;
 
@@ -65,7 +65,7 @@ class Review extends \Model implements modelInterface{
             $this->findById($args['id']);
         }
 
-        $this->init($args);
+        $this->argumentValuesToProperties($args);
     }
 
     /**
@@ -160,7 +160,7 @@ class Review extends \Model implements modelInterface{
     public function findById($id) {
         $result = parent::findById($id);
 
-        $this->init($this->mysqlResultToArray($result));
+        $this->argumentValuesToProperties($this->mysqlResultToArray($result));
     }
 
     /**
@@ -184,12 +184,12 @@ class Review extends \Model implements modelInterface{
 
         $data = $this->escapedPropertiesToArray();
 
-        if (isset($this->id)) {
+        if ($this->isNewInstance()) {
+            return parent::insert($data);
+        } else {
             $data['id'] = parent::$db->escape_string($this->id);
 
             return parent::update($data);
-        } else {
-            return parent::insert($data);
         }
     }
 

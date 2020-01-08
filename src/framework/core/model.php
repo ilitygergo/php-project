@@ -31,6 +31,13 @@ abstract class Model {
     }
 
     /**
+     * @return bool
+     */
+    public function isNewInstance() {
+        return !$this->getId() != '';
+    }
+
+    /**
      * @param $data
      *
      * @return mixed|string

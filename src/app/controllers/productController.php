@@ -18,7 +18,7 @@ class ProductController extends \Controller {
                     continue;
                 }
 
-                $availability->init($_POST['availability' . $index]);
+                $availability->argumentValuesToProperties($_POST['availability' . $index]);
                 $availability->save();
             }
         }

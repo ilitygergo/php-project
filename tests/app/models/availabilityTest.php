@@ -35,7 +35,7 @@ class AvailabilityTest extends TestCase {
             'sale' => 0
         ];
 
-        $user->init($args);
+        $user->argumentValuesToProperties($args);
 
         $this->assertSame($user->getId(), $args['id']);
         $this->assertSame($user->getProductId(), $args['product_id']);

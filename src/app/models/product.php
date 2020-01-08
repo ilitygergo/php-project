@@ -134,7 +134,7 @@ class Product extends \Model implements modelInterface {
             $this->findById($args['id']);
         }
 
-        $this->init($args);
+        $this->argumentValuesToProperties($args);
     }
 
     /**
@@ -354,7 +354,7 @@ class Product extends \Model implements modelInterface {
     public function findById($id) {
         if ($result = parent::findById($id)) {
             $properties = $this->mysqlResultToArray($result);
-            $this->init($properties);
+            $this->argumentValuesToProperties($properties);
         }
     }
 
@@ -368,15 +368,13 @@ class Product extends \Model implements modelInterface {
 
         $data = $this->escapedPropertiesToArray();
 
-        if (isset($this->id)) {
+        if ($this->isNewInstance()) {
+            return parent::insert($data);
+        } else {
             $data['id'] = parent::$db->escape_string($this->id);
 
-            $result = parent::update($data);
-        } else {
-            $result = parent::insert($data);
+            return parent::update($data);
         }
-
-        return $result;
     }
 
     /**

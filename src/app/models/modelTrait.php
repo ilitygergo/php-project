@@ -3,7 +3,7 @@ trait ModelTrait {
     /**
      * @param $args
      */
-    public function init($args = NULL) {
+    public function argumentValuesToProperties($args = NULL) {
         foreach (array_values(self::$fields) as $field) {
             if ($args["$field"] == NULL) {
                 continue;

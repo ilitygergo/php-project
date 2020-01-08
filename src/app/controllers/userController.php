@@ -12,7 +12,7 @@ class UserController extends \Controller {
     public function updateAction() {
         if (isPostRequest()) {
             $user = new User($_POST['user']);
-            $user->edit();
+            $user->save();
 
             $message = Session::getInstance()->getUserId() . " " . $user->getId() . " " . date("Y-m-d H-i-s") . "\n";
 

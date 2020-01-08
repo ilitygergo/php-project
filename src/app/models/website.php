@@ -60,7 +60,7 @@ class Website extends \Model {
             $website[self::$fields[$key]] = $value;
         }
 
-        $this->init($website);
+        $this->argumentValuesToProperties($website);
     }
 
     /**

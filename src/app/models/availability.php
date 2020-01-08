@@ -72,7 +72,7 @@ class Availability extends \Model implements modelInterface {
         if (isset($args['id'])) {
             $this->findById($args['id']);
         } else {
-            $this->init($args);
+            $this->argumentValuesToProperties($args);
         }
     }
 
@@ -190,9 +190,7 @@ class Availability extends \Model implements modelInterface {
      * @return boolean
      */
     public function save() {
-        return parent::insert(
-            $this->escapedPropertiesToArray()
-        );
+        return parent::insert($this->escapedPropertiesToArray());
     }
 
     /**

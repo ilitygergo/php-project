@@ -1,6 +1,6 @@
 <?php
 
-class User extends \Model {
+class User extends \Model implements modelInterface {
     use ModelTrait;
 
     const PRIMARY_KEY = 0;
@@ -91,7 +91,7 @@ class User extends \Model {
             $this->findById($args['id']);
         }
 
-        $this->init($args);
+        $this->argumentValuesToProperties($args);
     }
 
     /**
@@ -99,6 +99,13 @@ class User extends \Model {
      */
     public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id) {
+        $this->id = $id;
     }
 
     /**
@@ -260,58 +267,39 @@ class User extends \Model {
     }
 
     /**
-     * @return bool|string|void
+     * @return void|int
      */
-    public function create() {
+    public function save() {
         $this->validate();
-        $this->validatePassword();
+        $this->validateEmailUniqueness();
 
-        if (parent::isUnique('email', $this->email)) {
-            Alert::getInstance()->add('Already registered email!');
+        if ($this->isNewInstance()) {
+            $this->validatePassword();
+
+            if (!Alert::getInstance()->isAlertEmpty()) {
+                return;
+            }
+
+            $this->setHashedPassword();
+
+            return parent::insert(
+                [
+                    'first_name' => parent::$db->escape_string($this->first_name),
+                    'last_name' => parent::$db->escape_string($this->last_name),
+                    'email' => parent::$db->escape_string($this->email),
+                    'hashed_password' => parent::$db->escape_string($this->hashed_password)
+                ]
+            );
+        } else {
+            if (!Alert::getInstance()->isAlertEmpty()) {
+                return;
+            }
+
+            $data = $this->escapedPropertiesToArray();
+            $data['id'] = parent::$db->escape_string($this->id);
+    
+            return parent::update($data);
         }
-
-        if (!Alert::getInstance()->isAlertEmpty()) {
-            return;
-        }
-
-        $this->setHashedPassword();
-
-        $result = parent::insert(
-            [
-                'first_name' => parent::$db->escape_string($this->first_name),
-                'last_name' => parent::$db->escape_string($this->last_name),
-                'email' => parent::$db->escape_string($this->email),
-                'hashed_password' => parent::$db->escape_string($this->hashed_password)
-            ]
-        );
-
-        if (is_integer($result)) {
-            $this->id = $result;
-
-            return $this->login();
-        }
-    }
-
-    /**
-     * @return bool|void
-     */
-    public function edit() {
-        $this->validate();
-
-        $user = parent::isUnique('email', $this->email);
-
-        if ($user && $user[0] != $this->getId()) {
-            Alert::getInstance()->add('Already registered email!');
-        }
-
-        if (!Alert::getInstance()->isAlertEmpty()) {
-            return;
-        }
-
-        $data = $this->escapedPropertiesToArray();
-        $data['id'] = parent::$db->escape_string($this->id);
-
-        return parent::update($data);
     }
 
     /**
@@ -336,7 +324,7 @@ class User extends \Model {
     public function findById($id) {
         $result = parent::findById($id);
 
-        $this->init($this->mysqlResultToArray($result));
+        $this->argumentValuesToProperties($this->mysqlResultToArray($result));
     }
 
     /**
@@ -408,12 +396,29 @@ class User extends \Model {
             Alert::getInstance()->add('Email or password is invalid!');
         }
 
-        $this->init($this->mysqlResultToArray($mysqli_result));
+        $this->argumentValuesToProperties($this->mysqlResultToArray($mysqli_result));
 
         if (!password_verify($this->password, $this->hashed_password)) {
             Alert::getInstance()->add('Email or password is invalid!');
         }
 
         return Alert::getInstance()->isAlertEmpty();
+    }
+
+    /**
+     * @return bool
+     */
+    public function validateEmailUniqueness() {
+        $userWithEmail = parent::isUnique('email', $this->email);
+
+        if ($this->isUserRegistered()) {
+            if ($userWithEmail && $userWithEmail[0] != $this->getId()) {
+                Alert::getInstance()->add('Already registered email!');
+            }
+        } else {
+            if ($userWithEmail) {
+                Alert::getInstance()->add('Already registered email!');
+            }
+        }
     }
 }

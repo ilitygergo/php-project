@@ -36,7 +36,7 @@ class UserTest extends TestCase {
             'birthday' => '2019-06-12'
         ];
 
-        $user->init($args);
+        $user->argumentValuesToProperties($args);
 
         $this->assertSame($user->getId(), $args['id']);
         $this->assertSame($user->getFirstName(), $args['first_name']);
