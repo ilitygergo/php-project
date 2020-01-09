@@ -31,10 +31,12 @@ class Framework {
         spl_autoload_register(function($classname) {
             if (
                 substr($classname, -10) == "Controller"
-                && file_exists($path = getenv("CURR_CONTROLLER_PATH") . '/' . "$classname.php")
+                && file_exists($path = getenv("CURR_CONTROLLER_PATH") . "$classname.php")
             ) {
                 require_once $path;
             } elseif (file_exists($path = getenv("MODEL_PATH") . "$classname.php")) {
+                require_once $path;
+            } elseif (file_exists($path = getenv("MODEL_PATH") . "logger/$classname.php")) {
                 require_once $path;
             }
         });

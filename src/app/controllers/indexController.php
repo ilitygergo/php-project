@@ -14,6 +14,8 @@ class IndexController extends \Controller {
             $user = new User($_POST['user']);
             $user->setPassword($_POST['user']['password']);
             $user->login();
+
+            UserLogger::saveEntry('LOGIN', $user);
         }
 
         include  getenv("CURR_VIEW_PATH") . "index.phtml";
@@ -22,6 +24,16 @@ class IndexController extends \Controller {
     public function logoutAction() {
         if (isPostRequest()) {
             $session = Session::getInstance();
+
+            UserLogger::saveEntry(
+                'LOGOUT',
+                new User(
+                    [
+                        'id' => $session->getUserId()
+                    ]
+                )
+            );
+
             $session->logout();
         }
 

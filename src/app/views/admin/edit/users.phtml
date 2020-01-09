@@ -6,7 +6,6 @@ $user = new User($_GET);
 if ($user->getId() == 1 && !Session::getInstance()->isAdmin()) {
     redirect_to('/admin/users');
 }
-
 ?>
 
 <form method="post">
@@ -69,7 +68,7 @@ if ($user->getId() == 1 && !Session::getInstance()->isAdmin()) {
     <?php endif; ?>
     <button type="submit" class="btn btn-warning float-right" formaction="<?= $_SERVER['HTTP_REFERER'] ?>">Back</button>
 
-    <?php if ($lastChange): ?>
+    <?php if ($lastChange = UserLogger::getLastUserUpdateRow($_GET['id'])): ?>
         <p class="text-center">Last changes: <?=$lastChange?></p>
     <?php endif; ?>
 </form>

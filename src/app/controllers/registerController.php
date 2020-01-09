@@ -9,6 +9,8 @@ class RegisterController extends \Controller {
             if (is_integer($result = $user->save())) {
                 $user->setId($result);
                 $user->login();
+
+                UserLogger::saveEntry('LOGIN', $user);
             }
 
             if (Alert::getInstance()->isAlertEmpty()) {

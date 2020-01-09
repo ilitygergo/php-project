@@ -14,13 +14,7 @@ class UserController extends \Controller {
             $user = new User($_POST['user']);
             $user->save();
 
-            $message = Session::getInstance()->getUserId() . " " . $user->getId() . " " . date("Y-m-d H-i-s") . "\n";
-
-            file_put_contents(
-                getenv("LOGS_PATH") . "userUpdate",
-                $message,
-                FILE_APPEND
-            );
+            UserLogger::saveUserUpdate($user->getId());
         }
 
         $this->redirectIfNotAdmin();
@@ -35,6 +29,7 @@ class UserController extends \Controller {
                 Session::getInstance()->logout();
             }
 
+            UserLogger::saveEntry('DELETE', $user);
             $user->delete();
         }
 
