@@ -14,30 +14,15 @@ class Framework {
     private static function init() {
         require __DIR__ . '/../../../env.php';
 
-        require getenv("CORE_PATH") . "alert.php";
-
-        require getenv("CORE_PATH") . "controller.php";
-    
-        require getenv("DB_PATH") . "mysql.php";
-    
-        require getenv("CORE_PATH") . "model.php";
-    
-        require getenv("CORE_PATH") . "session.php";
-
         require getenv("CONFIG_PATH") . "functions.php";
     }
 
     private static function autoload() {
-        spl_autoload_register(function($classname) {
-            if (
-                substr($classname, -10) == "Controller"
-                && file_exists($path = getenv("CURR_CONTROLLER_PATH") . "$classname.php")
-            ) {
-                require_once $path;
-            } elseif (file_exists($path = getenv("MODEL_PATH") . "$classname.php")) {
-                require_once $path;
-            } elseif (file_exists($path = getenv("MODEL_PATH") . "logger/$classname.php")) {
-                require_once $path;
+        spl_autoload_register(function ($classname) {
+            foreach (self::getIncludePaths() as $path) {
+                if (file_exists($file = $path . "$classname.php")) {
+                    require $file;
+                }
             }
         });
     }
@@ -53,5 +38,18 @@ class Framework {
             $controller = new IndexController();
             $controller->not_foundAction();
         }
+    }
+
+    /**
+     * @return 
+     */
+    private static function getIncludePaths() {
+        return [
+            getenv("CORE_PATH"),
+            getenv("DB_PATH"),
+            getenv("CURR_CONTROLLER_PATH"),
+            getenv("MODEL_PATH"),
+            getenv("MODEL_PATH") . "logger/"
+        ];
     }
 }
