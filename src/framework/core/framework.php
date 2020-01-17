@@ -1,4 +1,7 @@
 <?php
+namespace App\Framework\Core;
+
+use App\Controllers\IndexController;
 
 class Framework {
     public static function run() {
@@ -18,17 +21,11 @@ class Framework {
     }
 
     private static function autoload() {
-        spl_autoload_register(function ($classname) {
-            foreach (self::getIncludePaths() as $path) {
-                if (file_exists($file = $path . "$classname.php")) {
-                    require $file;
-                }
-            }
-        });
+        require_once(__DIR__ . '/../../../vendor/autoload.php');
     }
 
     private static function dispatch() {
-        $controller_name = getenv("CONTROLLER") . "Controller";
+        $controller_name = "\App\Controllers\\" . ucfirst(getenv("CONTROLLER")) . "Controller";
         $action_name = getenv("ACTION") . "Action";
 
         if (class_exists($controller_name) && method_exists(new $controller_name, $action_name)) {
@@ -38,18 +35,5 @@ class Framework {
             $controller = new IndexController();
             $controller->not_foundAction();
         }
-    }
-
-    /**
-     * @return 
-     */
-    private static function getIncludePaths() {
-        return [
-            getenv("CORE_PATH"),
-            getenv("DB_PATH"),
-            getenv("CURR_CONTROLLER_PATH"),
-            getenv("MODEL_PATH"),
-            getenv("MODEL_PATH") . "logger/"
-        ];
     }
 }

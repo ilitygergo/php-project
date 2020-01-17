@@ -1,4 +1,4 @@
 <?php
 require "framework/core/Framework.php";
 
-Framework::run();
+App\Framework\Core\Framework::run();

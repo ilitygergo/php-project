@@ -1,6 +1,12 @@
 <?php
+namespace App\Models;
 
-class Product extends \Model implements modelInterface {
+use App\Framework\Core\Model;
+use App\Framework\Core\Alert;
+use App\Models\ModelInterface;
+use App\Models\ModelTrait;
+
+class Product extends Model implements modelInterface {
     use modelTrait;
 
     const PRIMARY_KEY = 0;

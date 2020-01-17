@@ -1,6 +1,10 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
+use App\Models\Website;
+use App\Models\Pagination;
+use App\Models\User;
+
 $pagination = new Pagination($_GET['page'] ?? 1, 10, User::countAll());
 $users = User::getAll($pagination->per_page, $pagination->offset());
 ?>

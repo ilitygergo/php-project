@@ -1,6 +1,11 @@
 <?php
+namespace App\Models;
 
-class Availability extends \Model implements modelInterface {
+use App\Framework\Core\Model;
+use App\Models\ModelInterface;
+use App\Models\ModelTrait;
+
+class Availability extends Model implements modelInterface {
     use ModelTrait;
 
     const PRIMARY_KEY = 0;

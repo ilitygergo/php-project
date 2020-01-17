@@ -1,6 +1,10 @@
 <?php
+namespace App\Models;
 
-class Website extends \Model {
+use App\Framework\Core\Model;
+use App\Models\ModelTrait;
+
+class Website extends Model {
     use ModelTrait;
     /**
      * @var Website

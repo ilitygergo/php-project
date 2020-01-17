@@ -1,6 +1,13 @@
 <?php
+namespace App\Controllers;
 
-class IndexController extends \Controller {
+use App\Framework\Core\Controller;
+use App\Framework\Core\Session;
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Logger\UserLogger;
+
+class IndexController extends Controller {
     public function indexAction() {
         include  getenv("CURR_VIEW_PATH") . "index.phtml";
     }

@@ -1,6 +1,9 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
+use \App\Models\Availability;
+use \App\Models\Product;
+
 $product = new Product();
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {

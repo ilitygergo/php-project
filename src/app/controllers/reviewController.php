@@ -1,6 +1,10 @@
 <?php
+namespace App\Controllers;
 
-class ReviewController extends \Controller {
+use App\Framework\Core\Controller;
+use App\Models\Review;
+
+class ReviewController extends Controller {
     public function indexAction() {
         if (isPostRequest()) {
             $review = new Review($_POST['review']);

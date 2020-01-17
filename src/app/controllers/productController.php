@@ -1,6 +1,12 @@
 <?php
+namespace App\Controllers;
 
-class ProductController extends \Controller {
+use App\Framework\Core\Controller;
+use App\Models\Product;
+use App\Models\Availability;
+use App\Framework\Core\Alert;
+
+class ProductController extends Controller {
     public function updateAction() {
         if (isPostRequest()) {
             if ($_FILES['image']['name'] != '') {

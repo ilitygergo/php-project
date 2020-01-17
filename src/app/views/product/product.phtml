@@ -1,6 +1,12 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
+use App\Models\Availability;
+use App\Models\Review;
+use App\Models\Website;
+use App\Models\User;
+use App\Framework\Core\Session;
+
 $availabilities = Availability::getAllById($id);
 $reviews = Review::getAllByProductId($id);
 $colors = [];

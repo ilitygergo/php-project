@@ -1,4 +1,5 @@
 <?php
+namespace App\Models\Logger;
 
 class Logger {
     /**

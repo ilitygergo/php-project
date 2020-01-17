@@ -1,4 +1,6 @@
 <?php
+namespace App\Models;
+
 trait ModelTrait {
     /**
      * @param $args

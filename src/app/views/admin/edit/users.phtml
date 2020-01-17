@@ -1,6 +1,10 @@
 <?php
 include_once getenv("VIEW_PATH") . 'common/header.phtml';
 
+use App\Models\User;
+use App\Models\Logger\UserLogger;
+use App\Framework\Core\Session;
+
 $user = new User($_GET);
 
 if ($user->getId() == 1 && !Session::getInstance()->isAdmin()) {

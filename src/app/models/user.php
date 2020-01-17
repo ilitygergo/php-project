@@ -1,6 +1,13 @@
 <?php
+namespace App\Models;
 
-class User extends \Model implements modelInterface {
+use App\Framework\Core\Model;
+use App\Framework\Core\Alert;
+use App\Framework\Core\Session;
+use App\Models\ModelInterface;
+use App\Models\ModelTrait;
+
+class User extends Model implements modelInterface {
     use ModelTrait;
 
     const PRIMARY_KEY = 0;

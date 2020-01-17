@@ -1,6 +1,9 @@
 <?php
+namespace App\Controllers;
 
-class StyleController extends \Controller {
+use App\Framework\Core\Controller;
+
+class StyleController extends Controller {
     public function indexAction() {
         if (isset($_GET['file'])) {
             header("Content-Type:text/css");

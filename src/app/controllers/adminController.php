@@ -1,6 +1,9 @@
 <?php
+namespace App\Controllers;
 
-class AdminController extends \Controller {
+use App\Framework\Core\Controller;
+
+class AdminController extends Controller {
     public function usersAction() {
         $this->redirectIfNotAdmin();
 

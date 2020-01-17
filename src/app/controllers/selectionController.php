@@ -1,6 +1,11 @@
 <?php
+namespace App\Controllers;
 
-class SelectionController extends \Controller {
+use App\Framework\Core\Controller;
+use App\Models\Pagination;
+use App\Models\Product;
+
+class SelectionController extends Controller {
     public function searchAction() {
         if (!isGetRequest()) {
             include getenv("CURR_VIEW_PATH") . "product/selection.phtml";

@@ -1,5 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
+use App\Framework\Core\Model;
+use App\Models\Website;
 
 class WebsiteTest extends TestCase {
     /**

@@ -16,6 +16,7 @@ services:
     image: php:7-fpm
     volumes:
       - ./src:/src
+      - ./vendor:/vendor
       - ./env.php:/env.php
       - ./node_modules:/node_modules
     build:

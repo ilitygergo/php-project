@@ -1,6 +1,12 @@
 <?php
+namespace App\Controllers;
 
-class UserController extends \Controller {
+use App\Framework\Core\Controller;
+use App\Framework\Core\Session;
+use App\Models\Logger\UserLogger;
+use App\Models\User;
+
+class UserController extends Controller {
     public function profileAction() {
         if (isset($_GET['id']) && $_GET['id'] == Session::getInstance()->getUserId()) {
             include getenv("CURR_VIEW_PATH") . "admin/edit/users.phtml";

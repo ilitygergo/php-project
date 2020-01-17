@@ -1,6 +1,12 @@
 <?php
+namespace App\Controllers;
 
-class RegisterController extends \Controller {
+use App\Framework\Core\Controller;
+use App\Framework\Core\Alert;
+use App\Models\Logger\UserLogger;
+use App\Models\User;
+
+class RegisterController extends Controller {
     public function indexAction() {
         if (isPostRequest() && isset($_POST['user'])) {
             $user = new User($_POST['user']);

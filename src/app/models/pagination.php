@@ -1,6 +1,9 @@
 <?php
+namespace App\Models;
 
-class Pagination extends \Model {
+use App\Framework\Core\Model;
+
+class Pagination extends Model {
     /**
      * @var int
      */
